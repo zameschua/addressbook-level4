@@ -721,61 +721,61 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-| `* * *` | Customer manager using the app for the first time | see usage instructions | refer to instructions when I forget how to use the App 
+| `* * *` | Customer manager using the app for the first time | see usage instructions | refer to instructions when I forget how to use the App
 
-| `* * *` | Customer manager | add a new customer | Store their data in my database 
+| `* * *` | Customer manager | add a new customer | Store their data in my database
 
-| `* * *` | Customer manager | delete a customer | remove entries that I no longer need 
+| `* * *` | Customer manager | delete a customer | remove entries that I no longer need
 
-| `* * *` | Customer manager | find a customer by name | locate details of persons without having to go through the entire list 
+| `* * *` | Customer manager | find a customer by name | locate details of persons without having to go through the entire list
 
-| `* * *` | Customer manager | Sort customers by name | Locate customers easily 
+| `* * *` | Customer manager | Sort customers by name | Locate customers easily
 
-| `* * *` | Customer Manager | Sort customers by tag | Group my customers according to specific criteria, like &#39;paid&#39;, &#39;new&#39; etc 
+| `* * *` | Customer Manager | Sort customers by tag | Group my customers according to specific criteria, like &#39;paid&#39;, &#39;new&#39; etc
 
-| `* * *` | Clumsy customer manager | Receive a warning when I might potentially make a grave mistake, ie. delete a wrong contact | I am less likely to make mistakes 
+| `* * *` | Clumsy customer manager | Receive a warning when I might potentially make a grave mistake, ie. delete a wrong contact | I am less likely to make mistakes
 
-| `* * *` | Customer manager who values security | Login securely | Keep my customer&#39;s data secure 
+| `* * *` | Customer manager who values security | Login securely | Keep my customer&#39;s data secure
 
-| `* * *` | Customer Manager | List all my customers | Get a List of all my customers 
+| `* * *` | Customer Manager | List all my customers | Get a List of all my customers
 
-| `* * *` | Customer Manager | Sort customers by tag | Group my customers according to specific criteria, like &#39;paid&#39;, &#39;new&#39; etc 
+| `* * *` | Customer Manager | Sort customers by tag | Group my customers according to specific criteria, like &#39;paid&#39;, &#39;new&#39; etc
 
-| `* * *` | Customer manager | Edit information | Update my customers&#39; information when they have changes. 
+| `* * *` | Customer manager | Edit information | Update my customers&#39; information when they have changes.
 
-| `* * *` | Customer manager who cannot  remember commands correctly | Have an &#39;auto-complete&#39; feature while typing commands | Be more efficient and reduce the time required to recall the whole command 
+| `* * *` | Customer manager who cannot  remember commands correctly | Have an &#39;auto-complete&#39; feature while typing commands | Be more efficient and reduce the time required to recall the whole command
 
-| `* * *` | Customer manager with customers with multiple emails, addresses and phone numbers. | Add all of their details | Contact them easily in case they don&#39;t respond via one of their usual contact details. 
-| `* * *` | Forgetful customer manager | List all tags | I can identify which tags I have, and possibly any near duplicates like &#39;frequent&#39; and &#39;frequent customer&#39; 
+| `* * *` | Customer manager with customers with multiple emails, addresses and phone numbers. | Add all of their details | Contact them easily in case they don&#39;t respond via one of their usual contact details.
+| `* * *` | Forgetful customer manager | List all tags | I can identify which tags I have, and possibly any near duplicates like &#39;frequent&#39; and &#39;frequent customer&#39;
 
 | `* *` | Customer manager who prioritizes convenience | Be able to access my most frequently / recent searched customers easily | Save time
 
-| `* *` | Customer manager who needs to send letters out | View their addresses on a map | Look-up their address easily 
+| `* *` | Customer manager who needs to send letters out | View their addresses on a map | Look-up their address easily
 
-| `* *` | Customer manager | Have alert for customers&#39; birthdays | We (the business) can celebrate with the customer or send out a greeting. 
+| `* *` | Customer manager | Have alert for customers&#39; birthdays | We (the business) can celebrate with the customer or send out a greeting.
 
-| `* *` | Clumsy customer manager | Undo my command   | Undo my mistake 
+| `* *` | Clumsy customer manager | Undo my command   | Undo my mistake
 
-| `* *` | Customer manager | Clear my address book | Start a new address book again 
+| `* *` | Customer manager | Clear my address book | Start a new address book again
 
-| `* *` | Customer manager | Profile pictures for my contacts | Verify the identity of the customer. 
+| `* *` | Customer manager | Profile pictures for my contacts | Verify the identity of the customer
 
-| `* *` | Customer manager | Get customers&#39; bank accounts number | Transfer them money quickly, or check if they transferred us money 
+| `* *` | Customer manager | Get customers&#39; bank accounts number | Transfer them money quickly, or check if they transferred us money
 
 
-| `* *` | Customer manager using the app for the first time | Import existing customers from an existing csv file | Do not have to go through the trouble of importing my customer details one by one 
+| `* *` | Customer manager using the app for the first time | Import existing customers from an existing csv file | Do not have to go through the trouble of importing my customer details one by one
 
-| `* *`  | Customer manager | Merge duplicate contacts | Don&#39;t have to change each user manually 
+| `* *`  | Customer manager | Merge duplicate contacts | Don&#39;t have to change each user manually
 
-| `* *` | Customer manager | Send mass email to my customers | Contact customers quickly and efficiently 
+| `* *` | Customer manager | Send mass email to my customers | Contact customers quickly and efficiently
 
-| `* *` | Customer manager | View the number of people I have in my application | So that I can keep track of the number of customers I have. 
+| `* *` | Customer manager | View the number of people I have in my application | So that I can keep track of the number of customers I have
 
-| `*` | Customer manager | Have alert for anniversaries | We (the business) can celebrate with the customer or send out a greeting. 
+| `*` | Customer manager | Have alert for anniversaries | We (the business) can celebrate with the customer or send out a greeting
 
-| `*` | Customer manager | Know when a customer signed up / joined us | Know their join date 
+| `*` | Customer manager | Know when a customer signed up / joined us | Know their join date
 
-| `*` | Customer manager who likes nice designs | Have multiple themes | Personalise the application to my liking. 
+| `*` | Customer manager who likes nice designs | Have multiple themes | Personalise the application to my liking
 
 |=======================================================================
 
@@ -792,21 +792,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 1. Customer Manager requests to list all customers.
 2. Cync shows a list of customers.
-3. Customer Manager requests to delete a specific customer in the list
+3. Customer Manager requests to delete a specific customer in the list.
 4. Cync prompts confirmation of deleting customer.
 5. Cync deletes the customer.
-6. Cync notifies user that deletion is successful
+6. Cync notifies user that deletion is successful.
 7. Use case ends.
 
 *Extensions*
 
-* 2a. The list is empty.  
+* 2a. The list is empty.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 - 3a1.Cync shows an error message.
-+ 
++
 Use case resumes at step 2
 
 * 4a. Deletion not successful
@@ -829,7 +829,7 @@ Use case ends
 * 2a. Customer does not exist.
 +
 Use case ends.
- 
+
 [discrete]
 === Use case: Auto-complete commands
 
@@ -851,7 +851,7 @@ No drop-down bar
 *MSS*
 
 1. Customer Manager enters command to search by tag, ie. search [tagName]
-2. Cync lists out all the customers who contain the tag tagName and the number of customers with tag 
+2. Cync lists out all the customers who contain the tag tagName and the number of customers with tag
 
 *Extensions*
 
@@ -869,7 +869,7 @@ Cync informs the customer manager that none of the customers have that tag
 * An user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 * Application should respond within 2 seconds.
- 
+
 * Application should show a loading spinner while CYNC is loading.
 
 * Application should automatically backup the customers’ information in the case that the user loses his/her data.
@@ -878,7 +878,7 @@ Cync informs the customer manager that none of the customers have that tag
 
 * Application’s design should be easy on the eyes
 
-* Application should be open source so that other developers can contribute 
+* Application should be open source so that other developers can contribute
 
 * Application should be free for users, but also incorporate a way to monetize as a way to monetize.
 
