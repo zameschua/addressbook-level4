@@ -13,11 +13,11 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
     private static final String NUMBER_OF_CONTACTS_STATUS_ID = "#numberOfContactsStatus";
-    
+
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
     private final StatusBar numberOfContactsNode;
-    
+
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
 

@@ -72,7 +72,7 @@ public class StatusBarFooter extends UiPart<Region> {
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
-    
+
     private void setNumberOfContactsStatus(int numberOfContactsText) {
         Platform.runLater(() -> this.numberOfContactsStatus.setText(numberOfContactsText + " person(s) total"));
     }
