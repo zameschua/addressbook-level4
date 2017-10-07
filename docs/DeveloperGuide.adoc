@@ -102,11 +102,14 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 Now that you've everything set up, you are ready to start coding! To help you along, we encourage you to
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+
+This section aims to give you a broad overview of the purpose of various components and our
+motivation for designing it that way.
 
 === Architecture
 
