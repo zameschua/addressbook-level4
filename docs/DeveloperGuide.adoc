@@ -191,11 +191,17 @@ The `UI` component,
 
 === Logic component
 
+The Logic Component concerns itself primarily with processing of commands and giving the relevant output.
+You may wish to look at _Figure 3.3.1_ to gain a broad overview of the Logic component,
+followed by _Figure 3.3.2_ to better understand the implementation of Commands in the Logic Component.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+
+Below is a simple explanation of what happens when user enters a command.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -205,10 +211,10 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+In case you are still feeling lost, we have provided a Sequence Diagram (_Figure 3.3.3_) to illustrate interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
