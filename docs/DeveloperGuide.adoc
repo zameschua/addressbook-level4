@@ -41,6 +41,10 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
+[NOTE]
+New to IntelliJ? We encourage you to head over to https://www.jetbrains.com/help/idea/meet-intellij-idea.html[IntelliJ IDEA 2017.2 Help] to fully
+understand the ins-and-outs of IntelliJ.
 
 
 === Setting up the project in your computer
