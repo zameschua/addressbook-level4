@@ -14,9 +14,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+Welcome, fellow software developer! We are extremely delighted to see you. The CYNC community
+prides itself on being a friendly and helpful community for new developers.
+If you ever face any issue or uncertainty in the instructions, feel free to send an email
+to pohjie@cync.com so that we can sort out the issues for you and following contributors.
+
 == Setting up
 
 === Prerequisites
+
+Before you get started, please ensure that you have the following software and Java development
+kit installed on your computer. As downloading and setting up *IntelliJ* may take up some time,
+feel free to jump ahead and read through the instructions to get a rough idea of this project.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,6 +45,9 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
+Now that you have both *JDK `1.8.0_60`* or later and *IntelliJ* installed, you are ready to
+set up the project.
+
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -48,12 +62,17 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
+To confirm that you've successfully set up the project, do take the time to ensure
+that your set up is correct and ready to run.
+
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
+Before you actually write any code, you want to make sure that you're following our coding standards
+so that whatever you've written can be easily understood by your peers.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -72,7 +91,7 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+You are encouraged to set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
@@ -81,9 +100,10 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Now that you've everything set up, you are ready to start coding! To help you along, we encourage you to
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
