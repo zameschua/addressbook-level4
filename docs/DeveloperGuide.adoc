@@ -469,19 +469,23 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested Starting Point
 
-Suggested path for new programmers:
+Here is a suggested path for new developers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+1. Add small link:#local-impact-enhancements[local-impact enhancements] to one component at a time. +
+Learning Outcome: To understand how each component functions. + 
+Some enhancements suggestions are given in this section link:#improving-each-component[Improving each Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+2. Add a feature that touches multiple components. + 
+ Learning Outcome: To learn how to implement an end-to-end feature across all components. + 
+ The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
+Exercises in this section aims to help you understand the 4 major components of CYNC. Each exercise is component-based thus you would not need to modify the other components for it to function.
 
-[discrete]
+
 ==== `Logic` component
 
 [TIP]
@@ -498,7 +502,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Model` component
 
 [TIP]
@@ -515,7 +519,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Ui` component
 
 [TIP]
@@ -579,7 +583,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Storage` component
 
 [TIP]
@@ -793,6 +797,12 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[local-impact-enhancements]]
+Local-impact enhancements
+....
+The impact of the change does not go beyond the component
 ....
 
 [appendix]
