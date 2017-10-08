@@ -616,8 +616,8 @@ Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
+===== [Step 1] Logic: Teach the app to accept 'remark'
+Let's start by teaching the application how to parse a `remark` command. The command will only function after adding the logic of `remark` later.
 
 **Main:**
 
