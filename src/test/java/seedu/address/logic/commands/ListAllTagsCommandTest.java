@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.ListAllTagsCommand.MESSAGE_NOT_IMPLEMENTED_YET;
+import static seedu.address.logic.commands.ListAllTagsCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class ListAllTagsCommandTest {
 
     @Test
     public void execute() throws Exception {
-        assertCommandFailure(prepareCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
+        assertCommandFailure(prepareCommand(), model, MESSAGE_SUCCESS);
     }
 
     /**
