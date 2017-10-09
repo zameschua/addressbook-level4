@@ -112,8 +112,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_listAllTags() throws Exception {
-        ListAllTagsCommand command = (ListAllTagsCommand) parser.parseCommand(ListAllTagsCommand.COMMAND_WORD);
-        assertTrue(command instanceof ListAllTagsCommand);
+        assertTrue(parser.parseCommand(ListAllTagsCommand.COMMAND_WORD) instanceof ListAllTagsCommand);
     }
 
     @Test
