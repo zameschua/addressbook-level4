@@ -812,10 +812,17 @@ Use case ends.
 
 [appendix]
 == Non Functional Requirements
+Here are the Non Functional Requirements that CYNC follows: 
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should respond within 2 seconds.
+*  Should be open source so that other developers can contribute.
+*  Should automatically backup the customers’ information in the case that the user loses his/her data.
+*  Should show a loading spinner while loading.
+*  Should be aesthetically clean so that user does not feel overwhelmed.
+*  Should be free for users.
 
 {More to be added}
 
