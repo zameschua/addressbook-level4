@@ -31,5 +31,5 @@ public class ListAllTagsCommandTest {
         ListAllTagsCommand listAllTagsCommand = new ListAllTagsCommand();
         listAllTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return listAllTagsCommand;
-   }
+    }
 }
