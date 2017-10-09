@@ -794,14 +794,15 @@ Use case resumes at step 2
 3. Customer Manager requests to edit specific fields with new data
 4. CYNC updates the details
 +
-Use case resumes at step 2. +
+Use case resumes at step 2.
++
 Use case ends
 
 *Extensions*
 
 [none]
 * 2a. Customer does not exist.
-+ 
++
 [none]
 ** 2a1. CYNC shows the requested customer does not exist.
 +
