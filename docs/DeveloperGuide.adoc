@@ -864,16 +864,29 @@ A dropdown toolbar that suggests words that the user may be typing as they type
 [appendix]
 == Product Survey
 
-*Product Name*
+Products that are similar to CYNC: 
 
-Author: ...
+* *Microsoft Outlook Customer Manager*
++
+Author: Microsoft
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Tracking of customer requests | Manages customers’ requests individually
+| Clean interface | Pay-to-use software
+| An overview of To-dos on main page |
+|=======================================================================
 
-Pros:
+* *Salesforce CRM*
++
+Author: Salesforce
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Sales management | Tons of features, easy to overwhelm client
+| Marketing automation | Not free, additional cost for businesses
+| Partner relationship management |
+|=======================================================================
 
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
