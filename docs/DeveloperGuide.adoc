@@ -750,17 +750,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+Here are use cases that show the various interactions between users and CYNC.
 
-[discrete]
-=== Use case: Delete person
+=== Delete Customer
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Customer Manager requests to list customers
+2.  CYNC shows a list of customers
+3.  Customers Manager requests to delete a specific customer in the list
+4.  CYNC prompts confirmation of deleting customer.
+5.  CYNC deletes the customer.
+6.  CYNC notifies Customer Manager that deletion is successful
 +
 Use case ends.
 
@@ -774,9 +775,38 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CYNC shows an error message.
 +
 Use case resumes at step 2.
+
+* 4a. Deletion not successful
++
+[none]
+** 4a1. CYNC shows an error messages
++
+Use case resumes at step 2
+
+=== Edit Customer's details
+
+*MSS*
+
+1. Customer Manager requests to edit customer
+2. CYNC lists out the current details of the customer
+3. Customer Manager requests to edit specific fields with new data
+4. CYNC updates the details
++
+Use case resumes at step 2. +
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. Customer does not exist.
++ 
+[none]
+** 2a1.CYNC shows the requested customer does not exist.
++
+Use case ends.
 
 {More to be added}
 
