@@ -1,9 +1,10 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.ListAllTagsCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -17,19 +18,21 @@ import seedu.address.model.UserPrefs;
 */
 public class ListAllTagsCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
+    private Model expectedModel;
+    private ListAllTagsCommand listAllTagsCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        listAllTagsCommand = new ListAllTagsCommand();
+        listAllTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
 
     @Test
     public void execute() throws Exception {
-        assertCommandFailure(prepareCommand(), model, MESSAGE_SUCCESS);
-    }
-
-    /**
-    * Returns an {@code ListAllTagsCommand}.
-    */
-    private ListAllTagsCommand prepareCommand() {
-        ListAllTagsCommand listAllTagsCommand = new ListAllTagsCommand();
-        listAllTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return listAllTagsCommand;
+        assertCommandSuccess(listAllTagsCommand, model, ListAllTagsCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
