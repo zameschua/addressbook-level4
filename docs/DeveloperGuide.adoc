@@ -719,23 +719,30 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == User Stories
+Here are the user stories that describes different types of CYNC users and their requirements. 
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="20%,<23%,<25%,<35%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | link:#customer-manager[Customer Manager] using the app for the first time |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |Customer Manager |add a new customer | store their data in my database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Customer Manager |delete a customer |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Customer Manager |find a customer by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+| `* * *` | Customer Manager | edit information | update customer's information when they have changes.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+| `* * *` | Customer Manager | list all my customers | get a list of all my customers
+
+| `* * *` | Customer Manager who cannot remember commands correctly | have an link:#auto-complete[auto-complete] feature while typing commands | be more efficient by reducing the time required to recall the whole command
+
+|`* *` |Customer Manager |hide customers' link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |Customer Manager |sort customers by name |locate a customer easily
 |=======================================================================
 
 {More to be added}
@@ -803,6 +810,18 @@ A contact detail that is not meant to be shared with others
 Local-impact enhancements
 ....
 The impact of the change does not go beyond the component
+....
+
+[[customer-manager]]
+Customer Manager
+....
+A person working at a small business that uses CYNC
+....
+
+[[auto-complete]]
+Auto-complete
+....
+A dropdown toolbar that suggests words that the user may be typing as they type
 ....
 
 [appendix]
