@@ -24,7 +24,7 @@ public class ListAllTagsCommandTest {
         assertCommandFailure(prepareCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
     }
 
-   /**
+    /**
     * Returns an {@code ListAllTagsCommand}.
     */
     private ListAllTagsCommand prepareCommand() {
