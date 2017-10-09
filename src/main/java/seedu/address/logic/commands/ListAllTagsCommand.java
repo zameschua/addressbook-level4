@@ -12,7 +12,7 @@ public class ListAllTagsCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Listed all tags";
 
     public static final String MESSAGE_NOT_IMPLEMENTED_YET = "ListAllTags command not implemented yet";
-    
+
     @Override
     public CommandResult execute() throws CommandException {
         throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
