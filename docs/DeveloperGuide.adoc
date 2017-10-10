@@ -517,19 +517,22 @@ a. Include those libraries in the repo (this bloats the repo size). +
 b. Require developers to download those libraries manually (this creates extra work for developers).
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested Starting Point
 
-Suggested path for new programmers:
+Here is a suggested path for new developers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+1. Add small link:#local-impact-enhancements[local-impact enhancements] to one component at a time. +
+Learning Outcome: To understand how each component functions. +
+Some enhancements suggestions are given in this section link:#improving-each-component[Improving each Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+2. Add a feature that touches multiple components. +
+ Learning Outcome: To learn how to implement an end-to-end feature across all components. +
+ The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
+Exercises in this section aims to help you understand the 4 major components of CYNC. Each exercise is component-based thus you would not need to modify the other components for it to function.
 
-[discrete]
 ==== `Logic` component
 
 [TIP]
@@ -546,7 +549,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Model` component
 
 [TIP]
@@ -563,7 +566,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Ui` component
 
 [TIP]
@@ -627,7 +630,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Storage` component
 
 [TIP]
@@ -660,8 +663,8 @@ Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
+===== [Step 1] Logic: Teach the app to accept 'remark'
+Let's start by teaching the application how to parse a `remark` command. The command will only function after adding the logic of `remark` later.
 
 **Main:**
 
@@ -763,23 +766,30 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == User Stories
+Here are the user stories that describes different types of CYNC users and their requirements.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="20%,<23%,<25%,<35%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | link:#customer-manager[Customer Manager] using the app for the first time |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |Customer Manager |add a new customer | store their data in my database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Customer Manager |delete a customer |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Customer Manager |find a customer by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+| `* * *` | Customer Manager | edit information | update customer's information when they have changes.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+| `* * *` | Customer Manager | list all my customers | get a list of all my customers
+
+| `* * *` | Customer Manager who cannot remember commands correctly | have an link:#auto-complete[auto-complete] feature while typing commands | be more efficient by reducing the time required to recall the whole command
+
+|`* *` |Customer Manager |hide customers' link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |Customer Manager |sort customers by name |locate a customer easily
 |=======================================================================
 
 {More to be added}
@@ -787,17 +797,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+Here are use cases that show the various interactions between users and CYNC.
 
-[discrete]
-=== Use case: Delete person
+=== Delete Customer
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Customer Manager requests to list customers
+2.  CYNC shows a list of customers
+3.  Customers Manager requests to delete a specific customer in the list
+4.  CYNC prompts confirmation of deleting customer.
+5.  CYNC deletes the customer.
+6.  CYNC notifies Customer Manager that deletion is successful
 +
 Use case ends.
 
@@ -811,18 +822,55 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CYNC shows an error message.
 +
 Use case resumes at step 2.
+
+* 4a. Deletion not successful
++
+[none]
+** 4a1. CYNC shows an error messages
++
+Use case resumes at step 2
+
+=== Edit Customer's details
+
+*MSS*
+
+1. Customer Manager requests to edit customer
+2. CYNC lists out the current details of the customer
+3. Customer Manager requests to edit specific fields with new data
+4. CYNC updates the details
++
+Use case resumes at step 2.
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. Customer does not exist.
++
+[none]
+** 2a1. CYNC shows the requested customer does not exist.
++
+Use case ends.
 
 {More to be added}
 
 [appendix]
 == Non Functional Requirements
+Here are the Non Functional Requirements that CYNC follows:
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should respond within 2 seconds.
+*  Should be open source so that other developers can contribute.
+*  Should automatically backup the customers’ information in the case that the user loses his/her data.
+*  Should show a loading spinner while loading.
+*  Should be aesthetically clean so that user does not feel overwhelmed.
+*  Should be free for users.
 
 {More to be added}
 
@@ -843,19 +891,49 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[local-impact-enhancements]]
+Local-impact enhancements
+....
+The impact of the change does not go beyond the component
+....
+
+[[customer-manager]]
+Customer Manager
+....
+A person working at a small business that uses CYNC
+....
+
+[[auto-complete]]
+Auto-complete
+....
+A dropdown toolbar that suggests words that the user may be typing as they type
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+Products that are similar to CYNC:
 
-Author: ...
+* *Microsoft Outlook Customer Manager*
++
+Author: Microsoft
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Tracking of customer requests | Manages customers’ requests individually
+| Clean interface | Pay-to-use software
+| An overview of To-dos on main page |
+|=======================================================================
 
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+* *Salesforce CRM*
++
+Author: Salesforce
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Sales management | Tons of features, easy to overwhelm client
+| Marketing automation | Not free, additional cost for businesses
+| Partner relationship management |
+|=======================================================================
