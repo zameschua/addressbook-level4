@@ -14,9 +14,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+Welcome, fellow software developer! We are extremely delighted to see you. The CYNC community
+prides itself on being a friendly and helpful community for new developers.
+If you ever face any issue or uncertainty in the instructions, feel free to send an email
+to pohjie@cync.com so that we can sort out the issues for you and following contributors.
+
 == Setting up
 
 === Prerequisites
+
+Before you get started, please ensure that you have the following software and Java development
+kit installed on your computer. As downloading and setting up *IntelliJ* may take up some time,
+feel free to jump ahead and read through the instructions to get a rough idea of this project.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -30,9 +41,16 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
+[NOTE]
+New to IntelliJ? We encourage you to head over to https://www.jetbrains.com/help/idea/meet-intellij-idea.html[IntelliJ IDEA 2017.2 Help] to fully
+understand the ins-and-outs of IntelliJ.
 
 
 === Setting up the project in your computer
+
+Now that you have both *JDK `1.8.0_60`* or later and *IntelliJ* installed, you are ready to
+set up the project.
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -48,12 +66,17 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
+To confirm that you've successfully set up the project, do take the time to ensure
+that your set up is correct and ready to run.
+
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
+Before you actually write any code, you want to make sure that you're following our coding standards
+so that whatever you've written can be easily understood by your peers.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -72,7 +95,7 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+You are encouraged to set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
@@ -81,19 +104,24 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Now that you've everything set up, you are ready to start coding! To help you along, we encourage you to
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
+. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
+This section aims to give you a broad overview of the purpose of various components and our
+motivation for designing it that way.
+
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+The *_Architecture Diagram_* given below (_Figure 3.1.1_) explains the high-level design of the App. Read on for a quick overview of each component.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture Diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -120,10 +148,10 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below, _Figure 3.1.2_) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +159,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +167,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -148,12 +176,14 @@ The sections below give more details of each component.
 
 === UI component
 
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+Refer to _Figure 3.2.1_ below to get a better visual overview of the UI component.
+
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
-
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -165,11 +195,17 @@ The `UI` component,
 
 === Logic component
 
+The Logic Component concerns itself primarily with processing of commands and giving the relevant output.
+You may wish to look at _Figure 3.3.1_ to gain a broad overview of the Logic component,
+followed by _Figure 3.3.2_ to better understand the implementation of Commands in the Logic Component.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+
+Below is a simple explanation of what happens when user enters a command.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -179,15 +215,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+In case you are still feeling lost, we have provided a Sequence Diagram (_Figure 3.3.3_) to illustrate interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
-
-image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -198,10 +231,12 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+Refer to _Figure 3.4.1_ below for an overview of the Model component.
 
-image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+image::ModelClassDiagram.png[width="800"]
+_Figure 3.4.1 : Structure of the Model Component_
+
+=== Storage component
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -209,6 +244,12 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+Refer to _Figure 3.5.1_ below for an overview of the Storage component.
+
+image::StorageClassDiagram.png[width="800"]
+_Figure 3.5.1 : Structure of the Storage Component_
+
 
 === Common classes
 
