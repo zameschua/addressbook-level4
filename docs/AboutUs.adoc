@@ -45,5 +45,3 @@ image::pohjie.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Storage
-
-'''
