@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -92,7 +93,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(newPerson);
             syncMasterTagListWith(newPerson);
         } catch (DuplicatePersonException e) {
-            // do nothing
+            throw new DuplicatePersonException();
         }
     }
 
