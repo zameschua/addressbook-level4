@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-CYNC was developed by https://github.com/CS2103AUG2017-W15-B2[team W15-B2]. 
+CYNC was developed by https://github.com/CS2103AUG2017-W15-B2[team W15-B2].
 
 We developed this project as part of our Software Engineering Module, CS2103T.
 
@@ -45,5 +45,3 @@ image::pohjie.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Storage
-
-'''
