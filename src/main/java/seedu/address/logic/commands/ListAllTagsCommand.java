@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TAGS;
+
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * List all tags that exist in software to user
