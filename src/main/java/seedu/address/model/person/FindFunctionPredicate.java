@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
@@ -25,13 +26,14 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().toString(), keyword));
         boolean tag = tagSearch(person);
 
-        if(name || address || tag){
+        if (name || address || tag) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
+// tests if person has tags matching keywords
     public boolean tagSearch(ReadOnlyPerson person) {
         Set<Tag> tags = person.getTags();
         for (Tag s : tags) {
