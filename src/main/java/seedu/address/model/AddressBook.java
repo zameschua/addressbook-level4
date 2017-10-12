@@ -117,9 +117,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.setPerson(target, editedPerson);
             syncMasterTagListWith(editedPerson);
-        } catch (DuplicatePersonException | PersonNotFoundException e) {
-            // do nothing
+        } catch (DuplicatePersonException e) {
+            throw new DuplicatePersonException();
+        } catch (PersonNotFoundException e) {
+            throw new PersonNotFoundException();
         }
+
     }
 
     /**
