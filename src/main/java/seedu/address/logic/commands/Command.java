@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -24,6 +26,15 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
+        StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
+        mess.append("\n");
+        for (String email : emails) {
+            mess.append(email);
+            mess.append("\n");
+        }
+        return mess.toString();
+    }
     /**
      * Executes the command and returns the result message.
      *

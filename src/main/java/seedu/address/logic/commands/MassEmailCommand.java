@@ -22,9 +22,9 @@ public class MassEmailCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> allPerson = model.getFilteredPersonList();
         ArrayList<String> emails = new ArrayList<String>();
-        for(ReadOnlyPerson person : allPerson) {
+        for (ReadOnlyPerson person : allPerson) {
             emails.add(person.getEmail().toString());
         }
-        return new CommandResult(emails,MESSAGE_SUCCESS);
+        return new CommandResult(getMessageForMassEmail(allPerson.size(), emails));
     }
 }

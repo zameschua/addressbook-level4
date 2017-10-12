@@ -84,9 +84,9 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-            
-        case MassEmailCommand.COMMAND_WORD: 
-            return new MassEmailCommand(); 
+
+        case MassEmailCommand.COMMAND_WORD:
+            return new MassEmailCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
