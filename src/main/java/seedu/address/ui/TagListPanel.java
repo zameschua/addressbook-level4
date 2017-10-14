@@ -13,7 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-// import seedu.address.commons.events.ui.JumpToListTagRequestEvent;
+// import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 // import seedu.address.commons.events.ui.TagPanelSelectionChangedEvent;
 import seedu.address.model.tag.Tag;
 
@@ -26,7 +26,7 @@ public class TagListPanel {
         private final Logger logger = LogsCenter.getLogger(TagListPanel.class);
 
         @FXML
-        private ListView<PersonCard> personListView;
+        private ListView<TagCard> tagListView;
 
         public TagListPanel(ObservableList<Tag> tagList) {
             super(FXML);
@@ -34,20 +34,20 @@ public class TagListPanel {
             registerAsAnEventHandler(this);
         }
 
-        private void setConnections(ObservableList<Tag> personList) {
-            ObservableList<PersonCard> mappedList = EasyBind.map(
-                    personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
-            personListView.setItems(mappedList);
-            personListView.setCellFactory(listView -> new PersonListViewCell());
+        private void setConnections(ObservableList<Tag> tagList) {
+            ObservableList<Tag> mappedList = EasyBind.map(
+                    tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
+            tagListView.setItems(mappedList);
+            tagListView.setCellFactory(listView -> new TagListViewCell());
             setEventHandlerForSelectionChangeEvent();
         }
 
         private void setEventHandlerForSelectionChangeEvent() {
-            personListView.getSelectionModel().selectedItemProperty()
+            tagListView.getSelectionModel().selectedItemProperty()
                     .addListener((observable, oldValue, newValue) -> {
                         if (newValue != null) {
-                            logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                            raise(new PersonPanelSelectionChangedEvent(newValue));
+                            logger.fine("Selection in tag list panel changed to : '" + newValue + "'");
+                            raise(new TagPanelSelectionChangedEvent(newValue));
                         }
                     });
         }
@@ -57,13 +57,13 @@ public class TagListPanel {
          */
         private void scrollTo(int index) {
             Platform.runLater(() -> {
-                personListView.scrollTo(index);
-                personListView.getSelectionModel().clearAndSelect(index);
+                tagListView.scrollTo(index);
+                tagListView.getSelectionModel().clearAndSelect(index);
             });
         }
 
         @Subscribe
-        private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        private void handleJumpToListAllTagsRequestEvent(JumpToListAllTagsRequestEvent event) {
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
             scrollTo(event.targetIndex);
         }
@@ -85,4 +85,5 @@ public class TagListPanel {
                 }
             }
         }
+    }
 }
