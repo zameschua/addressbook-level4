@@ -13,76 +13,75 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-// import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
-// import seedu.address.commons.events.ui.TagPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
+import seedu.address.commons.events.ui.TagPanelSelectionChangedEvent;
 import seedu.address.model.tag.Tag;
 
-public class TagListPanel {
+
+/**
+ * Panel containing the list of tags.
+ */
+public class TagListPanel extends UiPart<Region> {
+    private static final String FXML = "TagListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(TagListPanel.class);
+
+    @FXML
+    private ListView<TagCard> tagListView;
+
+    public TagListPanel(ObservableList<Tag> tagList) {
+        super(FXML);
+        setConnections(tagList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<Tag> tagList) {
+        ObservableList<TagCard> mappedList = EasyBind.map(
+                tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
+        tagListView.setItems(mappedList);
+        tagListView.setCellFactory(listView -> new TagListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        tagListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in tag list panel changed to : '" + newValue + "'");
+                        raise(new TagPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
     /**
-     * Panel containing the list of tags.
+     * Scrolls to the {@code TagCard} at the {@code index} and selects it.
      */
-    public class TagListPanel extends UiPart<Region> {
-        private static final String FXML = "TagListPanel.fxml";
-        private final Logger logger = LogsCenter.getLogger(TagListPanel.class);
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            tagListView.scrollTo(index);
+            tagListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
 
-        @FXML
-        private ListView<TagCard> tagListView;
+    @Subscribe
+    private void handleJumpToListAllTagsRequestEvent(JumpToListAllTagsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
 
-        public TagListPanel(ObservableList<Tag> tagList) {
-            super(FXML);
-            setConnections(tagList);
-            registerAsAnEventHandler(this);
-        }
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code TagCard}.
+     */
+    class TagListViewCell extends ListCell<TagCard> {
 
-        private void setConnections(ObservableList<Tag> tagList) {
-            ObservableList<Tag> mappedList = EasyBind.map(
-                    tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
-            tagListView.setItems(mappedList);
-            tagListView.setCellFactory(listView -> new TagListViewCell());
-            setEventHandlerForSelectionChangeEvent();
-        }
+        @Override
+        protected void updateItem(TagCard tagCard, boolean empty) {
+            super.updateItem(tagCard, empty);
 
-        private void setEventHandlerForSelectionChangeEvent() {
-            tagListView.getSelectionModel().selectedItemProperty()
-                    .addListener((observable, oldValue, newValue) -> {
-                        if (newValue != null) {
-                            logger.fine("Selection in tag list panel changed to : '" + newValue + "'");
-                            raise(new TagPanelSelectionChangedEvent(newValue));
-                        }
-                    });
-        }
-
-        /**
-         * Scrolls to the {@code TagCard} at the {@code index} and selects it.
-         */
-        private void scrollTo(int index) {
-            Platform.runLater(() -> {
-                tagListView.scrollTo(index);
-                tagListView.getSelectionModel().clearAndSelect(index);
-            });
-        }
-
-        @Subscribe
-        private void handleJumpToListAllTagsRequestEvent(JumpToListAllTagsRequestEvent event) {
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            scrollTo(event.targetIndex);
-        }
-
-        /**
-         * Custom {@code ListCell} that displays the graphics of a {@code TagCard}.
-         */
-        class PersonListViewCell extends ListCell<PersonCard> {
-
-            @Override
-            protected void updateItem(PersonCard person, boolean empty) {
-                super.updateItem(person, empty);
-
-                if (empty || person == null) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                    setGraphic(person.getRoot());
-                }
+            if (empty || tagCard == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(tagCard.getRoot());
             }
         }
     }
