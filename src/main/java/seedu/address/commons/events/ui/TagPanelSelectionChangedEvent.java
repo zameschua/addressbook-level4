@@ -22,5 +22,4 @@ public class TagPanelSelectionChangedEvent extends BaseEvent {
     public TagCard getNewSelection() {
         return newSelection;
     }
-    
 }
