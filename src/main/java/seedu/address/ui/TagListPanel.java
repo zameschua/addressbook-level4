@@ -53,7 +53,7 @@ public class TagListPanel {
         }
 
         /**
-         * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+         * Scrolls to the {@code TagCard} at the {@code index} and selects it.
          */
         private void scrollTo(int index) {
             Platform.runLater(() -> {
@@ -69,7 +69,7 @@ public class TagListPanel {
         }
 
         /**
-         * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+         * Custom {@code ListCell} that displays the graphics of a {@code TagCard}.
          */
         class PersonListViewCell extends ListCell<PersonCard> {
 
