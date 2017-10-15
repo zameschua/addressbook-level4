@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -18,6 +19,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.MassEmailRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -41,6 +43,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private EmailPanel emailPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -192,6 +195,16 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the Email panel.
+     */
+    @FXML
+   public void handleEmail(ArrayList<String> emails) {
+        emailPanel = new EmailPanel(emails);
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(emailPanel.getRoot());
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -216,5 +229,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleMassEmailEvent(MassEmailRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEmail(event.getEmailList());
     }
 }
