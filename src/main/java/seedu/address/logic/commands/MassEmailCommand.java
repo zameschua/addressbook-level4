@@ -5,6 +5,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.MassEmailRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -25,6 +27,7 @@ public class MassEmailCommand extends Command {
         for (ReadOnlyPerson person : allPerson) {
             emails.add(person.getEmail().toString());
         }
+        EventsCenter.getInstance().post(new MassEmailRequestEvent(emails));
         return new CommandResult(getMessageForMassEmail(allPerson.size(), emails));
     }
 }
