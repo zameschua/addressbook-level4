@@ -191,6 +191,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    /**
+     * Method to get UniqueTagList
+     * @return UniqueTagList
+     */
+    public UniqueTagList getUniqueTagList() {
+        return tags;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
