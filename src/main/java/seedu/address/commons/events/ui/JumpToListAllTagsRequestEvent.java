@@ -1,7 +1,8 @@
 package seedu.address.commons.events.ui;
 
-import seedu.address.commons.core.index.Index;
+import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.tag.Tag;
 
 /**
  * Indicates a request to jump to the list of tags
@@ -9,7 +10,8 @@ import seedu.address.commons.events.BaseEvent;
 
 public class JumpToListAllTagsRequestEvent extends BaseEvent {
 
-    public JumpToListAllTagsRequestEvent () {}
+
+    public JumpToListAllTagsRequestEvent () { }
 
     @Override
     public String toString() {
