@@ -20,11 +20,6 @@ public class ListAllTagsCommand extends Command {
         model.updateFilteredTagList(PREDICATE_SHOW_ALL_TAGS);
         ObservableList<Tag> allTags = model.getFilteredTagList();
 
-        StringBuilder sb = new StringBuilder();
-        for (Tag tag : allTags) {
-            sb.append(tag.tagName + " ");
-        }
-
-        return new CommandResult(MESSAGE_SUCCESS + sb);
+        return new CommandResult(getMessageForTagListShownSummary(allTags));
     }
 }
