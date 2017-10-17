@@ -24,16 +24,22 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
         boolean address = keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().toString(), keyword));
+        boolean email = keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsSubStringIgnoreCase(person.getEmail().toString(), keyword));
+        boolean number = keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsSubStringIgnoreCase(person.getPhone().toString(), keyword));
         boolean tag = tagSearch(person);
 
-        if (name || address || tag) {
+        if (name || address || tag || email || number) {
             return true;
         } else {
             return false;
         }
     }
 
-// tests if person has tags matching keywords
+    /**
+     * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
+     */
     public boolean tagSearch(ReadOnlyPerson person) {
         Set<Tag> tags = person.getTags();
         for (Tag s : tags) {

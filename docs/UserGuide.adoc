@@ -98,15 +98,17 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Search people by name / address / tags: `find`
+=== Search people by name / address / tags / email / phone: `find`
 
-Finds people whose names / address / tags contain any of the given keywords. +
+Finds people whose names / address / tags / email / phone contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
+* The full email address does not have to be keyed in e.g. `find johndo` will match with `johndoe@gmail.com` and return `John Doe`.
+* The full phone number does not have to be keyed in e.g. `9987` will match with `99876261`.
 * Can search multiple categories at the same time e.g. `find hans(name) friends(tag) serangoon(address)` will return people matching any keywords.
 * People matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -121,6 +123,8 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns any person with the tag `friends`
 * `find serangoon` +
 Returns any person whose address contains `serangoon`
+* `find serangoon 99876261` +
+Returns any person whose address contains `serangoon` and whose phone number is `99876261`
 
 === Deleting a person : `delete`
 
