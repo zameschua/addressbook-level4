@@ -29,6 +29,7 @@ import seedu.address.commons.core.LogsCenter;
 public class EmailPanel extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "EmailPanel.fxml";
+    private static final String signature = "Best Regards,\n" + "Ms.Renee Seet\n"+"Customer Manager\n";  // Should be able to customise
     private static final Logger logger = LogsCenter.getLogger(EmailPanel.class);
 
     @FXML
@@ -57,6 +58,7 @@ public class EmailPanel extends UiPart<Region> {
             });
         String recipients = appendEmails(emailList);
         recipientsBox.setText(recipients);
+        emailMessage.setText(signature); 
         registerAsAnEventHandler(this);
     }
 
