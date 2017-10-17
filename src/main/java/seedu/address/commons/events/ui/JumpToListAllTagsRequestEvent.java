@@ -9,11 +9,7 @@ import seedu.address.commons.events.BaseEvent;
 
 public class JumpToListAllTagsRequestEvent extends BaseEvent {
 
-    public final int targetIndex;
-
-    public JumpToListAllTagsRequestEvent (Index targetIndex) {
-        this.targetIndex = targetIndex.getZeroBased();
-    }
+    public JumpToListAllTagsRequestEvent () {}
 
     @Override
     public String toString() {

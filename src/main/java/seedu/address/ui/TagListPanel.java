@@ -65,7 +65,6 @@ public class TagListPanel extends UiPart<Region> {
     @Subscribe
     private void handleJumpToListAllTagsRequestEvent(JumpToListAllTagsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
     /**
