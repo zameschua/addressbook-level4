@@ -217,8 +217,8 @@ public class MainWindow extends UiPart<Region> {
      */
     public void handleTagListPanel() {
         tagListPanel = new TagListPanel(logic.getFilteredTagList());
-        personListPanelPlaceholder.getChildren().clear();
-        personListPanelPlaceholder.getChildren().add(tagListPanel.getRoot());
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(tagListPanel.getRoot());
     }
 
     void releaseResources() {

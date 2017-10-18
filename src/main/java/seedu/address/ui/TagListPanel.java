@@ -30,7 +30,7 @@ public class TagListPanel extends UiPart<Region> {
 
     public TagListPanel(ObservableList<Tag> tagList) {
         super(FXML);
-        setConnections(tagList);
+        //setConnections(tagList);
         registerAsAnEventHandler(this);
     }
 
