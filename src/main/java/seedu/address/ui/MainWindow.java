@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -197,7 +198,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Opens the Email panel.
+     * Switch to the Email panel.
      */
     @FXML
    public void handleEmail(ArrayList<String> emails) {
@@ -205,6 +206,10 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot()); 
     }
+
+    /**
+     * Switch to the Browser panel.
+     */
 
     @FXML
     public void handleBrowser() {
@@ -247,5 +252,6 @@ public class MainWindow extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         handleBrowser();
     }
+    
 
 }

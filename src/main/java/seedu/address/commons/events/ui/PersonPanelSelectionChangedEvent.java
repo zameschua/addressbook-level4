@@ -7,11 +7,11 @@ import seedu.address.ui.PersonCard;
  * Represents a selection change in the Person List Panel
  */
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
-
-
+    public String message;
     private final PersonCard newSelection;
 
     public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
+        this.message = newSelection.person.getName().toString();
         this.newSelection = newSelection;
     }
 
