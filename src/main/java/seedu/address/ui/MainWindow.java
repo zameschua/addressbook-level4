@@ -20,7 +20,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -204,7 +203,7 @@ public class MainWindow extends UiPart<Region> {
    public void handleEmail(ArrayList<String> emails) {
         emailPanel = new EmailPanel(emails);
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
-        browserPlaceholder.getChildren().setAll(emailPanel.getRoot()); 
+        browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
     }
 
     /**
@@ -252,6 +251,4 @@ public class MainWindow extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         handleBrowser();
     }
-    
-
 }
