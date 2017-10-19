@@ -1,11 +1,7 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Customers's Join Date in the address book.
@@ -25,12 +21,11 @@ public class JoinDate {
     }
 
     public JoinDate(String date) {
-       this.value = date; 
+        this.value = date;
     }
 
     @Override
     public String toString() {
         return value;
     }
-    
 }

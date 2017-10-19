@@ -57,10 +57,12 @@ public class EditCommandTest {
         ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withJoinDate("16/10/2017")
+        Person editedPerson = personInList.withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withJoinDate("16/10/2017")
                 .withTags(VALID_TAG_HUSBAND).build();
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).withJoinDate("16/10/2017")
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName(VALID_NAME_BOB).withJoinDate("16/10/2017")
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
@@ -89,7 +91,8 @@ public class EditCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).withJoinDate("16/10/2017").build();
+        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB)
+                .withJoinDate("16/10/2017").build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).withJoinDate("16/10/2017").build());
 

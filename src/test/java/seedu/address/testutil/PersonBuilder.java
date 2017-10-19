@@ -33,7 +33,7 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            JoinDate defaultDate = new JoinDate(DEFAULT_DATE); 
+            JoinDate defaultDate = new JoinDate(DEFAULT_DATE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultDate, defaultTags);
         } catch (IllegalValueException ive) {
@@ -119,7 +119,6 @@ public class PersonBuilder {
         }
         return this;
     }
-    
     public Person build() {
         return this.person;
     }

@@ -151,7 +151,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.joindate, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
+                    this.address, this.joindate, this.tags);
         }
 
         public void setName(Name name) {
@@ -185,10 +186,13 @@ public class EditCommand extends UndoableCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
-        
-        public Optional<JoinDate> getJoinDate(){ return Optional.ofNullable(joindate);}
+        public Optional<JoinDate> getJoinDate() {
+            return Optional.ofNullable(joindate);
+        }
 
-        public void setJoinDate(JoinDate joindate){ this.joindate = joindate; }
+        public void setJoinDate(JoinDate joindate) {
+            this.joindate = joindate;
+        }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
@@ -217,7 +221,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                  //  && getJoinDate().equals(e.getJoinDate())
+                    //&& getJoinDate().equals(e.getJoinDate())
                     && getTags().equals(e.getTags());
         }
     }

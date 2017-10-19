@@ -31,27 +31,36 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432").withJoinDate("16/10/2017")
             .withTags("owesMoney", "friends").build();
-    public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz")
+            .withPhone("95352563").withJoinDate("16/10/2017")
             .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier")
+            .withPhone("87652533").withJoinDate("16/10/2017")
             .withEmail("cornelia@example.com").withAddress("10th street").build();
-    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
+            .withPhone("9482224").withJoinDate("16/10/2017")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
+            .withPhone("9482427").withJoinDate("16/10/2017")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best")
+            .withPhone("9482442").withJoinDate("16/10/2017")
             .withEmail("anna@example.com").withAddress("4th street").build();
 
     // Manually added
-    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier")
+            .withPhone("8482424").withJoinDate("16/10/2017")
             .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131").withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller")
+            .withPhone("8482131").withJoinDate("16/10/2017")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY)
+            .withPhone(VALID_PHONE_AMY).withJoinDate("16/10/2017")
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withJoinDate("16/10/2017")
+    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB)
+            .withPhone(VALID_PHONE_BOB).withJoinDate("16/10/2017")
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
