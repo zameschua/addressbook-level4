@@ -270,6 +270,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Mass Emailing*: `mass` / `mass KEYWORD` +
+e.g `mass friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
