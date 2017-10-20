@@ -30,16 +30,15 @@ public class TagListPanel extends UiPart<Region> {
 
     public TagListPanel(ObservableList<Tag> tagList) {
         super(FXML);
-        //setConnections(tagList);
+        setConnections(tagList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<Tag> tagList) {
-        ObservableList<TagCard> mappedList = EasyBind.map(
-                tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
+        ObservableList<TagCard> mappedList = EasyBind.map(tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
         tagListView.setItems(mappedList);
-        tagListView.setCellFactory(listView -> new TagListViewCell());
-        setEventHandlerForSelectionChangeEvent();
+        //tagListView.setCellFactory(listView -> new TagListViewCell());
+        //setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {

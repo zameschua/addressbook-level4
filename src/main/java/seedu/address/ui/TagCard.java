@@ -34,6 +34,7 @@ public class TagCard extends UiPart<Region> {
         super(FXML);
         this.tag = tag;
         id.setText(displayedIndex + ". ");
+        tagString.setText(tag.toString());
     }
 
     @Override
