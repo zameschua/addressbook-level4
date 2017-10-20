@@ -32,13 +32,7 @@ public abstract class Command {
      * @return summary message for tags displayed
      */
     public static String getMessageForTagListShownSummary(ObservableList<Tag> allTags) {
-
-        StringBuilder sb = new StringBuilder();
-        for (Tag tag : allTags) {
-            sb.append(tag.tagName + " ");
-        }
-
-        return ListAllTagsCommand.MESSAGE_SUCCESS + sb;
+        return ListAllTagsCommand.MESSAGE_SUCCESS;
     }
     /**
      * Executes the command and returns the result message.
