@@ -37,7 +37,7 @@ public class TagListPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Tag> tagList) {
         ObservableList<TagCard> mappedList = EasyBind.map(tagList, (tag) -> new TagCard(tag, tagList.indexOf(tag) + 1));
         tagListView.setItems(mappedList);
-        //tagListView.setCellFactory(listView -> new TagListViewCell());
+        tagListView.setCellFactory(listView -> new TagListViewCell());
         //setEventHandlerForSelectionChangeEvent();
     }
 
