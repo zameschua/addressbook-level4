@@ -78,6 +78,13 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Listing all tags : `listalltags`
+
+Shows a list of all tags in the address book. +
+Format: `listalltags`
+
+Upon entering this command, you should see a window on the right side of the app showing all the tags.
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -250,6 +257,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *List All Tags* : `listalltags`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
