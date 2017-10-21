@@ -9,8 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import javafx.fxml.FXML;
-import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,32 +47,64 @@ public class SearchPredictionPanel extends UiPart<Region> {
         
         tempPredictionResults = new ArrayList<String>();
         searchPredictionResults = FXCollections.observableArrayList(tempPredictionResults);
-        
         // Attach ObservableList to ListView
         searchPredictionListView.setItems(searchPredictionResults);
+        
+        setEventHandlerForSelectionChangeEvent();
     }
 
-    public void updatePredictionResults(String newText) {
-        // Set the prediction to be invisible if there is nothing typed in the Command Box
-        if (newText.equals("")) {
-            searchPredictionListView.setVisible(false);
-        } else {
-            searchPredictionListView.setVisible(true);
-        }
-        
+    private void updatePredictionResults(String newText) {
         searchPredictionResults.clear();
         tempPredictionResults = SEARCH_PREDICTION_RESULTS_INITIAL
                 .stream()
                 .filter(p -> p.startsWith(newText))
                 .collect(toCollection(ArrayList::new));
-
+        
         searchPredictionResults.addAll(tempPredictionResults);
         searchPredictionListView.setItems(searchPredictionResults);
+        searchPredictionListView.getSelectionModel().selectFirst();
+
+        // Set the prediction to be invisible if there is nothing typed in the Command Box
+        // Or if there is no prediction to show
+        if (newText.equals("") || searchPredictionResults.isEmpty()) {
+            searchPredictionListView.setVisible(false);
+        } else {
+            searchPredictionListView.setVisible(true);
+        }
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        searchPredictionListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in search prediction panel changed to : '" + newValue + "'");
+                        raise(new SearchPredictionPanelSelectionChangedEvent(newValue));
+                    }
+                });
     }
     
     @Subscribe
     private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updatePredictionResults(event.getCommandText());
+    }
+
+
+    @Subscribe
+    private void handleSearchPredictionPanelNextSelectionEvent(SearchPredictionPanelNextSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        searchPredictionListView.getSelectionModel().selectNext();
+    }
+
+    @Subscribe
+    private void handleSearchPredictionPanelPreviousSelectionEvent(SearchPredictionPanelPreviousSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        searchPredictionListView.getSelectionModel().selectPrevious();
+    }
+    
+    @Subscribe
+    private void handleSearchPredictionPanelHideEvent(SearchPredictionPanelHideEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        searchPredictionListView.setVisible(false);
     }
 }

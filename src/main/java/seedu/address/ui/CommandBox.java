@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -10,8 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.*;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -25,20 +25,19 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
-    private SearchPredictionPanel searchPredictionPanel;
     
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-
+    private String searchPredictionSelectionText = "";
+    
     @FXML
     private TextField commandTextField;
 
     public CommandBox(Logic logic) {
         super(FXML);
+        registerAsAnEventHandler(this);
         this.logic = logic;
-        searchPredictionPanel = new SearchPredictionPanel();
         // calls textPredictionPanel#updatePredictionResults(newText) whenever there is a change to the text of the command box
         // then calls #setStyleToDefault()
         commandTextField.textProperty().addListener((observable, oldText, newText) -> {
@@ -54,16 +53,26 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
+        case PAGE_UP:
+            navigateToPreviousInput();
+            break;
+        case PAGE_DOWN:
+            navigateToNextInput();
+            break;
+        case TAB:
+            // As up, down, and tab buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
-            navigateToPreviousInput();
+            replaceText(searchPredictionSelectionText);
+            raise(new SearchPredictionPanelHideEvent());
+            break;
+        case UP:
+            keyEvent.consume();
+            raise(new SearchPredictionPanelPreviousSelectionEvent());
             break;
         case DOWN:
             keyEvent.consume();
-            navigateToNextInput();
+            raise(new SearchPredictionPanelNextSelectionEvent());
             break;
         default:
             // let JavaFx handle the keypress
@@ -158,4 +167,15 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    @Subscribe
+    private void handleSearchPredictionPanelSelectionChangedEvent(SearchPredictionPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        searchPredictionSelectionText = event.getCurrentSelection();
+    }
+
+    @Subscribe
+    private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        searchPredictionSelectionText = event.getCommandText();
+    }
 }
