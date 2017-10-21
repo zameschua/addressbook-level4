@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import com.google.common.eventbus.Subscribe;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,8 @@ import javafx.fxml.FXML;
 import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import static java.util.stream.Collectors.toCollection;
@@ -26,9 +29,13 @@ public class SearchPredictionPanel extends UiPart<Region> {
     private static final String FXML = "SearchPredictionPanel.fxml";
 
     private static ObservableList<String> searchPredictionResults;
-    private static ObservableList<String> SEARCH_PREDICTION_RESULTS_INITIAL = FXCollections.observableArrayList(
-            "help", "add", "list", "edit", "find", "delete", "select",
-            "history", "undo", "redo", "clear", "exit");
+    // tempPredictionResults used to store the results from filtering through SEARCH_PREDICTION_RESULTS_INITIAL
+    private ArrayList<String> tempPredictionResults;
+
+    private static final ArrayList<String> SEARCH_PREDICTION_RESULTS_INITIAL =
+            new ArrayList<String>( Arrays.asList(
+                    "help", "add", "list", "edit", "find", "delete", "select",
+                    "history", "undo", "redo", "clear", "exit"));
     
     @FXML
     private ListView<String> searchPredictionListView;
@@ -37,33 +44,33 @@ public class SearchPredictionPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
 
-        ObservableList<String> searchPredictionResults = SEARCH_PREDICTION_RESULTS_INITIAL;
+        searchPredictionListView.setVisible(false);
+        
+        tempPredictionResults = new ArrayList<String>();
+        searchPredictionResults = FXCollections.observableArrayList(tempPredictionResults);
         
         // Attach ObservableList to ListView
         searchPredictionListView.setItems(searchPredictionResults);
     }
 
     public void updatePredictionResults(String newText) {
-        searchPredictionResults = SEARCH_PREDICTION_RESULTS_INITIAL
+        // Set the prediction to be invisible if there is nothing typed in the Command Box
+        if (newText.equals("")) {
+            searchPredictionListView.setVisible(false);
+        } else {
+            searchPredictionListView.setVisible(true);
+        }
+        
+        searchPredictionResults.clear();
+        tempPredictionResults = SEARCH_PREDICTION_RESULTS_INITIAL
                 .stream()
                 .filter(p -> p.startsWith(newText))
-                .collect(toCollection(FXCollections::observableArrayList));
+                .collect(toCollection(ArrayList::new));
 
-        System.out.println(searchPredictionResults);
-        searchPredictionListView.refresh();
-        
-        // SETVISIBLE DOESN'T WORK YET
-        if (newText.equals("")) {
-            System.out.println("EMPTY");
-            searchPredictionListView.setVisible(false);
-
-        } else {
-            System.out.println("doens't seem empty");
-            searchPredictionListView.setVisible(true);
-            
-        }
+        searchPredictionResults.addAll(tempPredictionResults);
+        searchPredictionListView.setItems(searchPredictionResults);
     }
-
+    
     @Subscribe
     private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
