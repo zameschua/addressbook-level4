@@ -142,7 +142,8 @@ public class MainWindow extends UiPart<Region> {
         searchPredictionPanel = new SearchPredictionPanel();
         resultDisplayPlaceholder.getChildren().add(searchPredictionPanel.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
