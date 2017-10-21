@@ -2,12 +2,15 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.EventBus;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -39,7 +42,7 @@ public class CommandBox extends UiPart<Region> {
         // calls textPredictionPanel#updatePredictionResults(newText) whenever there is a change to the text of the command box
         // then calls #setStyleToDefault()
         commandTextField.textProperty().addListener((observable, oldText, newText) -> {
-            searchPredictionPanel.updatePredictionResults(newText);
+            raise(new CommandBoxKeyInputEvent(newText));
             setStyleToDefault();
         });
         historySnapshot = logic.getHistorySnapshot();
