@@ -14,9 +14,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+Welcome, fellow software developer! We are extremely delighted to see you. The CYNC community
+prides itself on being a friendly and helpful community for new developers.
+If you ever face any issue or uncertainty in the instructions, feel free to send an email
+to pohjie@cync.com so that we can sort out the issues for you and following contributors.
+
 == Setting up
 
 === Prerequisites
+
+Before you get started, please ensure that you have the following software and Java development
+kit installed on your computer. As downloading and setting up *IntelliJ* may take up some time,
+feel free to jump ahead and read through the instructions to get a rough idea of this project.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -30,9 +41,16 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
+[NOTE]
+New to IntelliJ? We encourage you to head over to https://www.jetbrains.com/help/idea/meet-intellij-idea.html[IntelliJ IDEA 2017.2 Help] to fully
+understand the ins-and-outs of IntelliJ.
 
 
 === Setting up the project in your computer
+
+Now that you have both *JDK `1.8.0_60`* or later and *IntelliJ* installed, you are ready to
+set up the project.
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -48,12 +66,17 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
+To confirm that you've successfully set up the project, do take the time to ensure
+that your set up is correct and ready to run.
+
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
+Before you actually write any code, you want to make sure that you're following our coding standards
+so that whatever you've written can be easily understood by your peers.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -72,7 +95,7 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+You are encouraged to set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
@@ -81,19 +104,24 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Now that you've everything set up, you are ready to start coding! To help you along, we encourage you to
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
+. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
+This section aims to give you a broad overview of the purpose of various components and our
+motivation for designing it that way.
+
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+The *_Architecture Diagram_* given below (_Figure 3.1.1_) explains the high-level design of the App. Read on for a quick overview of each component.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture Diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -120,10 +148,10 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below, _Figure 3.1.2_) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +159,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +167,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -148,12 +176,14 @@ The sections below give more details of each component.
 
 === UI component
 
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+Refer to _Figure 3.2.1_ below to get a better visual overview of the UI component.
+
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
-
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -165,11 +195,17 @@ The `UI` component,
 
 === Logic component
 
+The Logic Component concerns itself primarily with processing of commands and giving the relevant output.
+You may wish to look at _Figure 3.3.1_ to gain a broad overview of the Logic component,
+followed by _Figure 3.3.2_ to better understand the implementation of Commands in the Logic Component.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+
+Below is a simple explanation of what happens when user enters a command.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -179,15 +215,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+In case you are still feeling lost, we have provided a Sequence Diagram (_Figure 3.3.3_) to illustrate interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
-
-image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -198,10 +231,12 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+Refer to _Figure 3.4.1_ below for an overview of the Model component.
 
-image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+image::ModelClassDiagram.png[width="800"]
+_Figure 3.4.1 : Structure of the Model Component_
+
+=== Storage component
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -209,6 +244,12 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+Refer to _Figure 3.5.1_ below for an overview of the Storage component.
+
+image::StorageClassDiagram.png[width="800"]
+_Figure 3.5.1 : Structure of the Storage Component_
+
 
 === Common classes
 
@@ -396,12 +437,12 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
+[TIP]
+It is recommended for you to test the software after every update you make.
+
 === Running Tests
 
-There are three ways to run tests.
-
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+We have three methods for you to run tests on the software.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
@@ -417,9 +458,12 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+[TIP]
+The most reliable way to run tests is this method. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. This allows you to do other things on the Computer while the tests are running.
+
+* To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
 === Types of tests
 
@@ -445,6 +489,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
+Here are a few things that you should take note of when making updates.
+
 === Build Automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
@@ -464,24 +510,29 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing.
+
+* Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
+a. Include those libraries in the repo (this bloats the repo size). +
+b. Require developers to download those libraries manually (this creates extra work for developers).
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested Starting Point
 
-Suggested path for new programmers:
+Here is a suggested path for new developers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+1. Add small link:#local-impact-enhancements[local-impact enhancements] to one component at a time. +
+Learning Outcome: To understand how each component functions. +
+Some enhancements suggestions are given in this section link:#improving-each-component[Improving each Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+2. Add a feature that touches multiple components. +
+ Learning Outcome: To learn how to implement an end-to-end feature across all components. +
+ The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
+Exercises in this section aims to help you understand the 4 major components of CYNC. Each exercise is component-based thus you would not need to modify the other components for it to function.
 
-[discrete]
 ==== `Logic` component
 
 [TIP]
@@ -498,7 +549,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Model` component
 
 [TIP]
@@ -515,7 +566,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Ui` component
 
 [TIP]
@@ -579,7 +630,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Storage` component
 
 [TIP]
@@ -612,8 +663,8 @@ Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
+===== [Step 1] Logic: Teach the app to accept 'remark'
+Let's start by teaching the application how to parse a `remark` command. The command will only function after adding the logic of `remark` later.
 
 **Main:**
 
@@ -715,23 +766,30 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == User Stories
+Here are the user stories that describes different types of CYNC users and their requirements.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="20%,<23%,<25%,<35%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | link:#customer-manager[Customer Manager] using the app for the first time |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |Customer Manager |add a new customer | store their data in my database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Customer Manager |delete a customer |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Customer Manager |find a customer by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+| `* * *` | Customer Manager | edit information | update customer's information when they have changes.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+| `* * *` | Customer Manager | list all my customers | get a list of all my customers
+
+| `* * *` | Customer Manager who cannot remember commands correctly | have an link:#auto-complete[auto-complete] feature while typing commands | be more efficient by reducing the time required to recall the whole command
+
+|`* *` |Customer Manager |hide customers' link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |Customer Manager |sort customers by name |locate a customer easily
 |=======================================================================
 
 {More to be added}
@@ -739,17 +797,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+Here are use cases that show the various interactions between users and CYNC.
 
-[discrete]
-=== Use case: Delete person
+=== Delete Customer
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Customer Manager requests to list customers
+2.  CYNC shows a list of customers
+3.  Customers Manager requests to delete a specific customer in the list
+4.  CYNC prompts confirmation of deleting customer.
+5.  CYNC deletes the customer.
+6.  CYNC notifies Customer Manager that deletion is successful
 +
 Use case ends.
 
@@ -763,18 +822,55 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CYNC shows an error message.
 +
 Use case resumes at step 2.
+
+* 4a. Deletion not successful
++
+[none]
+** 4a1. CYNC shows an error messages
++
+Use case resumes at step 2
+
+=== Edit Customer's details
+
+*MSS*
+
+1. Customer Manager requests to edit customer
+2. CYNC lists out the current details of the customer
+3. Customer Manager requests to edit specific fields with new data
+4. CYNC updates the details
++
+Use case resumes at step 2.
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. Customer does not exist.
++
+[none]
+** 2a1. CYNC shows the requested customer does not exist.
++
+Use case ends.
 
 {More to be added}
 
 [appendix]
 == Non Functional Requirements
+Here are the Non Functional Requirements that CYNC follows:
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should respond within 2 seconds.
+*  Should be open source so that other developers can contribute.
+*  Should automatically backup the customers’ information in the case that the user loses his/her data.
+*  Should show a loading spinner while loading.
+*  Should be aesthetically clean so that user does not feel overwhelmed.
+*  Should be free for users.
 
 {More to be added}
 
@@ -795,19 +891,49 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[local-impact-enhancements]]
+Local-impact enhancements
+....
+The impact of the change does not go beyond the component
+....
+
+[[customer-manager]]
+Customer Manager
+....
+A person working at a small business that uses CYNC
+....
+
+[[auto-complete]]
+Auto-complete
+....
+A dropdown toolbar that suggests words that the user may be typing as they type
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+Products that are similar to CYNC:
 
-Author: ...
+* *Microsoft Outlook Customer Manager*
++
+Author: Microsoft
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Tracking of customer requests | Manages customers’ requests individually
+| Clean interface | Pay-to-use software
+| An overview of To-dos on main page |
+|=======================================================================
 
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+* *Salesforce CRM*
++
+Author: Salesforce
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Sales management | Tons of features, easy to overwhelm client
+| Marketing automation | Not free, additional cost for businesses
+| Partner relationship management |
+|=======================================================================
