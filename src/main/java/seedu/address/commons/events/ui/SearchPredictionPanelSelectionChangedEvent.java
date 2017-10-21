@@ -2,11 +2,14 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+/**
+ * Indicates a change in selection of the SearchPredictionPanel
+ */
 public class SearchPredictionPanelSelectionChangedEvent extends BaseEvent {
 
     private String currentSelection;
 
-    public SearchPredictionPanelSelectionChangedEvent(String currentSelection){
+    public SearchPredictionPanelSelectionChangedEvent(String currentSelection) {
         this.currentSelection = currentSelection;
     }
 

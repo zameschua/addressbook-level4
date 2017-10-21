@@ -2,16 +2,22 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.*;
+
+import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelHideEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelNextSelectionEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelPreviousSelectionEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelSelectionChangedEvent;
+
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -25,12 +31,12 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    
+
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
     private String searchPredictionSelectionText = "";
-    
+
     @FXML
     private TextField commandTextField;
 
@@ -38,7 +44,8 @@ public class CommandBox extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
         this.logic = logic;
-        // calls textPredictionPanel#updatePredictionResults(newText) whenever there is a change to the text of the command box
+        // calls textPredictionPanel#updatePredictionResults(newText) whenever there is
+        // a change to the text of the command box
         // then calls #setStyleToDefault()
         commandTextField.textProperty().addListener((observable, oldText, newText) -> {
             raise(new CommandBoxKeyInputEvent(newText));

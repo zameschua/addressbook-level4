@@ -1,21 +1,25 @@
 package seedu.address.ui;
 
-import com.google.common.eventbus.Subscribe;
-import javafx.application.Platform;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import javafx.fxml.FXML;
-import seedu.address.commons.events.ui.*;
+import static java.util.stream.Collectors.toCollection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-import static java.util.stream.Collectors.toCollection;
+import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelHideEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelNextSelectionEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelPreviousSelectionEvent;
+import seedu.address.commons.events.ui.SearchPredictionPanelSelectionChangedEvent;
 
 /**
  * Panel containing search predictions
@@ -26,16 +30,15 @@ import static java.util.stream.Collectors.toCollection;
 public class SearchPredictionPanel extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(SearchPredictionPanel.class);
     private static final String FXML = "SearchPredictionPanel.fxml";
+    private static final ArrayList<String> SEARCH_PREDICTION_RESULTS_INITIAL =
+            new ArrayList<String>(Arrays.asList(
+                    "help", "add", "list", "edit", "find", "delete", "select",
+                    "history", "undo", "redo", "clear", "exit"));
 
     private static ObservableList<String> searchPredictionResults;
     // tempPredictionResults used to store the results from filtering through SEARCH_PREDICTION_RESULTS_INITIAL
     private ArrayList<String> tempPredictionResults;
 
-    private static final ArrayList<String> SEARCH_PREDICTION_RESULTS_INITIAL =
-            new ArrayList<String>( Arrays.asList(
-                    "help", "add", "list", "edit", "find", "delete", "select",
-                    "history", "undo", "redo", "clear", "exit"));
-    
     @FXML
     private ListView<String> searchPredictionListView;
 
@@ -44,22 +47,26 @@ public class SearchPredictionPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
         searchPredictionListView.setVisible(false);
-        
+
         tempPredictionResults = new ArrayList<String>();
         searchPredictionResults = FXCollections.observableArrayList(tempPredictionResults);
         // Attach ObservableList to ListView
         searchPredictionListView.setItems(searchPredictionResults);
-        
+
         setEventHandlerForSelectionChangeEvent();
     }
 
+    /**
+     * This method refreshes the SearchPredictionPanel with results that start with `newText`
+     * @param newText
+     */
     private void updatePredictionResults(String newText) {
         searchPredictionResults.clear();
         tempPredictionResults = SEARCH_PREDICTION_RESULTS_INITIAL
                 .stream()
                 .filter(p -> p.startsWith(newText))
                 .collect(toCollection(ArrayList::new));
-        
+
         searchPredictionResults.addAll(tempPredictionResults);
         searchPredictionListView.setItems(searchPredictionResults);
         searchPredictionListView.getSelectionModel().selectFirst();
@@ -82,7 +89,7 @@ public class SearchPredictionPanel extends UiPart<Region> {
                     }
                 });
     }
-    
+
     @Subscribe
     private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -101,7 +108,7 @@ public class SearchPredictionPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         searchPredictionListView.getSelectionModel().selectPrevious();
     }
-    
+
     @Subscribe
     private void handleSearchPredictionPanelHideEvent(SearchPredictionPanelHideEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
