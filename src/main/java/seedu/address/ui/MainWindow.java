@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -42,6 +43,8 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private SearchPredictionPanel searchPredictionPanel;
+    private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -135,6 +138,10 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
+        // Overlay SearchPredictionPanel over ResultDisplay
+        searchPredictionPanel = new SearchPredictionPanel();
+        resultDisplayPlaceholder.getChildren().add(searchPredictionPanel.getRoot());
+
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -208,6 +215,15 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    /**
+     * Opens the tag list panel
+     */
+    public void handleTagListPanel() {
+        tagListPanel = new TagListPanel(logic.getFilteredTagList());
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(tagListPanel.getRoot());
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -216,5 +232,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleTagListPanel();
     }
 }
