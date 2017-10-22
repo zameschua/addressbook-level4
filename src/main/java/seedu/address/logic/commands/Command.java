@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
@@ -26,6 +28,15 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
+        StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
+        mess.append("\n");
+        for (String email : emails) {
+            mess.append(email);
+            mess.append("\n");
+        }
+        return mess.toString();
+    }
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of all tags.
      *

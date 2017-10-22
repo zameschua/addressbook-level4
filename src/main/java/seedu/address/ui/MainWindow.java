@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -19,6 +20,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
+import seedu.address.commons.events.ui.MassEmailRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -42,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private EmailPanel emailPanel;
     private PersonListPanel personListPanel;
     private SearchPredictionPanel searchPredictionPanel;
     private TagListPanel tagListPanel;
@@ -200,6 +204,25 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Switch to the Email panel.
+     */
+    @FXML
+   public void handleEmail(ArrayList<String> emails) {
+        emailPanel = new EmailPanel(emails);
+        browserPlaceholder.getChildren().add(emailPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
+    }
+
+    /**
+     * Switch to the Browser panel.
+     */
+
+    @FXML
+    public void handleBrowser() {
+        browserPlaceholder.getChildren().setAll(browserPanel.getRoot());
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -236,6 +259,16 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleMassEmailEvent(MassEmailRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEmail(event.getEmailList());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        handleBrowser();
+    }
+
     private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleTagListPanel();
