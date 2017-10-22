@@ -60,12 +60,14 @@ allprojects {
     }
 
     dependencies {
+       
         compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
-        compile "com.google.guava:guava:$guavaVersion"
+        compile "com.google.guava:guava:$guavaVersion" 
+        compile fileTree(dir: 'src/main/resources/libs', include: ['*.jar'])
         //compile 'com.google.api-client:google-api-client:1.23.0'
         //compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
         //compile 'com.google.apis:google-api-services-gmail:v1-rev72-1.23.0'
@@ -127,7 +129,7 @@ tasks.coveralls {
 }
 
 class AddressBookTest extends Test {
-    public AddressBookTest() {
+    AddressBookTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -143,7 +145,7 @@ class AddressBookTest extends Test {
         }
     }
 
-    public void setHeadless() {
+    void setHeadless() {
         systemProperty 'java.awt.robot', 'true'
         systemProperty 'testfx.robot', 'glass'
         systemProperty 'testfx.headless', 'true'
