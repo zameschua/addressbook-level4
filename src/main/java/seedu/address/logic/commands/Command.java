@@ -1,12 +1,13 @@
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
-
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
@@ -34,6 +35,14 @@ public abstract class Command {
             mess.append("\n");
         }
         return mess.toString();
+    }
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of all tags.
+     *
+     * @return summary message for tags displayed
+     */
+    public static String getMessageForTagListShownSummary(ObservableList<Tag> allTags) {
+        return ListAllTagsCommand.MESSAGE_SUCCESS;
     }
     /**
      * Executes the command and returns the result message.
