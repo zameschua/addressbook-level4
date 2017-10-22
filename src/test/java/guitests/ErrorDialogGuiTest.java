@@ -19,7 +19,9 @@ public class ErrorDialogGuiTest extends AddressBookGuiTest {
 
     @Test
     public void showErrorDialogs() {
+        
         postLater(new DataSavingExceptionEvent(IO_EXCEPTION_STUB));
+        
 
         guiRobot.waitForEvent(() -> guiRobot.isWindowShown(FILE_OPS_ERROR_DIALOG_STAGE_TITLE));
 
