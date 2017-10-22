@@ -81,6 +81,9 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             raise(new SearchPredictionPanelNextSelectionEvent());
             break;
+        case ENTER:
+            raise(new SearchPredictionPanelHideEvent());
+            break;
         default:
             // let JavaFx handle the keypress
         }

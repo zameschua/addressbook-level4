@@ -2,7 +2,7 @@
     main-background-color: #E1E2E1;
     main-foreground-color: #F5F5F6;
     primary-text-color: #212121;
-    secondary-text-color: #424242;
+    secondary-text-color: #757575;
     primary-color: #81d4fa;
     accent-color: #4ba3c7;
 }
@@ -117,11 +117,6 @@
     -fx-background-color: derive(primary-color, 0%);
 }
 
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: main-background-color;
-    -fx-border-width: 0.5;
-}
-
 .list-cell .label {
     -fx-text-fill: secondary-text-color;
 }
@@ -154,9 +149,9 @@
 .result-display {
     -fx-background-color: main-foreground-color;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 15pt;
     -fx-text-fill: secondary-text-color;
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -35%), 10, 0, 2, 2);
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
 .result-display .label {
@@ -325,21 +320,24 @@
 #commandTextField {
     -fx-background-color: main-foreground-color;
     -fx-background-insets: 0;
-    -fx-background-radius: 18;
+    -fx-background-radius: 30;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 18pt;
     -fx-text-fill: primary-text-color;
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -35%), 10, 0, 2, 2);
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
+}
+#commandTextField:focused {
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -30%), 20, 0, 4, 4);
 }
 
 #filterField, #personListPanel, #personWebpage {
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -35%), 10, 0, 2, 2);
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
 #resultDisplay .content {
     -fx-background-color: main-foreground-color;
     -fx-background-radius: 0;
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -35%), 10, 0, 2, 2);
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
 #tags {
@@ -357,5 +355,10 @@
 }
 
 #person-list-panel {
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -35%), 10, 0, 2, 2);
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
+}
+
+#search-prediction-panel {
+    -fx-font-size: 20px;
+    -fx-font-family: "Segoe UI Light";
 }
