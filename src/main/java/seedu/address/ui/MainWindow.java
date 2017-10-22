@@ -19,9 +19,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -267,6 +267,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         handleBrowser();
+    }
 
     private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
