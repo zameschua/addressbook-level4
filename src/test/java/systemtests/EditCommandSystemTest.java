@@ -56,7 +56,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     public void edit() throws Exception {
         Model model = getModel();
 
-        /* ----------------- Performing edit operation while an unfiltered list is being shown --------------------- */
+        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> edited
