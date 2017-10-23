@@ -15,8 +15,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.*;
+import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
 
 /**
  * Panel containing command predictions
