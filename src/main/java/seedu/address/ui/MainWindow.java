@@ -43,7 +43,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
-    private SearchPredictionPanel searchPredictionPanel;
+    private CommandPredictionPanel commandPredictionPanel;
     private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -138,9 +138,9 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        // Overlay SearchPredictionPanel over ResultDisplay
-        searchPredictionPanel = new SearchPredictionPanel();
-        resultDisplayPlaceholder.getChildren().add(searchPredictionPanel.getRoot());
+        // Overlay CommandPredictionPanel over ResultDisplay
+        commandPredictionPanel = new CommandPredictionPanel();
+        resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
