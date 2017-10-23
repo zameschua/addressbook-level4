@@ -21,6 +21,7 @@ import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -91,6 +92,9 @@ public class AddressBookParser {
 
         case MassEmailCommand.COMMAND_WORD:
             return new MassEmailCommand();
+
+        case CalendarCommand.COMMAND_WORD:
+            return new CalendarCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
