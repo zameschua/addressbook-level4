@@ -26,7 +26,7 @@
 
   <StackPane fx:id="commandBoxPlaceholder" prefWidth="692.0" minHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets bottom="5" left="20" right="20" top="5" />
+      <Insets bottom="5" left="18" right="18" top="5" />
     </padding>
   </StackPane>
 
