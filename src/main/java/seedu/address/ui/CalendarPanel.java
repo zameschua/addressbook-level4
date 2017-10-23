@@ -21,12 +21,12 @@ public class CalendarPanel extends UiPart<Region> {
 
     public static final String CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=2103dummystudio%40gmail.com&ctz=Asia/Singapore";
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML = "CalendarPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private WebView browser;
+    private WebView calendar;
 
     public CalendarPanel() {
         super(FXML);
@@ -43,14 +43,14 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        Platform.runLater(() -> calendar.getEngine().load(url));
     }
 
     /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
-        browser = null;
+        calendar = null;
     }
 
     @Subscribe
