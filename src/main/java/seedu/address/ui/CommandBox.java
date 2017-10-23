@@ -12,11 +12,11 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.events.ui.SearchPredictionPanelHideEvent;
-import seedu.address.commons.events.ui.SearchPredictionPanelNextSelectionEvent;
-import seedu.address.commons.events.ui.SearchPredictionPanelPreviousSelectionEvent;
-import seedu.address.commons.events.ui.SearchPredictionPanelSelectionChangedEvent;
 
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -35,7 +35,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private String searchPredictionSelectionText = "";
+    private String commandPredictionSelectionText = "";
 
     @FXML
     private TextField commandTextField;
@@ -70,16 +70,19 @@ public class CommandBox extends UiPart<Region> {
             // As up, down, and tab buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-            replaceText(searchPredictionSelectionText);
-            raise(new SearchPredictionPanelHideEvent());
+            replaceText(commandPredictionSelectionText);
+            raise(new CommandPredictionPanelHideEvent());
             break;
         case UP:
             keyEvent.consume();
-            raise(new SearchPredictionPanelPreviousSelectionEvent());
+            raise(new CommandPredictionPanelPreviousSelectionEvent());
             break;
         case DOWN:
             keyEvent.consume();
-            raise(new SearchPredictionPanelNextSelectionEvent());
+            raise(new CommandPredictionPanelNextSelectionEvent());
+            break;
+        case ENTER:
+            raise(new CommandPredictionPanelHideEvent());
             break;
         default:
             // let JavaFx handle the keypress
@@ -175,14 +178,14 @@ public class CommandBox extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleSearchPredictionPanelSelectionChangedEvent(SearchPredictionPanelSelectionChangedEvent event) {
+    private void handleSearchPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        searchPredictionSelectionText = event.getCurrentSelection();
+        commandPredictionSelectionText = event.getCurrentSelection();
     }
 
     @Subscribe
     private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        searchPredictionSelectionText = event.getCommandText();
+        commandPredictionSelectionText = event.getCommandText();
     }
 }
