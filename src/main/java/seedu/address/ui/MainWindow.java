@@ -19,10 +19,12 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -43,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private PersonInfo personInfo;
     private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -219,6 +222,15 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(tagListPanel.getRoot());
     }
 
+    /**
+     * Loads the information of the person in the BrowserPanel position
+     * @param person
+     */
+    private void loadPersonInfo(ReadOnlyPerson person) {
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(personInfo.getRoot());
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -233,5 +245,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleTagListPanel();
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
     }
 }
