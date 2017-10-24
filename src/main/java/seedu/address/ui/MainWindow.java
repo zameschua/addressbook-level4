@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
@@ -46,8 +47,13 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private EmailPanel emailPanel;
+    private CalendarPanel calendarPanel;
     private PersonListPanel personListPanel;
-    private SearchPredictionPanel searchPredictionPanel;
+    private StatusBarFooter statusBarFooter;
+    private ResultDisplay resultDisplay;
+    private CommandBox commandBox;
+    private LoginPanel loginPanel;
+    private CommandPredictionPanel commandPredictionPanel;
     private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -130,27 +136,42 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Fills up all the placeholders of this window for login.
+     */
+    void fillLogin() {
+        loginPanel = new LoginPanel();
+        browserPanel = new BrowserPanel();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
+        resultDisplay = new ResultDisplay();
+        commandBox = new CommandBox(logic);
+        browserPlaceholder.getChildren().add(loginPanel.getRoot());
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        //browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        //ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        // Overlay SearchPredictionPanel over ResultDisplay
-        searchPredictionPanel = new SearchPredictionPanel();
-        resultDisplayPlaceholder.getChildren().add(searchPredictionPanel.getRoot());
+        // Overlay CommandPredictionPanel over ResultDisplay
+        commandPredictionPanel = new CommandPredictionPanel();
+        resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 logic.getFilteredPersonList().size());
+
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        //CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -215,6 +236,16 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Switch to the Email panel.
+     */
+    @FXML
+    public void handleCalendar() {
+        calendarPanel = new CalendarPanel();
+        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
+    }
+
+    /**
      * Switch to the Browser panel.
      */
 
@@ -250,6 +281,7 @@ public class MainWindow extends UiPart<Region> {
 
     void releaseResources() {
         browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe
@@ -262,6 +294,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
+    }
+
+    @Subscribe
+    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
     }
 
     @Subscribe

@@ -15,7 +15,7 @@ public class ListAllTagsCommand extends Command {
 
     public static final String COMMAND_WORD = "listalltags";
 
-    public static final String MESSAGE_SUCCESS = "All tags listed! They are: ";
+    public static final String MESSAGE_SUCCESS = "All tags listed!";
 
     @Override
     public CommandResult execute() throws CommandException {

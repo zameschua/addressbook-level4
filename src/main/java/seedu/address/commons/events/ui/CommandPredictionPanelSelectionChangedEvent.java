@@ -3,13 +3,13 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a change in selection of the SearchPredictionPanel
+ * Indicates a change in selection of the CommandPredictionPanel
  */
-public class SearchPredictionPanelSelectionChangedEvent extends BaseEvent {
+public class CommandPredictionPanelSelectionChangedEvent extends BaseEvent {
 
     private String currentSelection;
 
-    public SearchPredictionPanelSelectionChangedEvent(String currentSelection) {
+    public CommandPredictionPanelSelectionChangedEvent(String currentSelection) {
         this.currentSelection = currentSelection;
     }
 
