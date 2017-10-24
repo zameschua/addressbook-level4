@@ -25,7 +25,6 @@ import org.junit.ClassRule;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.MainWindowWithLoginHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;

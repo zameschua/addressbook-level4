@@ -11,14 +11,11 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.LoginHandle;
 import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.MainWindowWithLoginHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -39,7 +36,6 @@ public abstract class AddressBookGuiTest {
     protected Stage stage;
 
     protected MainWindowWithLoginHandle mainWindowHandle;
-    
 
     @BeforeClass
     public static void setupOnce() {

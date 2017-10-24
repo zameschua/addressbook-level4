@@ -2,6 +2,10 @@ package guitests.guihandles;
 
 import javafx.stage.Stage;
 
+/**
+ * Provides a handle to the main menu of the app.
+ */
+
 public class MainWindowWithLoginHandle extends StageHandle {
 
     private final PersonListPanelHandle personListPanel;

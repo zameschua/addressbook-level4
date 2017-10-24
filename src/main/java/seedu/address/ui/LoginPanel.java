@@ -43,11 +43,11 @@ public class LoginPanel extends UiPart<Region> {
 
     @FXML
     public void onEnter(ActionEvent ae) {
-    if(!emailBox.getText().equals("") && !passwordBox.getText().equals("")) {
-        EventsCenter.getInstance().post(new LoginRequestEvent());
-    }else{
-       loginText.setText("Please enter email and password");
-        logger.info("nothing entered");
+        if (!emailBox.getText().equals("") && !passwordBox.getText().equals("")) {
+            EventsCenter.getInstance().post(new LoginRequestEvent());
+        } else {
+            loginText.setText("Please enter email and password");
+            logger.info("nothing entered");
         }
     }
 }

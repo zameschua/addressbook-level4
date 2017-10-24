@@ -1,6 +1,5 @@
 package guitests.guihandles;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -24,7 +23,7 @@ public class MainWindowHandle extends StageHandle {
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
     }
-    
+
     public PersonListPanelHandle getPersonListPanel() {
         return personListPanel;
     }

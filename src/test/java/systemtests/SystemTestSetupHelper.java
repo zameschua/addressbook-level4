@@ -5,7 +5,6 @@ import java.util.concurrent.TimeoutException;
 import org.testfx.api.FxToolkit;
 
 import guitests.GuiRobot;
-import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.MainWindowWithLoginHandle;
 import seedu.address.TestApp;
 import seedu.address.testutil.TypicalPersons;
@@ -53,9 +52,9 @@ public class SystemTestSetupHelper {
                 mainWindowHandle = new MainWindowWithLoginHandle(stage);
                 mainWindowHandle.focus();
             });
-            
+
             FxToolkit.showStage();
-           
+
         } catch (TimeoutException te) {
             throw new AssertionError("Stage takes too long to set up.");
         }
