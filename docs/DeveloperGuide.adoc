@@ -405,6 +405,31 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== List All Tags mechanism
+
+The List All Tags mechanism is facilitated by the `EventsCenter`, in which it receives an event from `listalltags` command
+and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
+
+The `listalltags` command inherits the abstract `Command` class.
+
+Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
+
+image::CyncStartUp.png[width="800"]
+
+As we can see from the above diagram, the `BrowserPanel` is initially empty.
+
+The user decides to call the command `listalltags` so as to view all the tags that are currently in the application.
+Upon receiving the request, `EventsCenter` will then send a signal to the UI, specifically the `BrowserPanel`, to refresh and update with the Tag list.
+
+==== Design Considerations
+**Aspect:** Where the `Tag` list is displayed. +
+**Alternative 1 (current choice):** In the `BrowserPanel`. +
+**Pros:** User can see both the `Person` list and `Tag` list side by side, facilitating the sifting of information of his customers. +
+**Cons:** User loses functionality of the `BrowserPanel`, in which the user is unable to use the `BrowserPanel` to see the detailed information of his client. +
+**Alternative 2:** List the tags in the return message of the command, under the command box. +
+**Pros:** User retains functionality of `BrowserPanel`, whereby the user can still click on the person to find out more information. +
+**Cons:** This is less aesthetically pleasing. With many tags, it may be harder for the user to see the desired tag.
+
 == Documentation
 
 We use asciidoc for writing documentation.
