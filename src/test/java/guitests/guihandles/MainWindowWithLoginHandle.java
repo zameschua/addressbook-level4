@@ -1,6 +1,9 @@
 package guitests.guihandles;
 
+import guitests.guihandles.exceptions.NodeNotFoundException;
 import javafx.stage.Stage;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.LoginRequestEvent;
 
 /**
  * Provides a handle to the main menu of the app.
@@ -8,23 +11,33 @@ import javafx.stage.Stage;
 
 public class MainWindowWithLoginHandle extends StageHandle {
 
-    private final PersonListPanelHandle personListPanel;
-    private final ResultDisplayHandle resultDisplay;
-    private final CommandBoxHandle commandBox;
-    private final StatusBarFooterHandle statusBarFooter;
-    private final MainMenuHandle mainMenu;
-    private final BrowserPanelHandle browserPanel;
+    private PersonListPanelHandle personListPanel;
+    private ResultDisplayHandle resultDisplay;
+    private CommandBoxHandle commandBox;
+    private StatusBarFooterHandle statusBarFooter;
+    private MainMenuHandle mainMenu;
+    private BrowserPanelHandle browserPanel;
     private final LoginHandle loginPanel;
 
     public MainWindowWithLoginHandle(Stage stage) {
         super(stage);
         loginPanel = new LoginHandle(getChildNode(LoginHandle.LOGIN_DISPLAY_ID));
-        personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
-        resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
-        commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
-        statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
-        mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        try {
+            personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+            resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
+            commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
+            statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
+            mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
+            browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        } catch (NodeNotFoundException ne) {
+            EventsCenter.getInstance().post(new LoginRequestEvent()); //unlock for system test
+            personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+            resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
+            commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
+            statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
+            mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
+            browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        }
     }
 
     public PersonListPanelHandle getPersonListPanel() {
