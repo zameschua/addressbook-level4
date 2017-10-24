@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
@@ -46,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private EmailPanel emailPanel;
+    private CalendarPanel calendarPanel;
     private PersonListPanel personListPanel;
     private StatusBarFooter statusBarFooter;
     private ResultDisplay resultDisplay;
@@ -234,6 +236,16 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Switch to the Email panel.
+     */
+    @FXML
+    public void handleCalendar() {
+        calendarPanel = new CalendarPanel();
+        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
+    }
+
+    /**
      * Switch to the Browser panel.
      */
 
@@ -269,6 +281,7 @@ public class MainWindow extends UiPart<Region> {
 
     void releaseResources() {
         browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe
@@ -281,6 +294,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
+    }
+
+    @Subscribe
+    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
     }
 
     @Subscribe
