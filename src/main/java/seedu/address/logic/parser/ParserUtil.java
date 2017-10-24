@@ -12,7 +12,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.JoinDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -79,16 +78,6 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-
-    /**
-     * Parses a {@code Optional<String> joindate} into an {@code Optional<JoinDate>} if {@code joinDate} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<JoinDate> parseJoinDate(Optional<String> joindate) throws IllegalValueException {
-        requireNonNull(joindate);
-        return joindate.isPresent() ? Optional.of(new JoinDate(joindate.get())) : Optional.empty();
-    }
-
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
