@@ -17,8 +17,8 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=" +
-            "2103dummystudio%40gmail.com&ctz=Asia/Singapore";
+    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar/embed?src="
+            + "2103dummystudio%40gmail.com&ctz=Asia/Singapore";
 
     private static final String FXML = "CalendarPanel.fxml";
 
