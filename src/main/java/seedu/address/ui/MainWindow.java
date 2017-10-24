@@ -140,7 +140,7 @@ public class MainWindow extends UiPart<Region> {
         loginPanel = new LoginPanel();
         browserPanel = new BrowserPanel();
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
         resultDisplay = new ResultDisplay();
         commandBox = new CommandBox(logic);
         browserPlaceholder.getChildren().add(loginPanel.getRoot());
