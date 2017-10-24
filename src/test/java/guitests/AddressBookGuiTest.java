@@ -16,6 +16,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -54,7 +55,7 @@ public abstract class AddressBookGuiTest {
         });
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
-
+        //guiRobot.type(KeyCode.ENTER); 
         mainWindowHandle = new MainWindowHandle(stage);
         mainWindowHandle.focus();
     }

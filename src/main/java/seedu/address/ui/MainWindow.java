@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private LoginPanel loginPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -123,10 +124,19 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Fills up all the placeholders of this window for login.
+     */
+    void fillLogin() {
+        loginPanel = new LoginPanel();
+        browserPlaceholder.getChildren().add(loginPanel.getRoot());
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

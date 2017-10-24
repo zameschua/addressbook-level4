@@ -29,6 +29,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    
 
     public CommandBox(Logic logic) {
         super(FXML);
