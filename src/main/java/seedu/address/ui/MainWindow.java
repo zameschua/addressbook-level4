@@ -18,12 +18,12 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -220,7 +220,7 @@ public class MainWindow extends UiPart<Region> {
      * Switch to the Email panel.
      */
     @FXML
-    public void handleCalendar(){
+    public void handleCalendar() {
         calendarPanel = new CalendarPanel();
         browserPlaceholder.getChildren().add(calendarPanel.getRoot());
         browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
@@ -278,7 +278,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleCalendarRequestEvent(CalendarRequestEvent event){
+    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleCalendar();
     }

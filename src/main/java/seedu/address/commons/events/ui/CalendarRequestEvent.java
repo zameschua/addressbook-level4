@@ -8,7 +8,7 @@ import seedu.address.commons.events.BaseEvent;
 
 public class CalendarRequestEvent extends BaseEvent {
 
-    public CalendarRequestEvent(){
+    public CalendarRequestEvent() {
     ;
     }
 

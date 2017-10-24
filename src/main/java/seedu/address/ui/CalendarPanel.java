@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -10,7 +9,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
-import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarRequestEvent;
 
@@ -19,7 +17,8 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=2103dummystudio%40gmail.com&ctz=Asia/Singapore";
+    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=" +
+            "2103dummystudio%40gmail.com&ctz=Asia/Singapore";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -34,15 +33,15 @@ public class CalendarPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        loadCalendarPage();
+        loadDefaultCalendarPage();
         registerAsAnEventHandler(this);
     }
 
-    private void loadCalendarPage() {
-        loadPage(CALENDAR_URL);
+    private void loadDefaultCalendarPage() {
+        loadCalendarPage(DEFAULT_CALENDAR_URL);
     }
 
-    public void loadPage(String url) {
+    public void loadCalendarPage(String url) {
         Platform.runLater(() -> calendar.getEngine().load(url));
     }
 
@@ -56,7 +55,7 @@ public class CalendarPanel extends UiPart<Region> {
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadCalendarPage();
+        loadCalendarPage(event.toString()); //UPDATE THIS
     }
 
 }
