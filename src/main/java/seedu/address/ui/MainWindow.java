@@ -47,6 +47,10 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private EmailPanel emailPanel;
     private PersonListPanel personListPanel;
+    private StatusBarFooter statusBarFooter;
+    private ResultDisplay resultDisplay;
+    private CommandBox commandBox;
+    private LoginPanel loginPanel;
     private CommandPredictionPanel commandPredictionPanel;
     private TagListPanel tagListPanel;
     private Config config;
@@ -130,16 +134,30 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Fills up all the placeholders of this window for login.
+     */
+    void fillLogin() {
+        loginPanel = new LoginPanel();
+        browserPanel = new BrowserPanel();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
+        resultDisplay = new ResultDisplay();
+        commandBox = new CommandBox(logic);
+        browserPlaceholder.getChildren().add(loginPanel.getRoot());
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        //browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        //ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         // Overlay CommandPredictionPanel over ResultDisplay
@@ -148,9 +166,10 @@ public class MainWindow extends UiPart<Region> {
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 logic.getFilteredPersonList().size());
+
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        //CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
