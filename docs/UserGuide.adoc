@@ -171,18 +171,18 @@ Examples:
 * `mass` +
 Email to all customers in CYNC.
 * `mass OwesMoney` +
-Email to customers with tag OwesMoney 
+Email to customers with tag OwesMoney
 
-The UI should appear as such: 
+The UI should appear as such:
 
-image::email.png[width="790"]  
+image::email.png[width="790"]
 
-After composing your email, click send. 
+After composing your email, click send.
 
-[NOTE] 
+[NOTE]
 ====
 First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC. 
+send out emails through CYNC.
 ====
 
 // tag::undoredo[]
