@@ -65,6 +65,10 @@ Format: `help`
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
+****
+* For every person added, CYNC will automatically assign a Join Date based on the current date.
+****
+
 [TIP]
 A person can have any number of tags (including 0)
 
