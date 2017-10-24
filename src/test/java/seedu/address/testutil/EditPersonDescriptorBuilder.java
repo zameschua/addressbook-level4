@@ -32,7 +32,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setJoinDate(person.getJoinDate());
         descriptor.setTags(person.getTags());
     }
 
@@ -80,18 +79,6 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     *Sets the {@code JoinDate} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withJoinDate(String joindate) {
-        try {
-            ParserUtil.parseJoinDate(Optional.of(joindate)).ifPresent(descriptor::setJoinDate);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Join Date is expected to be unique.");
         }
         return this;
     }
