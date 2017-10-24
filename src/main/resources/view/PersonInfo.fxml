@@ -17,7 +17,9 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <Label text="Label" />
+       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
    </children>
 </GridPane>
