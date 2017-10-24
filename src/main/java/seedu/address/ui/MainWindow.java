@@ -128,6 +128,8 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillLogin() {
         loginPanel = new LoginPanel();
+        browserPanel = new BrowserPanel();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         browserPlaceholder.getChildren().add(loginPanel.getRoot());
     }
 

@@ -11,8 +11,10 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.LoginHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.MainWindowWithLoginHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -36,7 +38,8 @@ public abstract class AddressBookGuiTest {
 
     protected Stage stage;
 
-    protected MainWindowHandle mainWindowHandle;
+    protected MainWindowWithLoginHandle mainWindowHandle;
+    
 
     @BeforeClass
     public static void setupOnce() {
@@ -55,11 +58,9 @@ public abstract class AddressBookGuiTest {
         });
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
-        //guiRobot.type(KeyCode.ENTER); 
-        mainWindowHandle = new MainWindowHandle(stage);
+        mainWindowHandle = new MainWindowWithLoginHandle(stage);
         mainWindowHandle.focus();
     }
-
     /**
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}

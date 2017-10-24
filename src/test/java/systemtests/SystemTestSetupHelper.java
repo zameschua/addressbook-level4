@@ -6,7 +6,7 @@ import org.testfx.api.FxToolkit;
 
 import guitests.GuiRobot;
 import guitests.guihandles.MainWindowHandle;
-import javafx.scene.input.KeyCode;
+import guitests.guihandles.MainWindowWithLoginHandle;
 import seedu.address.TestApp;
 import seedu.address.testutil.TypicalPersons;
 
@@ -16,7 +16,7 @@ import seedu.address.testutil.TypicalPersons;
 public class SystemTestSetupHelper {
     protected GuiRobot guiRobot = new GuiRobot();
     private TestApp testApp;
-    private MainWindowHandle mainWindowHandle;
+    private MainWindowWithLoginHandle mainWindowHandle;
 
     /**
      * Sets up the {@code TestApp} and returns it.
@@ -47,12 +47,13 @@ public class SystemTestSetupHelper {
     /**
      * Encapsulates the stage initialized by {@code initializeStage} in a {@code MainWindowHandle} and returns it.
      */
-    public MainWindowHandle setupMainWindowHandle() {
+    public MainWindowWithLoginHandle setupMainWindowHandle() {
         try {
             FxToolkit.setupStage((stage) -> {
-                mainWindowHandle = new MainWindowHandle(stage);
+                mainWindowHandle = new MainWindowWithLoginHandle(stage);
                 mainWindowHandle.focus();
             });
+            
             FxToolkit.showStage();
            
         } catch (TimeoutException te) {
