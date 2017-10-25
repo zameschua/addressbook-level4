@@ -27,6 +27,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -49,6 +50,7 @@ public class MainWindow extends UiPart<Region> {
     private EmailPanel emailPanel;
     private CalendarPanel calendarPanel;
     private PersonListPanel personListPanel;
+    private PersonInfo personInfo;
     private StatusBarFooter statusBarFooter;
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
@@ -277,6 +279,15 @@ public class MainWindow extends UiPart<Region> {
         tagListPanel = new TagListPanel(logic.getFilteredTagList());
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(tagListPanel.getRoot());
+    }
+
+    /**
+     * Loads the information of the person in the BrowserPanel position
+     * @param person
+     */
+    private void loadPersonInfo(ReadOnlyPerson person) {
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(personInfo.getRoot());
     }
 
     void releaseResources() {
