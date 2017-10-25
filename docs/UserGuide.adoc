@@ -73,10 +73,17 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all people : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all people in the address book. +
 Format: `list`
+
+=== Listing all tags : `listalltags`
+
+Shows a list of all tags in the address book. +
+Format: `listalltags`
+
+Upon entering this command, you should see a window on the right side of the app showing all the tags.
 
 === Editing a person : `edit`
 
@@ -98,17 +105,19 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Search people by name / address / tags / email / phone: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds people whose names / address / tags / email / phone contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The full email address does not have to be keyed in e.g. `find johndo` will match with `johndoe@gmail.com` and return `John Doe`.
+* The full phone number does not have to be keyed in e.g. `9987` will match with `99876261`.
+* Can search multiple categories at the same time e.g. `find hans(name) friends(tag) serangoon(address)` will return people matching any keywords.
+* People matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -117,6 +126,12 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find friends` +
+Returns any person with the tag `friends`
+* `find serangoon` +
+Returns any person whose address contains `serangoon`
+* `find serangoon 99876261` +
+Returns any person whose address contains `serangoon` and whose phone number is `99876261`
 
 === Deleting a person : `delete`
 
@@ -166,6 +181,29 @@ Format: `history`
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+=== Mass Emailing : `mass`
+Allows user to customise and send out email to all customers or to specific tagged customers. +
+Format: `mass` or `mass KEYWORD` +
+
+Examples:
+
+* `mass` +
+Email to all customers in CYNC.
+* `mass OwesMoney` +
+Email to customers with tag OwesMoney
+
+The UI should appear as such:
+
+image::email.png[width="790"]
+
+After composing your email, click send.
+
+[NOTE]
+====
+First Time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
 ====
 
 // tag::undoredo[]
@@ -250,9 +288,12 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *List All Tags* : `listalltags`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Mass Emailing*: `mass` / `mass KEYWORD` +
+e.g `mass friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
