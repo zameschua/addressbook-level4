@@ -16,8 +16,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonInfo extends UiPart<Region> {
     private static final String FXML = "PersonInfo.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
     public final ReadOnlyPerson person;
+    private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
 
     @FXML
     private ImageView profilePic;
@@ -36,7 +36,7 @@ public class PersonInfo extends UiPart<Region> {
         super(FXML);
         this.person = person;
         profilePic.setImage(new Image(
-                "https://vignette.wikia.nocookie.net/disney/images/f/f6/MickeyArt.jpg/revision/latest/scale-to-width-down/250?cb=20130705054827"));
+                "https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png"));
         name.setText(person.getName().toString());
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
