@@ -322,5 +322,4 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleTagListPanel();
     }
-    
 }
