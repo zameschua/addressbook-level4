@@ -185,8 +185,7 @@ public abstract class AddressBookSystemTest {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
+            expectedUrl = new URL("http://thecollegedorm.com/detailed-information-cs2103t/");
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
