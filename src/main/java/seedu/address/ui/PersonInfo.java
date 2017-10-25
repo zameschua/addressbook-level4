@@ -21,22 +21,17 @@ public class PersonInfo extends UiPart<Region> {
 
     @FXML
     private ImageView profilePic;
-
     @FXML
     private Label name;
-
     @FXML
     private Label address;
-
     @FXML
     private Label phone;
-
     @FXML
     private Label email;
-
     @FXML
     private ImageView attendance;
-    
+
     public PersonInfo (ReadOnlyPerson person) {
         super(FXML);
         this.person = person;
