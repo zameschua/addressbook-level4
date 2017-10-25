@@ -173,6 +173,9 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+Do note that when you select a person, the person's detailed information will appear to the right of the Person List.
+However, as we are connecting to a webpage to display the information, you may need to wait for up to 3 seconds for the information to load.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
