@@ -28,14 +28,25 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    /**
+     * Constructs a feedback message to summarise an operation for mass emailing
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for persons displayed
+     */
+
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
-        StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
-        mess.append("\n");
-        for (String email : emails) {
-            mess.append(email);
+        if(displaySize != 0) {
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
             mess.append("\n");
+            for (String email : emails) {
+                mess.append(email);
+                mess.append("\n");
+            }
+            return mess.toString();
+        }else {
+            return "0 persons found";
         }
-        return mess.toString();
     }
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of all tags.
