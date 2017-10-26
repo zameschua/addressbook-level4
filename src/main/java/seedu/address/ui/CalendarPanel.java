@@ -17,8 +17,7 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar/embed?src="
-            + "2103dummystudio%40gmail.com&ctz=Asia/Singapore";
+    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -28,6 +27,7 @@ public class CalendarPanel extends UiPart<Region> {
     private WebView calendar;
 
     public CalendarPanel() {
+
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
@@ -35,6 +35,7 @@ public class CalendarPanel extends UiPart<Region> {
 
         loadDefaultCalendarPage();
         registerAsAnEventHandler(this);
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 
     private void loadDefaultCalendarPage() {

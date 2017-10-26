@@ -143,6 +143,7 @@ public class MainWindow extends UiPart<Region> {
     void fillLogin() {
         loginPanel = new LoginPanel();
         browserPanel = new BrowserPanel();
+        calendarPanel = new CalendarPanel();
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
         resultDisplay = new ResultDisplay();
@@ -156,7 +157,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         //browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().clear();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
