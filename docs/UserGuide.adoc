@@ -185,11 +185,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 === Mass Emailing : `mass`
 Allows user to customise and send out email to all customers or to specific tagged customers. +
-Format: `mass` or `mass KEYWORD` +
+Format: `mass all` or `mass KEYWORD` +
 
 Examples:
 
-* `mass` +
+* `mass all` +
 Email to all customers in CYNC.
 * `mass OwesMoney` +
 Email to customers with tag OwesMoney
