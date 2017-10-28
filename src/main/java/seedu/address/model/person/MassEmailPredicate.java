@@ -22,7 +22,7 @@ public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        if(keytags.size()== 1 && keytags.contains("all")) { 
+        if (keytags.size() == 1 && keytags.contains("all")) {
             return true;
         }
         Set<Tag> tags = person.getTags();

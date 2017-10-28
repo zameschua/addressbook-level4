@@ -35,34 +35,24 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendEmailRequestEvent;
 
 
-/** call gmail API */
+/** call gmail API * */
 
-public class CallGmailApi extends externalClass {
-    
-    public CallGmailApi(){
-        registerAsAnEventHandler(this);
-    }
+public class CallGmailApi extends ExternalCall {
 
     private static final Logger logger = LogsCenter.getLogger(CallGmailApi.class);
-
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Gmail API Java Quickstart";
-
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/gmail-java-quickstart");
-
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory dataStoryFactory;
-
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
-
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
-
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
@@ -79,6 +69,9 @@ public class CallGmailApi extends externalClass {
             t.printStackTrace();
             System.exit(1);
         }
+    }
+    public CallGmailApi() {
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -117,27 +110,6 @@ public class CallGmailApi extends externalClass {
         return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-    }
-
-    @Subscribe
-    public void handleSendEmailRequestEvent(SendEmailRequestEvent event) throws IOException, MessagingException {
-        // Build a new authorized API client service.
-        try {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        logger.info("HI HERE");
-        Gmail service = getGmailService();
-        String user = "me";
-        String[] recipients = event.getRecipients();
-        for (String s : recipients) {
-            MimeMessage email = createEmail(s, user, event.getSubject(), event.getMessage());
-            sendMessage(service, user, email);
-            logger.info("EMAIL SENT");
-        }
-        }catch (IOException e) {
-            logger.info("Io");
-        }catch (MessagingException d) {
-            logger.info("mess");
-        }
     }
 
     /**
@@ -206,5 +178,24 @@ public class CallGmailApi extends externalClass {
         Message message = new Message();
         message.setRaw(encodedEmail);
         return message;
+    }
+    @Subscribe
+    public void handleSendEmailRequestEvent(SendEmailRequestEvent event) throws IOException, MessagingException {
+        // Build a new authorized API client service.
+        try {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            Gmail service = getGmailService();
+            String user = "me";
+            String[] recipients = event.getRecipients();
+            for (String s : recipients) {
+                MimeMessage email = createEmail(s, user, event.getSubject(), event.getMessage());
+                sendMessage(service, user, email);
+                logger.info("EMAIL SENT");
+            }
+        } catch (IOException e) {
+            logger.info("Io");
+        } catch (MessagingException d) {
+            logger.info("mess");
+        }
     }
 }

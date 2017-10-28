@@ -19,7 +19,7 @@ public class MassEmailCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Listed all required emails";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": To email all persons with tag\n"
              + COMMAND_WORD + " all : To email everyone in CYNC\n"
-             + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"  
+             + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"
              + "Example: " + COMMAND_WORD + " Sec 2 Sec 3\n";
 
     private final MassEmailPredicate predicate;

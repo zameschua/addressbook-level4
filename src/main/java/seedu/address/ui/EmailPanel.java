@@ -1,10 +1,7 @@
 package seedu.address.ui;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
-import javax.mail.MessagingException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -66,11 +63,11 @@ public class EmailPanel extends UiPart<Region> {
     /**
      * Method posts SendEmailRequestEvent
      */
-    private void sendEmail(){
+    private void sendEmail() {
         String subject = emailSubjectBox.getText();
         String message = emailMessage.getText();
         String[] recipients = recipientsBox.getText().split(";");
         new CallGmailApi();
-        EventsCenter.getInstance().post(new SendEmailRequestEvent(subject,message,recipients));
-        }
+        EventsCenter.getInstance().post(new SendEmailRequestEvent(subject, message, recipients));
+    }
 }

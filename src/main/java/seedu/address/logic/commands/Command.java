@@ -36,7 +36,7 @@ public abstract class Command {
      */
 
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
-        if(displaySize != 0) {
+        if (displaySize != 0) {
             StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
             mess.append("\n");
             for (String email : emails) {
@@ -44,7 +44,7 @@ public abstract class Command {
                 mess.append("\n");
             }
             return mess.toString();
-        }else {
+        } else {
             return "0 persons found";
         }
     }

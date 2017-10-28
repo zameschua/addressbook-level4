@@ -7,16 +7,15 @@ import seedu.address.commons.events.BaseEvent;
  */
 
 public class SendEmailRequestEvent extends BaseEvent {
-    
-    private String subject; 
-    private String message; 
-    private String[] recipients; 
-    
-    public SendEmailRequestEvent(String subject, String message, String[] recipients){ 
-        this.subject = subject; 
-        this.message = message; 
-        this.recipients = recipients; 
-        
+
+    private String subject;
+    private String message;
+    private String[] recipients;
+
+    public SendEmailRequestEvent(String subject, String message, String[] recipients) {
+        this.subject = subject;
+        this.message = message;
+        this.recipients = recipients;
     }
 
     public String getSubject() {
