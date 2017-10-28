@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,7 +23,7 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com";
+    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=2103dummystudio%40gmail.com&ctz=Asia%2FSingapore";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -32,7 +38,6 @@ public class CalendarPanel extends UiPart<Region> {
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-
         loadDefaultCalendarPage();
         registerAsAnEventHandler(this);
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");

@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +11,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.events.model.CalendarAPI;
+import seedu.address.model.calendarEvent.CalendarEvent;
+import seedu.address.model.calendarEvent.ReadOnlyCalendarEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -123,6 +127,20 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
 
+    }
+
+    //// event-level operations
+
+    /**
+     * Adds a event to the calendar.
+     */
+    public void addEvent(ReadOnlyCalendarEvent event) {
+        CalendarEvent newEvent = new CalendarEvent(event);
+        try {
+            CalendarAPI.addEvent(newEvent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
