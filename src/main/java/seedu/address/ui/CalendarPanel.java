@@ -23,7 +23,7 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=2103dummystudio%40gmail.com&ctz=Asia%2FSingapore";
+    public static final String DEFAULT_CALENDAR_URL = "https://calendar.google.com/calendar";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -61,7 +61,7 @@ public class CalendarPanel extends UiPart<Region> {
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadCalendarPage(event.toString()); //UPDATE THIS
+        loadCalendarPage(DEFAULT_CALENDAR_URL); //UPDATE THIS
     }
 
 }

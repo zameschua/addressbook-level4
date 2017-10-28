@@ -149,13 +149,6 @@ public class CalendarAPI {
         System.out.printf("Event created: %s\n", event.getHtmlLink());
     }
 
-    public static void main(String[] args) throws IOException {
-        // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
-
-
-    }
 
 
 

@@ -13,7 +13,7 @@ public class EventStart {
 
     public static final String START_TIME_CONSTRAINTS =
             "Time can only contain numbers, and should be at least 3 digits long 2015-05-29T17:00:00-07:00";
-    public static final String TIME_VALIDATION_REGEX = "\\d{3,} | (?:) | (?-)";
+    public static final String TIME_VALIDATION_REGEX = "";
     public final String value;
 
     /**
@@ -24,9 +24,9 @@ public class EventStart {
     public EventStart(String time) throws IllegalValueException {
         requireNonNull(time);
         String trimmedTime = time.trim();
-        if (!isValidTime(trimmedTime)) {
+        /*if (!isValidTime(trimmedTime)) {
             throw new IllegalValueException(START_TIME_CONSTRAINTS);
-        }
+        }*/
         this.value = trimmedTime;
     }
 
