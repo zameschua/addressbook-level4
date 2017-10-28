@@ -48,6 +48,12 @@ public abstract class Command {
             return "0 persons found";
         }
     }
+
+    public static String getMessageForCalendar() {
+        StringBuilder mess = new StringBuilder(String.format(Messages.CALENDAR_MESSAGE));
+        mess.append("\n");
+        return mess.toString();
+    }
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of all tags.
      *
