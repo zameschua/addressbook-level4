@@ -1,5 +1,7 @@
 package seedu.address.external;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EMAIL_SUCCESS;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,8 +33,10 @@ import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 import com.google.common.eventbus.Subscribe;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendEmailRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 
 /** call gmail API * */
@@ -192,10 +196,11 @@ public class CallGmailApi extends ExternalCall {
                 sendMessage(service, user, email);
                 logger.info("EMAIL SENT");
             }
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
         } catch (IOException e) {
-            logger.info("Io");
+            logger.info("IO");
         } catch (MessagingException d) {
-            logger.info("mess");
+            logger.info("messageException");
         }
     }
 }
