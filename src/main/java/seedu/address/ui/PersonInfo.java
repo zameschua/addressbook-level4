@@ -24,9 +24,9 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Label address;
-    @FXML
     private Label phone;
+    @FXML
+    private Label address;
     @FXML
     private Label email;
     @FXML

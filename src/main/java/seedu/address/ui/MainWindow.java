@@ -286,6 +286,7 @@ public class MainWindow extends UiPart<Region> {
      * @param person
      */
     private void loadPersonInfo(ReadOnlyPerson person) {
+        personInfo = new PersonInfo(person);
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(personInfo.getRoot());
     }
@@ -315,9 +316,12 @@ public class MainWindow extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        handleBrowser();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+
     }
 
+    @Subscribe
     private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleTagListPanel();
