@@ -187,12 +187,25 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 === Mass Emailing : `mass`
-Allows user to customise and send out email to all customers or to specific tagged customers. +
-Format: `mass` or `mass KEYWORD` +
+Allows user to customise and send out emails to all customers or to specific tagged customers. +
+Format: `mass all` or `mass KEYWORD [MORE_KEYWORDS]` +
+
+****
+* The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
+* The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
+* Only full words will be matched e.g. `Friends` will not match `Friends`
+* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+****
+
+[NOTE]
+====
+First Time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
+====
 
 Examples:
 
-* `mass` +
+* `mass all` +
 Email to all customers in CYNC.
 * `mass OwesMoney` +
 Email to customers with tag OwesMoney
@@ -201,13 +214,13 @@ The UI should appear as such:
 
 image::email.png[width="790"]
 
-After composing your email, click send.
+[TIP]
+====
+It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+====
 
-[NOTE]
-====
-First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC.
-====
+After composing your email, click send. +
+CYNC will indicate if the emails are successfully sent.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -295,7 +308,7 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Mass Emailing*: `mass` / `mass KEYWORD` +
+* *Mass Emailing*: `mass all` / `mass KEYWORD [MORE_KEYWORDS]` +
 e.g `mass friends`
 * *History* : `history`
 * *Undo* : `undo`
