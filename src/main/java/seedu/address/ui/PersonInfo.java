@@ -10,7 +10,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
 /**
  * Panel containing the list of persons.
  */
@@ -36,13 +35,13 @@ public class PersonInfo extends UiPart<Region> {
         super(FXML);
         this.person = person;
         profilePic.setImage(new Image(
-                "https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png"));
+                "https://upload.wikimedia.org/wikipedia/commons/8/83/Sir_Arthur_Wellesley%2C_1st_Duke_of_Wellington.png"));
         name.setText(person.getName().toString());
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
         attendance.setImage(new Image(
-                "http://communityofhope.church/wp-content/uploads/2015/02/Next-Attendance-Graph.jpg"));
+                "https://upload.wikimedia.org/wikipedia/commons/0/05/Swingley_mpost_scorecard_black_pitchers_clean.png"));
     }
 
 }
