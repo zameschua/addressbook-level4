@@ -29,6 +29,8 @@ public class BrowserPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private PersonInfo personInfo;
+
     @FXML
     private WebView browser;
 
@@ -40,6 +42,15 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Loads the information of the person in the BrowserPanel position
+     * @param person
+     */
+    private void loadPersonInfo(ReadOnlyPerson person) {
+        personInfo = new PersonInfo(person);
+        personInfo.getRoot();
     }
 
     private void loadPersonPage(ReadOnlyPerson person) {
@@ -68,6 +79,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadPersonInfo(event.getNewSelection().person);
     }
 }

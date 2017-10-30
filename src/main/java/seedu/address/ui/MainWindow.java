@@ -281,16 +281,6 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(tagListPanel.getRoot());
     }
 
-    /**
-     * Loads the information of the person in the BrowserPanel position
-     * @param person
-     */
-    private void loadPersonInfo(ReadOnlyPerson person) {
-        personInfo = new PersonInfo(person);
-        browserPlaceholder.getChildren().clear();
-        browserPlaceholder.getChildren().add(personInfo.getRoot());
-    }
-
     void releaseResources() {
         browserPanel.freeResources();
         calendarPanel.freeResources();
@@ -312,13 +302,6 @@ public class MainWindow extends UiPart<Region> {
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleCalendar();
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonInfo(event.getNewSelection().person);
-
     }
 
     @Subscribe
