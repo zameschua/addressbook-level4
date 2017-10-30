@@ -318,7 +318,6 @@ public class MainWindow extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection().person);
-
     }
 
     @Subscribe
