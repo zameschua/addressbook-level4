@@ -40,6 +40,10 @@ public class MassEmailCommand extends Command {
         return new CommandResult(getMessageForMassEmail(allPerson.size(), emails));
     }
 
+    public MassEmailPredicate getPredicate() {
+        return predicate;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
