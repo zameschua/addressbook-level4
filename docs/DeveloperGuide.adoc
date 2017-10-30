@@ -416,19 +416,19 @@ Certain properties of the application can be controlled (e.g App name, logging l
 === Mass Emailing mechanism
 
 The Mass Emailing mechanism is facilitated by the `EventsCenter`, in which it receives an event from `MassEmail` command,
-and send the update to the UI to display the EmailPanel.Before a 'MassEmail' command is successfully called, it pass the command into 'MassEmailParser'. If the command is valid, 
+and send the update to the UI to display the EmailPanel.Before a 'MassEmail' command is successfully called, it pass the command into 'MassEmailParser'. If the command is valid,
 it will create a predicate and call the 'MassEmail' class.
 
 The `MassEmail` command inherits the abstract `Command` class and requires a `MassEmailPredicate` when constructed. +
 
 There are two types of mass emailing commands: +
-1. `mass all` : get everyone in CYNC and store their emails in an array. 
+1. `mass all` : get everyone in CYNC and store their emails in an array.
 
-2.`mass KEYWORD [MORE KEYWORDS]`: get all the required persons and store their emails in an array. 
+2.`mass KEYWORD [MORE KEYWORDS]`: get all the required persons and store their emails in an array.
 
 The email array will then be pass to UI to be displayed in the `To:` textbox. The PersonListPanel will also update to show all required Persons.
 
-Suppose that the user has just request for Mass Emailing. Then the set-up of the application will look like the picture below. 
+Suppose that the user has just request for Mass Emailing. Then the set-up of the application will look like the picture below.
 
 image::email.png[width="800"]
 
