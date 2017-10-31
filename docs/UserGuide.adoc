@@ -16,9 +16,14 @@ By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Welcome to CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. +
-Derived from the word " Sync ", CYNC aims to keep customers and businesses in sync. CYNC ensures that customers are businesses' main priority
-by storing customers' information and tracking their activities. CYNC also focuses on efficiency thus its
-Command Line Interface (CLI) allows users to add or retrieve customer's data quickly.
+'CYNC' was derived from the word " Sync ", and aims to keep customers and businesses in sync.
+
+The first 'C' in CYNC stands for the customer. This shows how much we value your customers and understand that it's
+a businesses' main priority. Hence, we store the customers' information safely and allow you to
+effectively monitor their activities.
+
+CYNC also places a large focuses on efficiency.
+It's Command Line Interface (CLI) allows users to add or retrieve customer's data quickly.
 
 == Getting Started
 
@@ -55,6 +60,29 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+=======
+=== Navigating the command predictions
+
+CYNC has a command prediction feature, which tries to predict the commands that you will type
+before you even finish typing it. This allows the user to save time on typing and focus on
+making their customers happy.
+
+While entering a command, if a command prediction is available, it will appear as a list
+below the input field, as shown in the image below.
+
+image::command-prediction-1.png[width="790"]
+_Figure 3.1 : The Command Prediction Panel_
+
+Use the `up` and `down` arrow keys to navigate up or down the list.
+
+image::command-prediction-2.png[width="790"]
+_Figure 3.2 : Pressing the `down` arrow key will navigate to the next command prediction_
+
+Use the `tab` key to select a prediction.
+The input field will immediately be updated to contain the text prediction!
+
+image::command-prediction-3.png[width="790"]
+_Figure 3.3 : Pressing the `tab` button will select the highlighted command prediction_
 
 === Viewing help : `help`
 
@@ -212,12 +240,25 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 === Mass Emailing : `mass`
-Allows user to customise and send out email to all customers or to specific tagged customers. +
-Format: `mass` or `mass KEYWORD` +
+Allows user to customise and send out emails to all customers or to specific tagged customers. +
+Format: `mass all` or `mass TAG [MORE_TAG]` +
+
+****
+* The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
+* The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
+* Only full words will be matched e.g. `Friends` will not match `Friends`
+* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+****
+
+[NOTE]
+====
+First Time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
+====
 
 Examples:
 
-* `mass` +
+* `mass all` +
 Email to all customers in CYNC.
 * `mass OwesMoney` +
 Email to customers with tag OwesMoney
@@ -226,13 +267,50 @@ The UI should appear as such:
 
 image::email.png[width="790"]
 
-After composing your email, click send.
+[TIP]
+====
+It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+====
 
+After composing your email, click send. +
+CYNC will indicate if the emails are successfully sent.
+
+=== Mass SMS : `sms`
+Allows user to customise and send out SMSses to all customers or to specific tagged customers. +
+Format: `sms all` or `sms TAG [MORE_TAGS]` +
+
+****
+* The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
+* The order of the tags does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
+* Only full words will be matched e.g. `Friends` will not match `Friends`
+* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+****
+
+// TODO: Show how to sign up on Twilio, and insert their phone numbers in the system
 [NOTE]
 ====
-First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC.
+The SMS Service uses Twilio's API, so make sure that  the phone number supplied has been verified on Twilio.
 ====
+
+Examples:
+
+* `sms all` +
+SMS to all customers in CYNC.
+* `sms OwesMoney` +
+SMS to customers with tag OwesMoney
+
+The UI should appear as such:
+
+// TODO: REPLACE IMAGE LATER AFTER FEATURE IS DONE
+image::email.png[width="790"]
+
+[TIP]
+====
+It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+====
+
+After composing your email, click send. +
+CYNC will indicate if the emails are successfully sent.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -320,7 +398,7 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Mass Emailing*: `mass` / `mass KEYWORD` +
+* *Mass Emailing*: `mass all` / `mass KEYWORD [MORE_KEYWORDS]` +
 e.g `mass friends`
 * *History* : `history`
 * *Undo* : `undo`

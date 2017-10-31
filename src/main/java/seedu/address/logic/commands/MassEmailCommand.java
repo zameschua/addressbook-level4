@@ -1,27 +1,36 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
 import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
+import seedu.address.model.person.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * List all emails in address book.
+ * Finds and lists all persons in address book whose tags keywords for group emailing
+ * Keyword matching is case-sensitive.
  */
 
 public class MassEmailCommand extends Command {
 
     public static final String COMMAND_WORD = "mass";
-    public static final String MESSAGE_SUCCESS = "Listed all emails";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all emails ";
+    public static final String MESSAGE_SUCCESS = "Listed all required emails";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": To email all persons with tag\n"
+             + COMMAND_WORD + " all : To email everyone in CYNC\n"
+             + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"
+             + "Example: " + COMMAND_WORD + " Sec 2 Sec 3\n";
+
+    private final MassEmailPredicate predicate;
+
+    public MassEmailCommand(MassEmailPredicate predicate) {
+        this.predicate = predicate;
+    }
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(predicate);
         ObservableList<ReadOnlyPerson> allPerson = model.getFilteredPersonList();
         ArrayList<String> emails = new ArrayList<String>();
         for (ReadOnlyPerson person : allPerson) {
@@ -29,5 +38,16 @@ public class MassEmailCommand extends Command {
         }
         EventsCenter.getInstance().post(new MassEmailRequestEvent(emails));
         return new CommandResult(getMessageForMassEmail(allPerson.size(), emails));
+    }
+
+    public MassEmailPredicate getPredicate() {
+        return predicate;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MassEmailCommand // instanceof handles nulls
+                && this.predicate.equals(((MassEmailCommand) other).predicate)); // state check
     }
 }
