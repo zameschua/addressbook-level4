@@ -10,5 +10,6 @@ public class Messages {
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_MASS_MESSAGING = "Would you like to email all %1$d persons listed?";
+    public static final String MESSAGE_EMAIL_SUCCESS = "Emails are sent successfully";
     public static final String CALENDAR_MESSAGE = "Calendar loaded!";
 }
