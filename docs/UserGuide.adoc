@@ -63,7 +63,7 @@ Format: `help`
 
 === Display Google Calendar: `calendar`
 
-To help you plan your schedule, we have integrated google calendar into the software. +
+To help you plan your schedule, we have integrated google calendar into the software +
 To open up google calendar in the browser panel, type `calendar` in the command box +
 Format: `calendar`
 
