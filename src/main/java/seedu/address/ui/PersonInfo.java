@@ -39,9 +39,7 @@ public class PersonInfo extends UiPart<Region> {
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
-        attendance.setImage(new Image(
-                "https://upload.wikimedia.org/wikipedia/commons"
-                        + "/0/05/Swingley_mpost_scorecard_black_pitchers_clean.png"));
+        attendance.setImage(new Image("/images/attendance.jpg"));
     }
 
 }
