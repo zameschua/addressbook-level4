@@ -35,14 +35,14 @@ public class CalendarApi {
             System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
+    private static HttpTransport httpTransport;
 
     /** Global instance of the scopes required by this quickstart.
      *
@@ -54,8 +54,8 @@ public class CalendarApi {
 
     static {
         try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -76,8 +76,8 @@ public class CalendarApi {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
+                        httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
+                        .setDataStoreFactory(dataStoreFactory)
                         .setAccessType("offline")
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
@@ -95,7 +95,7 @@ public class CalendarApi {
     public static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, credential)
+                httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
@@ -128,8 +128,5 @@ public class CalendarApi {
         String calendarId = "primary";
         event = service.events().insert(calendarId, event).execute();
     }
-
-
-
 
 }

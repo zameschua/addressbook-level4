@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
-
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
+
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
+
 
 
 /**
@@ -38,7 +40,7 @@ public class AddEventCommand extends Command {
         toAdd = new CalendarEvent(event);
     }
 
-
+    @Override
     public CommandResult execute() {
         requireNonNull(model);
         model.addEvent(toAdd);
