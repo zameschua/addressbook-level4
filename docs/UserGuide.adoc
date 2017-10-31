@@ -65,6 +65,13 @@ Format: `help`
 Opens up google calendar in the browser panel +
 Format: `calendar`
 
+[TIP]
+Instead of a calendar, a google login page will be shown every time the application is restarted. Login to proceed to the calendar.
+
+The UI should appear as such:
+
+image::Calendar.png[width="790"]
+
 === Adding a event to the calendar
 
 Adds an event to the google calendar linked +
