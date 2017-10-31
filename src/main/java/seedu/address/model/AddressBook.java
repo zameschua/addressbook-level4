@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.model.CalendarAPI;
+import seedu.address.commons.events.model.CalendarApi;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 import seedu.address.model.person.Person;
@@ -137,7 +137,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addEvent(ReadOnlyCalendarEvent event) {
         CalendarEvent newEvent = new CalendarEvent(event);
         try {
-            CalendarAPI.addEvent(newEvent);
+            CalendarApi.addEvent(newEvent);
         } catch (IOException e) {
             e.printStackTrace();
         }

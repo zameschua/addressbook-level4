@@ -15,15 +15,17 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
-import seedu.address.model.calendarevent.CalendarEvent;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-public class CalendarAPI {
+import seedu.address.model.calendarevent.CalendarEvent;
+
+/** Calls Calendar API **/
+
+public class CalendarApi {
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
@@ -56,7 +58,6 @@ public class CalendarAPI {
             DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
-            System.exit(1);
         }
     }
 
@@ -68,7 +69,7 @@ public class CalendarAPI {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                CalendarAPI.class.getResourceAsStream("/client_secret.json");
+                CalendarApi.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -91,8 +92,7 @@ public class CalendarAPI {
      * @return an authorized Calendar client service
      * @throws IOException
      */
-    public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
+    public static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -102,7 +102,6 @@ public class CalendarAPI {
 
     /**
      * Build and return an authorized Calendar client service.
-     * @return an authorized Calendar client service
      * @throws IOException
      */
     public static void addEvent(CalendarEvent eventSent) throws IOException {
@@ -126,28 +125,8 @@ public class CalendarAPI {
                 .setDateTime(endDateTime)
                 .setTimeZone("Singapore");
         event.setEnd(end);
-        // WIP
-        /*String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
-        event.setRecurrence(Arrays.asList(recurrence));
-
-        EventAttendee[] attendees = new EventAttendee[] {
-                new EventAttendee().setEmail("lpage@example.com"),
-                new EventAttendee().setEmail("sbrin@example.com"),
-        };
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = new EventReminder[] {
-                new EventReminder().setMethod("email").setMinutes(24 * 60),
-                new EventReminder().setMethod("popup").setMinutes(10),
-        };
-        Event.Reminders reminders = new Event.Reminders()
-                .setUseDefault(false)
-                .setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders); */
-
         String calendarId = "primary";
         event = service.events().insert(calendarId, event).execute();
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
     }
 
 
