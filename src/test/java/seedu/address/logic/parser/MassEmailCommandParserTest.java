@@ -11,6 +11,8 @@ import org.junit.Test;
 import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.model.person.MassEmailPredicate;
 
+//@@author ReneeSeet
+
 public class MassEmailCommandParserTest {
 
     private MassEmailParser parser = new MassEmailParser();

@@ -2,6 +2,8 @@ package seedu.address.commons.events.external;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author ReneeSeet
+
 /**
  * Indicates a request for Sending of Emails
  */
