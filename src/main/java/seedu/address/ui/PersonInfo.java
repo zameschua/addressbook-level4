@@ -34,9 +34,7 @@ public class PersonInfo extends UiPart<Region> {
     public PersonInfo (ReadOnlyPerson person) {
         super(FXML);
         this.person = person;
-        profilePic.setImage(new Image(
-                "https://upload.wikimedia.org/wikipedia/commons"
-                        + "/8/83/Sir_Arthur_Wellesley%2C_1st_Duke_of_Wellington.png"));
+        profilePic.setImage(new Image(person.getProfilePic().toString()));
         name.setText(person.getName().toString());
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
