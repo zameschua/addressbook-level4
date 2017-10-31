@@ -38,6 +38,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendEmailRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
+//@@author ReneeSeet
 
 /** call gmail API * */
 

@@ -19,6 +19,8 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Draft;
 import com.google.api.services.gmail.model.Message;
 
+//@@author ReneeSeet
+
 /**
  * This Class contains the different email creation methods.
  */

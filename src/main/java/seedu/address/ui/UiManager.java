@@ -120,6 +120,7 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    //@@author ReneeSeet
     @Subscribe
     private void handleLogin(LoginRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

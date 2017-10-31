@@ -8,6 +8,8 @@ import seedu.address.commons.events.ui.MassEmailRequestEvent;
 import seedu.address.model.person.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author ReneeSeet
+
 /**
  * Finds and lists all persons in address book whose tags keywords for group emailing
  * Keyword matching is case-sensitive.

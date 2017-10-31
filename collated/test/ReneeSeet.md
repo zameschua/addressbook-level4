@@ -1,20 +1,6 @@
-package seedu.address.logic.commands;
-
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.Arrays;
-
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.MassEmailPredicate;
-
-//@@author ReneeSeet
+# ReneeSeet
+###### \java\seedu\address\logic\commands\MassEmailCommandTest.java
+``` java
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for MassEmailCommand.
@@ -74,3 +60,29 @@ public class MassEmailCommandTest {
 
 
 }
+```
+###### \java\seedu\address\logic\parser\MassEmailCommandParserTest.java
+``` java
+
+public class MassEmailCommandParserTest {
+
+    private MassEmailParser parser = new MassEmailParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MassEmailCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsMassEmailCommand() {
+        // no leading and trailing whitespaces
+        MassEmailCommand expectedMassEmailCommand =
+                new MassEmailCommand(new MassEmailPredicate((Arrays.asList("friends", "OwesMoney"))));
+        assertParseSuccess(parser, "friends OwesMoney", expectedMassEmailCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n friends \n \t OwesMoney  \t", expectedMassEmailCommand);
+    }
+}
+```
