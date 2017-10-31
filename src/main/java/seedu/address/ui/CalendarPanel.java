@@ -1,11 +1,5 @@
 package seedu.address.ui;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -61,7 +55,7 @@ public class CalendarPanel extends UiPart<Region> {
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadCalendarPage(DEFAULT_CALENDAR_URL); //NOT USED YET
+        loadCalendarPage(DEFAULT_CALENDAR_URL);
     }
 
 }
