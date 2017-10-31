@@ -447,6 +447,7 @@ The `CommandPredictionPanel` then handles this event by finding the commands tha
 **Cons**: Can result in bugs if this list is not updated periodically +
 
 // TODO: Update in V1.5
+
 **Alternative 2** (to implement in V1.5): A `CommandManager` will keep track of all existing commands.
 The `CommandPredictionPanel` should update it's database automatically whenever a new command is added +
 **Pros**: More automation, less prone to bugs in the `CommandPredictionPanel`. The app also becomes more open to extension +

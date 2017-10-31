@@ -11,9 +11,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 
-import seedu.address.commons.events.ui.*;
 import seedu.address.commons.events.ui.CommandBoxContentsChangedEvent;
-
+import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
