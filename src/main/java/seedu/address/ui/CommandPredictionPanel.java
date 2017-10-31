@@ -15,7 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
+import seedu.address.commons.events.ui.CommandBoxContentsChangedEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
@@ -91,7 +91,7 @@ public class CommandPredictionPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
+    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updatePredictionResults(event.getCommandText());
     }

@@ -413,6 +413,45 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Command Prediction Mechanism
+
+The `CommandPredictionPanel` updates it's contents to show relevant command predictions to the user
+every time the user changes the content of the `CommandBox`. This is illustrated in the image below.
+
+image::command-prediction-1.png[width="800"]
+_Figure 4.4.1 : Screenshot of the Command Prediction Panel_
+
+The Command Prediction Mechanism's implementation is purely on the front-end,
+ie. it only interfaces with the UI component.
+
+Whenever the application detects a change in the contents of the `CommandBox`,
+it fires a `CommandBoxContentsChangedEvent` to the `EventsCenter`.
+This event is handled in the `CommandPredictionPanel`, which calls `updatePredictionPanel` internally
+and updates itself to show the new command predictions (if there are any command predictions).
+This is illustrated in the diagram below.
+
+// TODO: Check with tutor if diagram is acceptable
+image::command-prediction-panel-event-diagram.png[width="800"]
+_Figure 4.4.2 : Event Diagram of the Command Prediction Panel_
+
+==== Implementation
+
+Whenever the contents of the CommandBox is changed, it fires a `CommandBoxContentsChangedEvent`.
+The `CommandPredictionPanel` then handles this event by finding the commands that begin with the existing text in the Command Box.
+
+==== Design Considerations
+**Aspect**: The database of available command predictions should be open to extension +
+
+**Alternative 1 (Current implementation)**: Store all the available commands in a list to parse through +
+**Pros**: Simple to implement, reduces coupling between components +
+**Cons**: Can result in bugs if this list is not updated periodically +
+
+// TODO: Update in V1.5
+**Alternative 2** (to implement in V1.5): A `CommandManager` will keep track of all existing commands.
+The `CommandPredictionPanel` should update it's database automatically whenever a new command is added +
+**Pros**: More automation, less prone to bugs in the `CommandPredictionPanel`. The app also becomes more open to extension +
+**Cons**: This implementation is more coupled and may cause some bugs in `Command` if it is not handled carefully +
+
 === Mass Emailing mechanism
 
 The Mass Emailing mechanism is facilitated by the `EventsCenter`, in which it receives an event from `MassEmail` command,

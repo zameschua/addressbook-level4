@@ -11,12 +11,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 
-import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
-import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
-import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
-import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
-import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.*;
+import seedu.address.commons.events.ui.CommandBoxContentsChangedEvent;
 
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -48,7 +44,7 @@ public class CommandBox extends UiPart<Region> {
         // a change to the text of the command box
         // then calls #setStyleToDefault()
         commandTextField.textProperty().addListener((observable, oldText, newText) -> {
-            raise(new CommandBoxKeyInputEvent(newText));
+            raise(new CommandBoxContentsChangedEvent(newText));
             setStyleToDefault();
         });
         historySnapshot = logic.getHistorySnapshot();
@@ -184,7 +180,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
+    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionSelectionText = event.getCommandText();
     }

@@ -5,11 +5,11 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates change in the text of the CommandBox
  */
-public class CommandBoxKeyInputEvent extends BaseEvent {
+public class CommandBoxContentsChangedEvent extends BaseEvent {
 
     private String newCommandText;
 
-    public CommandBoxKeyInputEvent(String newCommandText) {
+    public CommandBoxContentsChangedEvent(String newCommandText) {
         this.newCommandText = newCommandText;
     }
 
