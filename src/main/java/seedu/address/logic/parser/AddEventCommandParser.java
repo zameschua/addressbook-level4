@@ -8,11 +8,11 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.EventEnd;
-import seedu.address.model.calendarEvent.EventName;
-import seedu.address.model.calendarEvent.EventStart;
-import seedu.address.model.calendarEvent.ReadOnlyCalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.EventEnd;
+import seedu.address.model.calendarevent.EventName;
+import seedu.address.model.calendarevent.EventStart;
+import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
 /**
  * Parses input arguments and creates a new AddEventCommand object

@@ -1,14 +1,14 @@
-package seedu.address.model.calendarEvent;
+package seedu.address.model.calendarevent;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents event start time.
- * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
+ * Represents time in the calendar.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
-public class EventStart {
+public class EventEnd {
 
 
     public static final String START_TIME_CONSTRAINTS =
@@ -21,19 +21,19 @@ public class EventStart {
      *
      * @throws IllegalValueException if given time string is invalid.
      */
-    public EventStart(String time) throws IllegalValueException {
+    public EventEnd(String time) throws IllegalValueException {
         requireNonNull(time);
-        String trimmedTime = time.trim();
-        /*if (!isValidTime(trimmedTime)) {
+        String trimmedPhone = time.trim();
+        /*if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(START_TIME_CONSTRAINTS);
         }*/
-        this.value = trimmedTime;
+        this.value = trimmedPhone;
     }
 
     /**
      * Returns true if a given string is a valid time.
      */
-    public static boolean isValidTime(String test) {
+    public static boolean isValidPhone(String test) {
         return test.matches(TIME_VALIDATION_REGEX);
     }
 

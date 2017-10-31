@@ -12,8 +12,8 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.model.CalendarAPI;
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.ReadOnlyCalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;

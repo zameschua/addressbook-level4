@@ -6,8 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END;
 
 
-import seedu.address.model.calendarEvent.CalendarEvent;
-import seedu.address.model.calendarEvent.ReadOnlyCalendarEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
 
 /**
