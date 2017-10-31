@@ -58,23 +58,26 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+If you need help with the usage of the software, type `help` in the command box to open up the guide +
 Format: `help`
 
-=== Display Google Calendar
+=== Display Google Calendar: `calendar`
 
-Opens up google calendar in the browser panel +
+To help you plan your schedule, we have integrated google calendar into the software. +
+To open up google calendar in the browser panel, type `calendar` in the command box +
 Format: `calendar`
 
 [TIP]
-Instead of a calendar, a google login page will be shown every time the application is restarted. Login to proceed to the calendar.
+Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
 
 The UI should appear as such:
 
 image::Calendar.png[width="790"]
 
-=== Adding a event to the calendar
+=== Adding a event to the calendar: `addEvent`
 
-Adds an event to the google calendar linked +
+To add an event to the google calendar linked, type the command `addEvent` in the command box. +
+The calendar shown should be updated automatically. +
 Format: `addEvent n/EVENT NAME s/START TIME((YYYY-MM-DD + T + HH:MM) e/END TIME(YYYY-MM-DD + T + HH:MM)`
 
 Examples:
@@ -128,6 +131,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Search people by details: `find`
 
+To help you filter out customers by their details, type `find` in the command box. +
 Finds people whose names / address / tags / email / phone contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
