@@ -105,7 +105,7 @@ public class AddCommandTest {
 
         @Override
         public void addEvent(ReadOnlyCalendarEvent event) {
-
+            fail("This method should not be called.");
         }
 
         @Override
