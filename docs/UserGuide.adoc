@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= CYNC - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W15-B2
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Welcome to CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. +
@@ -60,6 +60,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+=== Display Google Calendar
+
+Opens up google calendar in the browser panel +
+Format: `calendar`
+
+=== Adding a event to the calendar
+
+Adds an event to the google calendar linked +
+Format: `addEvent n/EVENT NAME s/START TIME((YYYY-MM-DD + T + HH:MM) e/END TIME(YYYY-MM-DD + T + HH:MM)`
+
+Examples:
+
+* `addEvent n/Halloween Party s/2017-10-30T17:00 e/2017-10-30T22:00`
+
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -105,7 +119,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Search people by name / address / tags / email / phone: `find`
+=== Search people by details: `find`
 
 Finds people whose names / address / tags / email / phone contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -131,7 +145,7 @@ Returns any person with the tag `friends`
 * `find serangoon` +
 Returns any person whose address contains `serangoon`
 * `find serangoon 99876261` +
-Returns any person whose address contains `serangoon` and whose phone number is `99876261`
+Returns any person either whose address contains `serangoon` or whose phone number is `99876261`
 
 === Deleting a person : `delete`
 
