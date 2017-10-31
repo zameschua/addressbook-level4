@@ -61,7 +61,7 @@ public class CalendarPanel extends UiPart<Region> {
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadCalendarPage(DEFAULT_CALENDAR_URL); //UPDATE THIS
+        loadCalendarPage(DEFAULT_CALENDAR_URL); //NOT USED YET
     }
 
 }

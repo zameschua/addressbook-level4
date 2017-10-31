@@ -24,8 +24,8 @@ public class AddEventCommand extends Command {
             + PREFIX_EVENT_END + "END DATE AND TIME "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_NAME + "Halloween Party "
-            + PREFIX_EVENT_START + "START DATE AND TIME "
-            + PREFIX_EVENT_END + "END DATE AND TIME ";
+            + PREFIX_EVENT_START + "2015-07-08T15:00 "
+            + PREFIX_EVENT_END + "2015-07-08T18:00 ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
 

@@ -29,7 +29,6 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final CallGmailApi calendar;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<Tag> filteredTags;
 
@@ -43,7 +42,6 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        this.calendar = new CallGmailApi();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTags = new FilteredList<>(this.addressBook.getTagList());
     }

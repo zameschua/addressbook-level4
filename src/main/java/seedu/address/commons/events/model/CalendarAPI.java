@@ -108,8 +108,8 @@ public class CalendarAPI {
         com.google.api.services.calendar.Calendar service =
                 getCalendarService();
         String nameSent = eventSent.getEventName().toString();
-        String startTime = eventSent.getStartTime().toString();
-        String endTime = eventSent.getEndTime().toString();
+        String startTime = eventSent.getStartTime().toString() + "+08:00";
+        String endTime = eventSent.getEndTime().toString() + "+08:00";
         Event event = new Event()
                 .setSummary(nameSent);
 
@@ -117,13 +117,13 @@ public class CalendarAPI {
         DateTime startDateTime = new DateTime(startTime);
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
-                .setTimeZone("America/Los_Angeles");
+                .setTimeZone("Singapore");
         event.setStart(start);
 
         DateTime endDateTime = new DateTime(endTime);
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
-                .setTimeZone("America/Los_Angeles");
+                .setTimeZone("Singapore");
         event.setEnd(end);
         // WIP
         /*String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
