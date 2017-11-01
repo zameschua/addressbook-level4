@@ -44,6 +44,7 @@ allprojects {
         monocleVersion = '1.8.0_20'
         checkstyleVersion = '8.1'
 
+
         libDir = 'lib'
     }
 

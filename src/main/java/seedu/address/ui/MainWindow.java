@@ -145,6 +145,7 @@ public class MainWindow extends UiPart<Region> {
     void fillLogin() {
         loginPanel = new LoginPanel();
         browserPanel = new BrowserPanel();
+        calendarPanel = new CalendarPanel();
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
         resultDisplay = new ResultDisplay();
@@ -227,7 +228,7 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
-
+    //@@author ReneeSeet
     /**
      * Switch to the Email panel.
      */
@@ -237,6 +238,7 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
     }
+    //@@author
 
     /**
      * Switch to the Calendar panel.
@@ -284,6 +286,7 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author pohjie
     /**
      * Opens the tag list panel
      */
@@ -298,9 +301,11 @@ public class MainWindow extends UiPart<Region> {
      * @param person
      */
     private void loadPersonInfo(ReadOnlyPerson person) {
+        personInfo = new PersonInfo(person);
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(personInfo.getRoot());
     }
+    //@@author
 
     void releaseResources() {
         browserPanel.freeResources();
@@ -313,11 +318,13 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author ReneeSeet
     @Subscribe
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
     }
+    //@@author
 
     @Subscribe
     private void handleSmsCommandEvent(SmsCommandRequestEvent event) {
@@ -331,11 +338,14 @@ public class MainWindow extends UiPart<Region> {
         handleCalendar();
     }
 
+    //@@author pohjie
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        handleBrowser();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
     }
 
+    @Subscribe
     private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleTagListPanel();

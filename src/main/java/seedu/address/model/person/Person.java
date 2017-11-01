@@ -22,8 +22,10 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    //@@author pohjie
+    private ProfilePicture profilePic;
+    private Attendance attendancePic;
 
     /**
      * Every field must be present and not null.
@@ -36,7 +38,10 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.profilePic = new ProfilePicture();
+        this.attendancePic = new Attendance();
     }
+    //@@author pohjie
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -121,6 +126,14 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
+
+    //@@author pohjie
+    @Override
+    public ProfilePicture getProfilePic() { return profilePic; }
+
+    @Override
+    public Attendance getAttendancePic() { return attendancePic; }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -15,6 +15,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendEmailRequestEvent;
 import seedu.address.external.CallGmailApi;
 
+//@@author ReneeSeet
+
 /**
  * The Email Panel of the App.
  */
