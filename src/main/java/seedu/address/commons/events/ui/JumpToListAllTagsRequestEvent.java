@@ -8,7 +8,6 @@ import seedu.address.commons.events.BaseEvent;
 
 public class JumpToListAllTagsRequestEvent extends BaseEvent {
 
-
     public JumpToListAllTagsRequestEvent () { }
 
     @Override

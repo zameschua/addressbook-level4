@@ -27,6 +27,8 @@ It's Command Line Interface (CLI) allows users to add or retrieve customer's dat
 
 == Getting Started
 
+// Preface here
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -35,10 +37,13 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
+// What is GUI?
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
+
+// Where is the command box?
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -51,6 +56,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+
+// Preface here
 
 ====
 *Command Format*
@@ -114,6 +121,8 @@ Examples:
 
 === Adding a person: `add`
 
+// "add a person" is too stiff- use "to add a contact to your address book"
+// special notes (another section) - elaborate what tag is- "if you want to sort users by groups"
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -122,6 +131,7 @@ A person can have any number of tags (including 0)
 
 Examples:
 
+// elaborate what does the n all these stand for?
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
@@ -135,17 +145,26 @@ Format: `list`
 Shows a list of all tags in the address book. +
 Format: `listalltags`
 
-Upon entering this command, you should see a window on the right side of the app showing all the tags.
+// Replace the "Shows a list of..." above with this line
+You can use this feature when you've forgotten some of the tags that you've added or if you want to check for duplicate tags.
+
+Upon entering this command, you should see the list of tags shown beside the Person List.
+
+This is illustrated by the diagram below.
+
+image::ListAllTagsFeature.png[width="790"]
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
+// What is "INDEX"? Where is it? What is an integer?
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+// Line below is not evident
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
@@ -211,8 +230,11 @@ Deletes the 1st person in the results of the `find` command.
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
+// Use this line to replace the first line
+If you wish to view more detailed information about a particular person (such as attendance and picture), you can use this command to do so.
+
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the detailed information for the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -226,11 +248,13 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-Do note that when you select a person, the person's detailed information will appear to the right of the Person List.
-However, as we are connecting to a webpage to display the information, you may need to wait for up to 3 seconds for the information to load.
+Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
+
+image::PersonDetailedInfo.png[width="790"]
 
 === Listing entered commands : `history`
 
+// Motivation for the features
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
@@ -315,6 +339,7 @@ CYNC will indicate if the emails are successfully sent.
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
+// Motivation
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
@@ -384,6 +409,8 @@ There is no need to save manually.
 
 == Command Summary
 
+// Preface
+// Put in a table
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
