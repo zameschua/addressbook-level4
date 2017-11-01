@@ -12,6 +12,7 @@ import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarRequestEvent;
 
+//@@author yilun-zhu
 /**
  * The Browser Panel of the App.
  */

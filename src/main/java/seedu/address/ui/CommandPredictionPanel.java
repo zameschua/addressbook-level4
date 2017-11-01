@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
 
+//@@author zameschua
 /**
  * Panel containing command predictions
  * It only shows when the user types something into the search box

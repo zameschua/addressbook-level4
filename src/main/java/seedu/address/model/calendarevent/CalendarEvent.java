@@ -8,6 +8,7 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+//@@author yilun-zhu
 /**
  * Represents a calendar event in the address book.
  * Guarantees: details are present and not null, field values are validated.

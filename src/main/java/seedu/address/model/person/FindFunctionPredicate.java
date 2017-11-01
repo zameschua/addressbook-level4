@@ -18,6 +18,7 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    //@@author yilun-zhu
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean name = keywords.stream()
