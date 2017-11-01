@@ -5,7 +5,7 @@ import java.util.concurrent.TimeoutException;
 import org.testfx.api.FxToolkit;
 
 import guitests.GuiRobot;
-import guitests.guihandles.MainWindowWithLoginHandle;
+import guitests.guihandles.MainWindowHandle;
 import seedu.address.TestApp;
 import seedu.address.testutil.TypicalPersons;
 
@@ -15,7 +15,7 @@ import seedu.address.testutil.TypicalPersons;
 public class SystemTestSetupHelper {
     protected GuiRobot guiRobot = new GuiRobot();
     private TestApp testApp;
-    private MainWindowWithLoginHandle mainWindowHandle;
+    private MainWindowHandle mainWindowHandle;
 
     /**
      * Sets up the {@code TestApp} and returns it.
@@ -46,10 +46,10 @@ public class SystemTestSetupHelper {
     /**
      * Encapsulates the stage initialized by {@code initializeStage} in a {@code MainWindowHandle} and returns it.
      */
-    public MainWindowWithLoginHandle setupMainWindowHandle() {
+    public MainWindowHandle setupMainWindowHandle() {
         try {
             FxToolkit.setupStage((stage) -> {
-                mainWindowHandle = new MainWindowWithLoginHandle(stage);
+                mainWindowHandle = new MainWindowHandle(stage);
                 mainWindowHandle.focus();
             });
 

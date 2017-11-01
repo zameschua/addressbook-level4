@@ -12,7 +12,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.MainWindowWithLoginHandle;
+import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -25,6 +25,7 @@ import seedu.address.testutil.TypicalPersons;
 /**
  * A GUI Test class for AddressBook.
  */
+
 public abstract class AddressBookGuiTest {
 
     /* The TestName Rule makes the current test name available inside test methods */
@@ -35,7 +36,7 @@ public abstract class AddressBookGuiTest {
 
     protected Stage stage;
 
-    protected MainWindowWithLoginHandle mainWindowHandle;
+    protected MainWindowHandle mainWindowHandle;
 
     @BeforeClass
     public static void setupOnce() {
@@ -54,7 +55,7 @@ public abstract class AddressBookGuiTest {
         });
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
-        mainWindowHandle = new MainWindowWithLoginHandle(stage);
+        mainWindowHandle = new MainWindowHandle(stage);
         mainWindowHandle.focus();
     }
     /**
