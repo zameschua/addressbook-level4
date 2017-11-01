@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<UniqueTagList> tags;
+    //@@author pohjie
     private ProfilePicture profilePic;
     private Attendance attendancePic;
 
@@ -40,6 +41,7 @@ public class Person implements ReadOnlyPerson {
         this.profilePic = new ProfilePicture();
         this.attendancePic = new Attendance();
     }
+    //@@author pohjie
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -125,11 +127,13 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author pohjie
     @Override
     public ProfilePicture getProfilePic() { return profilePic; }
 
     @Override
     public Attendance getAttendancePic() { return attendancePic; }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

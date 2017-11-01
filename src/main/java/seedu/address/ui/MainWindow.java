@@ -273,6 +273,7 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author pohjie
     /**
      * Opens the tag list panel
      */
@@ -291,6 +292,7 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(personInfo.getRoot());
     }
+    //@@author
 
     void releaseResources() {
         browserPanel.freeResources();
@@ -317,6 +319,7 @@ public class MainWindow extends UiPart<Region> {
         handleCalendar();
     }
 
+    //@@author pohjie
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
