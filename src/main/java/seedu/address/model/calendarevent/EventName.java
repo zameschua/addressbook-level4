@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author yilun-zhu
 /**
  * Represents a event name in the address book calendar.
  * Guarantees: immutable; is valid as declared in {@link #isValidEventName(String)}

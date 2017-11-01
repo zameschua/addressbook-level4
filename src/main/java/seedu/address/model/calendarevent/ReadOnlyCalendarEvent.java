@@ -2,6 +2,7 @@ package seedu.address.model.calendarevent;
 
 import javafx.beans.property.ObjectProperty;
 
+//@@author yilun-zhu
 /**
  * A read-only immutable interface for a Person in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
