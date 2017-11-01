@@ -25,8 +25,6 @@ public class SmsPanel extends UiPart<Region> {
     private static final String FXML = "SmsPanel.fxml";
     private static final Logger logger = LogsCenter.getLogger(SmsPanel.class);
 
-    private SmsManager smsManager;
-
     @FXML
     private TextField recipientsBox;
     @FXML
@@ -37,7 +35,9 @@ public class SmsPanel extends UiPart<Region> {
     public SmsPanel(ArrayList<String> phoneNumbersList) {
         super(FXML);
 
-        smsManager = SmsManager.getInstance();
+        // Init the smsManager
+        SmsManager.getInstance();
+
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

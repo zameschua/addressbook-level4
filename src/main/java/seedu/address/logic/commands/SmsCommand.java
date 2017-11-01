@@ -39,7 +39,7 @@ public class SmsCommand extends Command {
             phoneNumbers.add(person.getPhone().toString());
         }
         EventsCenter.getInstance().post(new SmsCommandRequestEvent(phoneNumbers));
-        return new CommandResult(getMessageForSms(allPerson.size(), phoneNumbers));
+        return new CommandResult(super.getMessageForSms(allPerson.size(), phoneNumbers));
     }
 
     // TODO: Change to something like tag matching predicate
