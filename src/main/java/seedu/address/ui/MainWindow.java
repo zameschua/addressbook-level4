@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,11 +18,16 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
+import seedu.address.commons.events.ui.MassEmailRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -41,7 +47,16 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private EmailPanel emailPanel;
+    private CalendarPanel calendarPanel;
     private PersonListPanel personListPanel;
+    private PersonInfo personInfo;
+    private StatusBarFooter statusBarFooter;
+    private ResultDisplay resultDisplay;
+    private CommandBox commandBox;
+    private LoginPanel loginPanel;
+    private CommandPredictionPanel commandPredictionPanel;
+    private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -123,6 +138,20 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Fills up all the placeholders of this window for login.
+     */
+    void fillLogin() {
+        loginPanel = new LoginPanel();
+        browserPanel = new BrowserPanel();
+        calendarPanel = new CalendarPanel();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
+        resultDisplay = new ResultDisplay();
+        commandBox = new CommandBox(logic);
+        browserPlaceholder.getChildren().add(loginPanel.getRoot());
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
@@ -135,7 +164,13 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        // Overlay CommandPredictionPanel over ResultDisplay
+        commandPredictionPanel = new CommandPredictionPanel();
+        resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
+
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
+
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -191,6 +226,36 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+    //@@author ReneeSeet
+    /**
+     * Switch to the Email panel.
+     */
+    @FXML
+   public void handleEmail(ArrayList<String> emails) {
+        emailPanel = new EmailPanel(emails);
+        browserPlaceholder.getChildren().add(emailPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
+    }
+    //@@author
+
+    /**
+     * Switch to the Calendar panel.
+     */
+    @FXML
+    public void handleCalendar() {
+        calendarPanel = new CalendarPanel();
+        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
+    }
+
+    /**
+     * Switch to the Browser panel.
+     */
+
+    @FXML
+    public void handleBrowser() {
+        browserPlaceholder.getChildren().setAll(browserPanel.getRoot());
+    }
 
     void show() {
         primaryStage.show();
@@ -208,13 +273,62 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author pohjie
+    /**
+     * Opens the tag list panel
+     */
+    public void handleTagListPanel() {
+        tagListPanel = new TagListPanel(logic.getFilteredTagList());
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(tagListPanel.getRoot());
+    }
+
+    /**
+     * Loads the information of the person in the BrowserPanel position
+     * @param person
+     */
+    private void loadPersonInfo(ReadOnlyPerson person) {
+        personInfo = new PersonInfo(person);
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(personInfo.getRoot());
+    }
+    //@@author
+
     void releaseResources() {
         browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author ReneeSeet
+    @Subscribe
+    private void handleMassEmailEvent(MassEmailRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEmail(event.getEmailList());
+    }
+    //@@author
+
+    @Subscribe
+    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
+    }
+
+    //@@author pohjie
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleTagListPanel();
     }
 }
