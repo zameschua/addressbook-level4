@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.tag.Tag;
 
+//@@author pohjie
 /**
  * An UI component that displays information of a {@code Tag}.
  */

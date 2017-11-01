@@ -72,8 +72,10 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        //@@author pohjie
         case ListAllTagsCommand.COMMAND_WORD:
             return new ListAllTagsCommand();
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();

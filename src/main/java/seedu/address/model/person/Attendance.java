@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author pohjie
 /**
  * Represents a Person's attendance in the address book.
  * Hardcoded now till further versions support actual implementation of attendance
