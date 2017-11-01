@@ -8,6 +8,8 @@ import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.MassEmailPredicate;
 
+//@@author ReneeSeet
+
 /**
  * Parses input arguments and creates a new MassEmailCommand object
  */

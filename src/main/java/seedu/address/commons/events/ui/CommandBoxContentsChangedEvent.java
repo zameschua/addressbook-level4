@@ -2,14 +2,15 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author zameschua
 /**
  * Indicates change in the text of the CommandBox
  */
-public class CommandBoxKeyInputEvent extends BaseEvent {
+public class CommandBoxContentsChangedEvent extends BaseEvent {
 
     private String newCommandText;
 
-    public CommandBoxKeyInputEvent(String newCommandText) {
+    public CommandBoxContentsChangedEvent(String newCommandText) {
         this.newCommandText = newCommandText;
     }
 

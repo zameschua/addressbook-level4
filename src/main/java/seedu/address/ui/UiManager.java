@@ -56,7 +56,7 @@ public class UiManager extends ComponentManager implements Ui {
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillLogin();
+            mainWindow.fillInnerParts();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
@@ -120,6 +120,7 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    //@@author ReneeSeet
     @Subscribe
     private void handleLogin(LoginRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -14,6 +14,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.MassEmailPredicate;
 
+//@@author ReneeSeet
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for MassEmailCommand.
  */
