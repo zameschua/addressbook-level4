@@ -39,7 +39,7 @@ public class PersonInfo extends UiPart<Region> {
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
-        attendance.setImage(new Image("/images/attendance.jpg"));
+        attendance.setImage(new Image(person.getAttendancePic().toString()));
     }
 
 }

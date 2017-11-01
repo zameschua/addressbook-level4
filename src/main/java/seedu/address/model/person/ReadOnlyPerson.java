@@ -22,6 +22,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     //ObjectProperty<ProfilePicture> profilePicProperty();
     ProfilePicture getProfilePic();
+    Attendance getAttendancePic();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
