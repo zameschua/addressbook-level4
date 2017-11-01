@@ -415,6 +415,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+== Features Implementation
 === Command Prediction Mechanism
 
 The `CommandPredictionPanel` updates it's contents to show relevant command predictions to the user
@@ -480,17 +481,15 @@ In the external component,it will authenticate the user's Gmail account before t
 
 === List All Tags mechanism
 
-// update the picture
-// Immediate sentence is too long
 // create another section
-The List All Tags mechanism is facilitated by the `EventsCenter`, in which it receives an event from `listalltags` command
+The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` receives an event from `listalltags` command
 and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
 
 The `listalltags` command inherits the abstract `Command` class.
 
 Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
 
-image::CyncStartUp.png[width="800"]
+image::CyncStartUpNew.png[width="800"]
 
 As we can see from the above diagram, the `BrowserPanel` is initially empty.
 
