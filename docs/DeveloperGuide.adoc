@@ -407,12 +407,12 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+== Features Implementation
+
 === List All Tags mechanism
 
-// update the picture
-// Immediate sentence is too long
 // create another section
-The List All Tags mechanism is facilitated by the `EventsCenter`, in which it receives an event from `listalltags` command
+The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` receives an event from `listalltags` command
 and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
 
 The `listalltags` command inherits the abstract `Command` class.
