@@ -1,22 +1,16 @@
-package seedu.address.external.smsService;
+package seedu.address.external.sms;
 
-import com.google.common.eventbus.Subscribe;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.external.SendSmsRequestEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
-import java.util.logging.Logger;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 /**
  * Helper class to handle the sending of SMS using Twilio API
  */
 public class TwilioApiHelper {
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     // I shouldn't be storing the Account SIDs here
     public static final String ACCOUNT_SID = "AC8e7d80947bd2e877013c66d99b0faa06";
     public static final String AUTH_TOKEN = "46abad64b64c0b29c468434ff69e36ca";
@@ -36,7 +30,6 @@ public class TwilioApiHelper {
 
         // TODO: Secure the from phone number properly
         Message.creator(new PhoneNumber(to), new PhoneNumber("+1 954-320-0045"), message).create();
-
         EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_SMS_SUCCESS));
     }
 

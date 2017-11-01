@@ -18,7 +18,13 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.*;
+import seedu.address.commons.events.ui.CalendarRequestEvent;
+import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
+import seedu.address.commons.events.ui.MassEmailRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SmsCommandRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -243,6 +249,10 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
     }
 
+    /**
+     * Switch to the SMS panel.
+     * @param phoneNumbers the list of phone numbers to pre-load into the SMS panel.
+     */
     @FXML
     public void handleSms(ArrayList<String> phoneNumbers) {
         smsPanel = new SmsPanel(phoneNumbers);

@@ -1,14 +1,9 @@
-package seedu.address.external.smsService;
+package seedu.address.external.sms;
 
-// Install the Java helper library from twilio.com/docs/java/install
 import com.google.common.eventbus.Subscribe;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.external.SendSmsRequestEvent;
-
-import java.util.ArrayList;
 
 /**
  * Follows Singleton and Facade design pattern,
