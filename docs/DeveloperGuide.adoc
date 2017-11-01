@@ -415,7 +415,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-<<<<<<< HEAD
 == Features Implementation
 =======
 === Command Prediction Mechanism
@@ -480,7 +479,6 @@ image::email.png[width="800"]
 As we can see from the above diagram, the `To:` textbox is filled with the required emails.
 When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
 In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
->>>>>>> 30b4f12af6d9af80eeaa12e0869f459e9aa14af0
 
 === List All Tags mechanism
 
