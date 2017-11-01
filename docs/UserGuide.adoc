@@ -90,11 +90,10 @@ Format: `list`
 
 === Listing all tags : `listalltags`
 
-Shows a list of all tags in the address book. +
+You can use this feature when you've forgotten some of the tags that you've added or if you want to check for duplicate tags. +
 Format: `listalltags`
 
 // Replace the "Shows a list of..." above with this line
-You can use this feature when you've forgotten some of the tags that you've added or if you want to check for duplicate tags.
 
 Upon entering this command, you should see the list of tags shown beside the Person List.
 
@@ -174,11 +173,8 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+If you wish to view more detailed information about a particular person (such as attendance and picture), you can use this command to do so. +
 Format: `select INDEX`
-
-// Use this line to replace the first line
-If you wish to view more detailed information about a particular person (such as attendance and picture), you can use this command to do so.
 
 ****
 * Selects the person and loads the detailed information for the person at the specified `INDEX`.
