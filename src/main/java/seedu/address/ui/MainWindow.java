@@ -226,7 +226,7 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
-
+    //@@author ReneeSeet
     /**
      * Switch to the Email panel.
      */
@@ -236,6 +236,7 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
     }
+    //@@author
 
     /**
      * Switch to the Email panel.
@@ -302,11 +303,13 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author ReneeSeet
     @Subscribe
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
     }
+    //@@author
 
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {

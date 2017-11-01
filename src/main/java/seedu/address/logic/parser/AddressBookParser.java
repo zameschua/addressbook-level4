@@ -91,7 +91,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case MassEmailCommand.COMMAND_WORD:
-            return new MassEmailCommand();
+            return new MassEmailParser().parse(arguments);
 
         case CalendarCommand.COMMAND_WORD:
             return new CalendarCommand();

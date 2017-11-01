@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B2
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -252,6 +252,14 @@ Refer to _Figure 3.5.1_ below for an overview of the Storage component.
 image::StorageClassDiagram.png[width="800"]
 _Figure 3.5.1 : Structure of the Storage Component_
 
+=== External component
+
+The `External` component,
+
+* consist of Gmail API : Authenticate user's Gmail and send out emails
+
+
+
 
 === Common classes
 
@@ -407,7 +415,72 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+<<<<<<< HEAD
 == Features Implementation
+=======
+=== Command Prediction Mechanism
+
+The `CommandPredictionPanel` updates it's contents to show relevant command predictions to the user
+every time the user changes the content of the `CommandBox`. This is illustrated in the image below.
+
+image::command-prediction-1.png[width="800"]
+_Figure 4.4.1 : Screenshot of the Command Prediction Panel_
+
+The Command Prediction Mechanism's implementation is purely on the front-end,
+ie. it only interfaces with the UI component.
+
+Whenever the application detects a change in the contents of the `CommandBox`,
+it fires a `CommandBoxContentsChangedEvent` to the `EventsCenter`.
+This event is handled in the `CommandPredictionPanel`, which calls `updatePredictionPanel` internally
+and updates itself to show the new command predictions (if there are any command predictions).
+This is illustrated in the diagram below.
+
+// TODO: Check with tutor if diagram is acceptable
+image::command-prediction-panel-event-diagram.png[width="800"]
+_Figure 4.4.2 : Event Diagram of the Command Prediction Panel_
+
+==== Implementation
+
+Whenever the contents of the CommandBox is changed, it fires a `CommandBoxContentsChangedEvent`.
+The `CommandPredictionPanel` then handles this event by finding the commands that begin with the existing text in the Command Box.
+
+==== Design Considerations
+**Aspect**: The database of available command predictions should be open to extension +
+
+**Alternative 1 (Current implementation)**: Store all the available commands in a list to parse through +
+**Pros**: Simple to implement, reduces coupling between components +
+**Cons**: Can result in bugs if this list is not updated periodically +
+
+// TODO: Update in V1.5
+
+**Alternative 2** (to implement in V1.5): A `CommandManager` will keep track of all existing commands.
+The `CommandPredictionPanel` should update it's database automatically whenever a new command is added +
+**Pros**: More automation, less prone to bugs in the `CommandPredictionPanel`. The app also becomes more open to extension +
+**Cons**: This implementation is more coupled and may cause some bugs in `Command` if it is not handled carefully +
+
+=== Mass Emailing mechanism
+
+The Mass Emailing mechanism is facilitated by the `EventsCenter`, in which it receives an event from `MassEmail` command,
+and send the update to the UI to display the EmailPanel.Before a 'MassEmail' command is successfully called, it pass the command into 'MassEmailParser'. If the command is valid,
+it will create a predicate and call the 'MassEmail' class.
+
+The `MassEmail` command inherits the abstract `Command` class and requires a `MassEmailPredicate` when constructed. +
+
+There are two types of mass emailing commands: +
+1. `mass all` : get everyone in CYNC and store their emails in an array.
+
+2.`mass KEYWORD [MORE KEYWORDS]`: get all the required persons and store their emails in an array.
+
+The email array will then be pass to UI to be displayed in the `To:` textbox. The PersonListPanel will also update to show all required Persons.
+
+Suppose that the user has just request for Mass Emailing. Then the set-up of the application will look like the picture below.
+
+image::email.png[width="800"]
+
+As we can see from the above diagram, the `To:` textbox is filled with the required emails.
+When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
+In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
+>>>>>>> 30b4f12af6d9af80eeaa12e0869f459e9aa14af0
 
 === List All Tags mechanism
 

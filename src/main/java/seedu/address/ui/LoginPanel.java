@@ -13,6 +13,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoginRequestEvent;
 
+//@@author ReneeSeet
+
 /**
  * The Login Panel of the App.
  */

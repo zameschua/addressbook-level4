@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author ReneeSeet
+
 /**
  * Indicates a request for MassEmailRequest
  */
