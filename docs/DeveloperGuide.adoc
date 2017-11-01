@@ -489,7 +489,7 @@ The `listalltags` command inherits the abstract `Command` class.
 
 Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
 
-image::CyncStartUp.png[width="800"]
+image::CyncStartUpNew.png[width="800"]
 
 As we can see from the above diagram, the `BrowserPanel` is initially empty.
 
