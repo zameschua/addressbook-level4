@@ -17,7 +17,7 @@ import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.TagPanelSelectionChangedEvent;
 import seedu.address.model.tag.Tag;
 
-
+//@@author pohjie
 /**
  * Panel containing the list of tags.
  */

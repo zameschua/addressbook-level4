@@ -10,7 +10,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
+//@@author pohjie
 /**
  * Panel containing the list of persons.
  */
@@ -24,9 +24,9 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Label address;
-    @FXML
     private Label phone;
+    @FXML
+    private Label address;
     @FXML
     private Label email;
     @FXML
@@ -35,14 +35,12 @@ public class PersonInfo extends UiPart<Region> {
     public PersonInfo (ReadOnlyPerson person) {
         super(FXML);
         this.person = person;
-        profilePic.setImage(new Image(
-                "https://upload.wikimedia.org/wikipedia/en/d/d4/Mickey_Mouse.png"));
+        profilePic.setImage(new Image(person.getProfilePic().toString()));
         name.setText(person.getName().toString());
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
-        attendance.setImage(new Image(
-                "http://communityofhope.church/wp-content/uploads/2015/02/Next-Attendance-Graph.jpg"));
+        attendance.setImage(new Image(person.getAttendancePic().toString()));
     }
 
 }

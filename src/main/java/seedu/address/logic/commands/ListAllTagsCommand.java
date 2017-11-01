@@ -8,6 +8,7 @@ import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 
+//@@author pohjie
 /**
  * List all tags that exist in software to user
  */
