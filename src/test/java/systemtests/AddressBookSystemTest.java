@@ -23,7 +23,7 @@ import org.junit.ClassRule;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.MainWindowWithLoginHandle;
+import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -49,7 +49,7 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
 
-    private MainWindowWithLoginHandle mainWindowHandle;
+    private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;
 
