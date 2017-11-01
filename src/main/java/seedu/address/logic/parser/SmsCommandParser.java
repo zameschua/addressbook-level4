@@ -1,20 +1,22 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Arrays;
+
 import seedu.address.logic.commands.SmsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.MassEmailPredicate;
 
-import java.util.Arrays;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
+/**
+ * Parses input arguments and creates a new SmsCommand object
+ */
 public class SmsCommandParser {
 
     /**
      * Parses the given {@code String} of arguments in the context of the SmsCommand
      * and returns an SmsCommand object for execution.
      */
-
     public SmsCommand parse(String args)throws ParseException {
         String trimmedArgs = args.trim();
 

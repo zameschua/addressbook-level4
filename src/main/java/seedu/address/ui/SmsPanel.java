@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendSmsRequestEvent;
-import seedu.address.external.smsService.SmsManager;
+import seedu.address.external.sms.SmsManager;
 
 /**
  * The Sms Panel of the App
