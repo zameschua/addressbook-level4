@@ -3,7 +3,6 @@ package seedu.address.ui;
 import static guitests.guihandles.WebViewUtil.waitUntilCalendarLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.ui.CalendarPanel.DEFAULT_CALENDAR_URL;
 
 import java.net.URL;
 
