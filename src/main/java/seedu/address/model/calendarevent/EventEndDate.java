@@ -13,8 +13,8 @@ public class EventEndDate {
 
 
     public static final String END_DATE_CONSTRAINTS =
-            "Date should be in the format YYYY-MM-DD. Eg. 2017-10-01";
-    public static final String DATE_VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
+            "Date should be in the format YYYY-MM-DD. Date should be valid. Eg. 2017-10-01";
+    public static final String DATE_VALIDATION_REGEX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
     public final String value;
 
     /**
