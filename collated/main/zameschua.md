@@ -1,4 +1,194 @@
-/* @@author zameschua */
+# zameschua
+###### \java\seedu\address\commons\events\ui\CommandBoxContentsChangedEvent.java
+``` java
+/**
+ * Indicates change in the text of the CommandBox
+ */
+public class CommandBoxContentsChangedEvent extends BaseEvent {
+
+    private String newCommandText;
+
+    public CommandBoxContentsChangedEvent(String newCommandText) {
+        this.newCommandText = newCommandText;
+    }
+
+    public String getCommandText() {
+        return newCommandText;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\CommandPredictionPanelHideEvent.java
+``` java
+/**
+ * Indicates a request to hide the CommandPredictionPanel
+ */
+public class CommandPredictionPanelHideEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\CommandPredictionPanelNextSelectionEvent.java
+``` java
+/**
+ * Indicates a request to go the next selection in the CommandPredictionPanel
+ */
+public class CommandPredictionPanelNextSelectionEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\CommandPredictionPanelPreviousSelectionEvent.java
+``` java
+/**
+ * Indicates a request to go the previous selection in the CommandPredictionPanel
+ */
+public class CommandPredictionPanelPreviousSelectionEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\CommandPredictionPanelSelectionChangedEvent.java
+``` java
+/**
+ * Indicates a change in selection of the CommandPredictionPanel
+ */
+public class CommandPredictionPanelSelectionChangedEvent extends BaseEvent {
+
+    private String currentSelection;
+
+    public CommandPredictionPanelSelectionChangedEvent(String currentSelection) {
+        this.currentSelection = currentSelection;
+    }
+
+    public String getCurrentSelection() {
+        return currentSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\ui\CommandPredictionPanel.java
+``` java
+/**
+ * Panel containing command predictions
+ * It only shows when the user types something into the search box
+ * And a command prediction is expected
+ * Kinda like Google's search prediction.
+ */
+public class CommandPredictionPanel extends UiPart<Region> {
+    private static final Logger logger = LogsCenter.getLogger(CommandPredictionPanel.class);
+    private static final String FXML = "CommandPredictionPanel.fxml";
+    private static final ArrayList<String> COMMAND_PREDICTION_RESULTS_INITIAL =
+            new ArrayList<String>(Arrays.asList(
+                    "help", "add", "list", "edit", "find", "delete", "select",
+                    "history", "undo", "redo", "clear", "exit"));
+
+    private static ObservableList<String> commandPredictionResults;
+    // tempPredictionResults used to store the results from filtering through COMMAND_PREDICTION_RESULTS_INITIAL
+    private ArrayList<String> tempPredictionResults;
+
+    @FXML
+    private ListView<String> commandPredictionListView;
+
+    public CommandPredictionPanel() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+
+        commandPredictionListView.setVisible(false);
+
+        tempPredictionResults = new ArrayList<String>();
+        commandPredictionResults = FXCollections.observableArrayList(tempPredictionResults);
+        // Attach ObservableList to ListView
+        commandPredictionListView.setItems(commandPredictionResults);
+
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    /**
+     * This method refreshes the CommandPredictionPanel with results that start with `newText`
+     * @param newText
+     */
+    private void updatePredictionResults(String newText) {
+        commandPredictionResults.clear();
+        tempPredictionResults = COMMAND_PREDICTION_RESULTS_INITIAL
+                .stream()
+                .filter(p -> p.startsWith(newText))
+                .collect(toCollection(ArrayList::new));
+
+        commandPredictionResults.addAll(tempPredictionResults);
+        commandPredictionListView.setItems(commandPredictionResults);
+        commandPredictionListView.getSelectionModel().selectFirst();
+
+        // Set the prediction to be invisible if there is nothing typed in the Command Box
+        // Or if there is no prediction to show
+        if (newText.equals("") || commandPredictionResults.isEmpty()) {
+            commandPredictionListView.setVisible(false);
+        } else {
+            commandPredictionListView.setVisible(true);
+        }
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        commandPredictionListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in command prediction panel changed to : '" + newValue + "'");
+                        raise(new CommandPredictionPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    @Subscribe
+    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updatePredictionResults(event.getCommandText());
+    }
+
+
+    @Subscribe
+    private void handleSearchPredictionPanelNextSelectionEvent(CommandPredictionPanelNextSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        commandPredictionListView.getSelectionModel().selectNext();
+    }
+
+    @Subscribe
+    private void handleSearchPredictionPanelPreviousSelectionEvent(CommandPredictionPanelPreviousSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        commandPredictionListView.getSelectionModel().selectPrevious();
+    }
+
+    @Subscribe
+    private void handleSearchPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        commandPredictionListView.setVisible(false);
+    }
+}
+```
+###### \resources\view\CommandPredictionPanel.fxml
+``` fxml
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <ListView fx:id="commandPredictionListView" VBox.vgrow="ALWAYS" id="command-prediction-panel" styleClass="card"/>
+</VBox>
+```
+###### \resources\view\Styles.css
+``` css
 .root {
     main-background-color: #E1E2E1;
     main-foreground-color: #F5F5F6;
@@ -364,3 +554,4 @@
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
     -fx-background-color: main-foreground-color;
 }
+```
