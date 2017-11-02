@@ -35,7 +35,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
         postNow(calendarRequestEvent);
 
-        //expected google login page
+        //expected login page
         URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"
                 + "passive=1209600&osid=1&continue=https://calendar.google.com/calendar/render&followup="
                 + "https://calendar.google.com/calendar/render&scc=1");
