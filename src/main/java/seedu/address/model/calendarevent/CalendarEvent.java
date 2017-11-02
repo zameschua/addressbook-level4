@@ -16,25 +16,31 @@ import javafx.beans.property.SimpleObjectProperty;
 public class CalendarEvent implements ReadOnlyCalendarEvent {
 
     private ObjectProperty<EventName> name;
-    private ObjectProperty<EventStart> start;
-    private ObjectProperty<EventEnd> end;
+    private ObjectProperty<EventStartDate> startDate;
+    private ObjectProperty<EventStartTime> startTime;
+    private ObjectProperty<EventEndDate> endDate;
+    private ObjectProperty<EventEndTime> endTime;
 
 
     /**
      * Every field must be present and not null.
      */
-    public CalendarEvent(EventName name, EventStart start, EventEnd end) {
-        requireAllNonNull(name, start, end);
+    public CalendarEvent(EventName name, EventStartDate startDate, EventStartTime startTime,
+                         EventEndDate endDate, EventEndTime endTime) {
+        requireAllNonNull(name, startDate, startTime, endDate, endTime);
         this.name = new SimpleObjectProperty<>(name);
-        this.start = new SimpleObjectProperty<>(start);
-        this.end = new SimpleObjectProperty<>(end);
+        this.startDate = new SimpleObjectProperty<>(startDate);
+        this.startTime = new SimpleObjectProperty<>(startTime);
+        this.endDate = new SimpleObjectProperty<>(endDate);
+        this.endTime = new SimpleObjectProperty<>(endTime);
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyCalendarEvent.
      */
     public CalendarEvent(ReadOnlyCalendarEvent source) {
-        this(source.getEventName(), source.getStartTime(), source.getEndTime());
+        this(source.getEventName(), source.getStartDate(), source.getStartTime(),
+                source.getEndDate(), source.getEndTime());
     }
 
     public void setName(EventName name) {
@@ -51,32 +57,58 @@ public class CalendarEvent implements ReadOnlyCalendarEvent {
         return name.get();
     }
 
-    public void setStart(EventStart time) {
-        this.start.set(requireNonNull(time));
+    public void setStartDate(EventStartDate date) {
+        this.startDate.set(requireNonNull(date));
     }
 
-    public void setEnd(EventEnd time) {
-        this.end.set(requireNonNull(time));
+    public void setStartTime(EventStartTime time) {
+        this.startTime.set(requireNonNull(time));
+    }
+
+    public void setEndDate(EventEndDate date) {
+        this.endDate.set(requireNonNull(date));
+    }
+
+    public void setEndTime(EventEndTime time) { this.endTime.set(requireNonNull(time)); }
+
+    @Override
+    public ObjectProperty<EventEndDate> endDateProperty() {
+        return this.endDate;
     }
 
     @Override
-    public ObjectProperty<EventEnd> endProperty() {
-        return this.end;
+    public ObjectProperty<EventEndTime> endTimeProperty() {
+        return this.endTime;
     }
 
     @Override
-    public ObjectProperty<EventStart> startProperty() {
-        return this.start;
+    public ObjectProperty<EventStartDate> startDateProperty() {
+        return this.startDate;
     }
 
     @Override
-    public EventStart getStartTime() {
-        return this.start.get();
+    public ObjectProperty<EventStartTime> startTimeProperty() {
+        return this.startTime;
     }
 
     @Override
-    public EventEnd getEndTime() {
-        return this.end.get();
+    public EventStartDate getStartDate() {
+        return this.startDate.get();
+    }
+
+    @Override
+    public EventStartTime getStartTime() {
+        return this.startTime.get();
+    }
+
+    @Override
+    public EventEndDate getEndDate() {
+        return this.endDate.get();
+    }
+
+    @Override
+    public EventEndTime getEndTime() {
+        return this.endTime.get();
     }
 
 
@@ -91,7 +123,7 @@ public class CalendarEvent implements ReadOnlyCalendarEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, start, end);
+        return Objects.hash(name, startDate, startTime, endDate, endTime);
     }
 
     @Override

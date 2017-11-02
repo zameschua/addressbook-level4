@@ -2,9 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_TIME;
 
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
@@ -21,12 +23,16 @@ public class AddEventCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the google calendar. "
             + "Parameters: "
             + PREFIX_EVENT_NAME + "EVENT NAME "
-            + PREFIX_EVENT_START + "START DATE AND TIME "
-            + PREFIX_EVENT_END + "END DATE AND TIME "
+            + PREFIX_EVENT_START_DATE + "START DATE "
+            + PREFIX_EVENT_START_TIME + "START TIME "
+            + PREFIX_EVENT_END_DATE + "END DATE "
+            + PREFIX_EVENT_END_TIME + "END TIME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_NAME + "Halloween Party "
-            + PREFIX_EVENT_START + "2015-07-08T15:00:00 "
-            + PREFIX_EVENT_END + "2015-07-08T18:00:00 ";
+            + PREFIX_EVENT_START_DATE + "2015-07-08 "
+            + PREFIX_EVENT_START_TIME + "15:00 "
+            + PREFIX_EVENT_END_DATE + "2015-07-08 "
+            + PREFIX_EVENT_END_TIME + "18:00";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
 

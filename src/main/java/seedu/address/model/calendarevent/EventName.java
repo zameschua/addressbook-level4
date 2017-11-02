@@ -12,13 +12,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class EventName {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Event names should not be blank, and should not contain special characters";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String EVENT_NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String EVENT_NAME_VALIDATION_REGEX = "^[^-\\s][a-zA-Z0-9_\\s-]+$";
 
     public final String fullEventName;
 

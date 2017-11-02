@@ -6,15 +6,15 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author yilun-zhu
 /**
- * Represents time in the calendar.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Represents event start time.
+ * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
-public class EventEnd {
+public class EventStartTime {
 
 
     public static final String START_TIME_CONSTRAINTS =
-            "Time can only contain numbers, and should be at least 3 digits long 2015-05-29T17:00:00-07:00";
-    public static final String TIME_VALIDATION_REGEX = "";
+            "Time should be in the format HH:MM, and must be valid. Eg. 09:00";
+    public static final String TIME_VALIDATION_REGEX = "^[0-2][0-3]:[0-5][0-9]$";
     public final String value;
 
     /**
@@ -22,19 +22,19 @@ public class EventEnd {
      *
      * @throws IllegalValueException if given time string is invalid.
      */
-    public EventEnd(String time) throws IllegalValueException {
+    public EventStartTime(String time) throws IllegalValueException {
         requireNonNull(time);
-        String trimmedPhone = time.trim();
-        /*if (!isValidPhone(trimmedPhone)) {
+        String trimmedTime = time.trim();
+        if (!isValidTime(trimmedTime)) {
             throw new IllegalValueException(START_TIME_CONSTRAINTS);
-        }*/
-        this.value = trimmedPhone;
+        }
+        this.value = trimmedTime;
     }
 
     /**
      * Returns true if a given string is a valid time.
      */
-    public static boolean isValidPhone(String test) {
+    public static boolean isValidTime(String test) {
         return test.matches(TIME_VALIDATION_REGEX);
     }
 
@@ -46,8 +46,8 @@ public class EventEnd {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EventStart // instanceof handles nulls
-                && this.value.equals(((EventStart) other).value)); // state check
+                || (other instanceof EventStartDate // instanceof handles nulls
+                && this.value.equals(((EventStartDate) other).value)); // state check
     }
 
     @Override
