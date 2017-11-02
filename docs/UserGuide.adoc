@@ -28,8 +28,8 @@ It's Command Line Interface (CLI) allows users to add or retrieve customer's dat
 == Getting Started
 
 // Preface here
-Thank you for selecting CYNC as your preferred customer manager!  
-Here are some steps to get you started: 
+Thank you for selecting CYNC as your preferred customer manager!
+Here are some steps to get you started:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -439,7 +439,7 @@ e.g `mass friends`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
-== Glossary 
+== Glossary
 
 [#GUI]
 GUI +
@@ -447,11 +447,11 @@ GUI +
 * stands for Graphical User Interface : allows users to interact with electronic devices through graphical icons and visual indicators.
 
 == UI Segments
-We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components. 
+We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components.
 
 [#UI]
 
-image::UiExplain.png[width="790"] 
+image::UiExplain.png[width="790"]
 
 
 
