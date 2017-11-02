@@ -14,7 +14,7 @@ public class EventStartTime {
 
     public static final String START_TIME_CONSTRAINTS =
             "Time should be in the format HH:MM, and must be valid. Eg. 09:00";
-    public static final String TIME_VALIDATION_REGEX = "^[0-2][0-3]:[0-5][0-9]$";
+    public static final String TIME_VALIDATION_REGEX = "^[0-2][0-9]:[0-5][0-9]$";
     public final String value;
 
     /**
