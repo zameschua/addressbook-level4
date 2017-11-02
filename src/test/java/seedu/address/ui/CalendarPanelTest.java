@@ -33,7 +33,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default web page
+        // default calendar page
         URL expectedDefaultPageUrl = new URL(DEFAULT_CALENDAR_URL);
         assertEquals(expectedDefaultPageUrl, calendarPanelHandle.getLoadedUrl());
 
