@@ -35,13 +35,13 @@ public class AddEventCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullCalendarEvent_throwsNullPointerException() {
+    public void constructorNullCalendarEventThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
 
     @Test
-    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+    public void executeEventAcceptedByModelAddSuccessful() throws Exception {
         ModelStubAcceptingCalendarEventAdded modelStub = new ModelStubAcceptingCalendarEventAdded();
         CalendarEvent validEvent = new CalendarEventBuilder().build();
 
@@ -68,9 +68,6 @@ public class AddEventCommandTest {
 
         // different types -> returns false
         assertFalse(addHalloweenCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addHalloweenCommand.equals(null));
 
         // different event -> returns false
         assertFalse(addHalloweenCommand.equals(addDanceClassCommand));
@@ -149,7 +146,7 @@ public class AddEventCommandTest {
      * A Model stub that always accept the event being added.
      */
     private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
-        final ArrayList<CalendarEvent> eventsAdded = new ArrayList<>();
+        private final ArrayList<CalendarEvent> eventsAdded = new ArrayList<>();
 
         @Override
         public void addEvent(ReadOnlyCalendarEvent event) {
