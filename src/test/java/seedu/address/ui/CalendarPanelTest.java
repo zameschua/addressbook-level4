@@ -34,15 +34,10 @@ public class CalendarPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default calendar page
-        URL expectedDefaultPageUrl = new URL(DEFAULT_CALENDAR_URL);
-        assertTrue(expectedDefaultPageUrl.equals(calendarPanelHandle.getLoadedUrl()));
-
         postNow(calendarRequestEvent);
 
         //expected google login page
-        URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"
-                + "passive=1209600&osid=1&continue=https://calendar.google.com/calendar/render&followup="
-                + "https://calendar.google.com/calendar/render&scc=1");
+        URL expectedCalendarUrl = new URL(DEFAULT_CALENDAR_URL);
 
         waitUntilCalendarLoaded(calendarPanelHandle);
         assertTrue(expectedCalendarUrl.equals(calendarPanelHandle.getLoadedUrl()));
