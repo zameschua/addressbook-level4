@@ -37,7 +37,9 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
             return false;
         }
     }
+    //@@author
 
+    //@@author reneeseet
     /**
      * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
      */
@@ -52,6 +54,7 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         }
         return false;
     }
+    //@@author
 
 
     @Override
