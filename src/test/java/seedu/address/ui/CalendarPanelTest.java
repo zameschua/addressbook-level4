@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.CalendarPanel.DEFAULT_CALENDAR_URL;
 
 import java.net.URL;
@@ -33,7 +33,7 @@ public class CalendarPanelTest extends GuiUnitTest {
     public void display() throws Exception {
         // default calendar page
         URL expectedDefaultPageUrl = new URL(DEFAULT_CALENDAR_URL);
-        assertEquals(expectedDefaultPageUrl.toString(), calendarPanelHandle.getLoadedUrl().toString());
+        assertTrue(expectedDefaultPageUrl.toString().equals(calendarPanelHandle.getLoadedUrl().toString()));
 
     }
 }
