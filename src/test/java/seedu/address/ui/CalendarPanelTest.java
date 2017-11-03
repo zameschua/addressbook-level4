@@ -31,7 +31,7 @@ public class CalendarPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default calendar page should not be the same as browser panel
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);;
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertFalse(expectedDefaultPageUrl.equals(calendarPanelHandle.getLoadedUrl()));
 
         /*
