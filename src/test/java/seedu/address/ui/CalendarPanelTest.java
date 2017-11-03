@@ -1,7 +1,8 @@
 package seedu.address.ui;
 
+import static guitests.guihandles.WebViewUtil.waitUntilCalendarLoaded;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.CalendarPanel.DEFAULT_CALENDAR_URL;
+import static seedu.address.testutil.EventsUtil.postNow;
 
 import java.net.URL;
 
@@ -31,9 +32,15 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default calendar page
-        URL expectedDefaultPageUrl = new URL(DEFAULT_CALENDAR_URL);
-        assertTrue(expectedDefaultPageUrl.toString().equals(calendarPanelHandle.getLoadedUrl().toString()));
 
+        postNow(calendarRequestEvent);
+
+        //expected google login page
+        URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"
+                + "passive=1209600&osid=1&continue=https://calendar.google.com/calendar/render&followup="
+                + "https://calendar.google.com/calendar/render&scc=1");
+
+        waitUntilCalendarLoaded(calendarPanelHandle);
+        assertTrue(expectedCalendarUrl.toString().equals(calendarPanelHandle.getLoadedUrl().toString()));
     }
 }
