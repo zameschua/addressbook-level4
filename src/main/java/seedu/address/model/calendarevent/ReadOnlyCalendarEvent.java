@@ -11,10 +11,14 @@ public interface ReadOnlyCalendarEvent {
 
     ObjectProperty<EventName> nameProperty();
     EventName getEventName();
-    ObjectProperty<EventStart> startProperty();
-    EventStart getStartTime();
-    ObjectProperty<EventEnd> endProperty();
-    EventEnd getEndTime();
+    ObjectProperty<EventStartDate> startDateProperty();
+    EventStartDate getStartDate();
+    ObjectProperty<EventStartTime> startTimeProperty();
+    EventStartTime getStartTime();
+    ObjectProperty<EventEndDate> endDateProperty();
+    EventEndDate getEndDate();
+    ObjectProperty<EventEndTime> endTimeProperty();
+    EventEndTime getEndTime();
 
 
     /**
@@ -24,7 +28,9 @@ public interface ReadOnlyCalendarEvent {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getEventName().equals(this.getEventName()) // state checks here onwards
+                && other.getStartDate().equals(this.getStartDate())
                 && other.getStartTime().equals(this.getStartTime())
+                && other.getEndDate().equals(this.getEndDate())
                 && other.getEndTime().equals(this.getEndTime()));
     }
 
@@ -35,8 +41,12 @@ public interface ReadOnlyCalendarEvent {
         final StringBuilder builder = new StringBuilder();
         builder.append(getEventName())
                 .append(" Start: ")
-                .append(getStartTime())
+                .append(getStartDate())
+                .append(" Time: ")
+                .append(getEndTime())
                 .append(" End: ")
+                .append(getEndDate())
+                .append(" Time: ")
                 .append(getEndTime());
         return builder.toString();
     }
