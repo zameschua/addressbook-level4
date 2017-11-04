@@ -76,7 +76,7 @@ public class MassEmailCommandTest {
     @Test
     // 1 vaild tag and 1 invalid tag
     public void  executevalidInvalidtagEmailsuccess() throws  Exception {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         original = originalModel.getAddressBook().getPersonList().size();
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
