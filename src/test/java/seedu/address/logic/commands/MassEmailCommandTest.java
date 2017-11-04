@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -25,31 +24,30 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 public class MassEmailCommandTest {
     private Model model;
+    private Model originalModel;
+    private int original;
 
     @Test
     public void execute_massEmail_success() throws Exception {
-
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        original = originalModel.getAddressBook().getPersonList().size();
         MassEmailCommand command = prepareCommand("all");
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        int expected = expectedModel.getAddressBook().getPersonList().size();
-
         model.updateFilteredPersonList(command.getPredicate());
         int actual = model.getFilteredPersonList().size();
-        System.out.print("ex:" + expected + "ac:" + actual);
-        assertListSize(expected, actual);
-        assertequalList(expectedModel.getAddressBook().getPersonList(),model.getFilteredPersonList());
-        
+        System.out.print("ex:" + original + "ac:" + actual);
+        assertListSize(original, actual);
+        assertequalList(originalModel.getFilteredPersonList(), model.getFilteredPersonList());
     }
 
     @Test
     // one valid tag
     public void  execute_tagEmail_success() throws  Exception {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        original = originalModel.getAddressBook().getPersonList().size();
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
         MassEmailCommand command = prepareCommand("friends");
-
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         int expected = expectedModel.getAddressBook().getPersonList().size();
 
@@ -57,41 +55,38 @@ public class MassEmailCommandTest {
         int actual = model.getFilteredPersonList().size();
         System.out.print("ex:" + expected + "ac:" + actual);
         assertdifferentListSize(expected, actual);
-        assertunequalList(expectedModel.getFilteredPersonList(),model.getFilteredPersonList());
+        assertunequalList(expectedModel.getFilteredPersonList(), model.getFilteredPersonList());
     }
 
     @Test
     // no vaild tag
     public void  execute_noVaildTagEmail_success() throws  Exception {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        original = originalModel.getAddressBook().getPersonList().size();
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
         MassEmailCommand command = prepareCommand("hello");
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        int expected = expectedModel.getAddressBook().getPersonList().size();
-
         model.updateFilteredPersonList(command.getPredicate());
         int actual = model.getFilteredPersonList().size();
-        assertdifferentListSize(expected, actual);
-        assertunequalList(expectedModel.getFilteredPersonList(),model.getFilteredPersonList());
-        System.out.print("ex:" + expected + "ac:" + actual);
+        System.out.print("ex:" + original + "ac:" + actual);
+        assertdifferentListSize(original, actual);
+        assert(model.getFilteredPersonList().isEmpty());
     }
 
     @Test
     // 1 vaild tag and 1 invalid tag
-    public void  execute_valid_InValidTagEmail_success() throws  Exception {
+    public void  execute_validInvalidtagEmail_success() throws  Exception {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        original = originalModel.getAddressBook().getPersonList().size();
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
         MassEmailCommand command = prepareCommand("friends hello");
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        int expected = expectedModel.getAddressBook().getPersonList().size();
-
         model.updateFilteredPersonList(command.getPredicate());
         int actual = model.getFilteredPersonList().size();
-        System.out.print("ex:" + expected + "ac:" + actual);
-        assertdifferentListSize(expected, actual);
-        assertunequalList(expectedModel.getAddressBook().getPersonList(),model.getFilteredPersonList());
+        System.out.print("ex:" + original + "ac:" + actual);
+        assertdifferentListSize(original, actual);
+        assert(!model.getFilteredPersonList().isEmpty());
+        assertunequalList(originalModel.getAddressBook().getPersonList(), model.getFilteredPersonList());
     }
 
     /**
@@ -118,8 +113,5 @@ public class MassEmailCommandTest {
 
     private void assertunequalList(ObservableList<ReadOnlyPerson> ex, ObservableList<ReadOnlyPerson> act) {
         assert !(act.containsAll(ex));
-
     }
-
-
 }
