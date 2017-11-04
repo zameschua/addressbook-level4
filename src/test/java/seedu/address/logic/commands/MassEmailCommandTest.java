@@ -29,7 +29,7 @@ public class MassEmailCommandTest {
 
     @Test
     public void execute_massEmail_success() throws Exception {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         original = originalModel.getAddressBook().getPersonList().size();
         MassEmailCommand command = prepareCommand("all");
@@ -60,7 +60,7 @@ public class MassEmailCommandTest {
 
     @Test
     // no vaild tag
-    public void  execute_noVaildTagEmail_success() throws  Exception {
+    public void  executenoVaildTagEmailsuccess() throws  Exception {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
         originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         original = originalModel.getAddressBook().getPersonList().size();
@@ -75,7 +75,7 @@ public class MassEmailCommandTest {
 
     @Test
     // 1 vaild tag and 1 invalid tag
-    public void  execute_validInvalidtagEmail_success() throws  Exception {
+    public void  executevalidInvalidtagEmailsuccess() throws  Exception {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
         originalModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         original = originalModel.getAddressBook().getPersonList().size();

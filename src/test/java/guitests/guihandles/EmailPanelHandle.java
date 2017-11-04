@@ -2,6 +2,7 @@ package guitests.guihandles;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -56,6 +57,11 @@ public class EmailPanelHandle extends NodeHandle<Node>  {
     public String getMessageText() {
         TextArea f = (TextArea) emailMessage;
         return f.getText();
+    }
+
+    public Button getSendButton() {
+        Button f = (Button) sendButton;
+        return f;
     }
 
 }
