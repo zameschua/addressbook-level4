@@ -3,7 +3,6 @@ package seedu.address.ui;
 //@@author ReneeSeet
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import java.util.ArrayList;
@@ -24,8 +23,8 @@ public class EmailPanelTest extends GuiUnitTest  {
             FXCollections.observableList(getTypicalPersons());
     private EmailPanel emailPanel;
     private EmailPanelHandle emailPanelHandle;
-    String expectedEmail; 
-    ArrayList<String> emails; 
+    private String expectedEmail;
+    private ArrayList<String> emails;
 
     @Before
     public void setUp() {
@@ -33,7 +32,7 @@ public class EmailPanelTest extends GuiUnitTest  {
         emails = new ArrayList<String>();
         for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
             emails.add(TYPICAL_PERSONS.get(i).getEmail().toString());
-            expectedEmailbuilder.append(TYPICAL_PERSONS.get(i).getEmail().toString()).append(";"); 
+            expectedEmailbuilder.append(TYPICAL_PERSONS.get(i).getEmail().toString()).append(";");
         }
         expectedEmail = expectedEmailbuilder.toString();
         guiRobot.interact(() -> emailPanel = new EmailPanel(emails));
@@ -48,8 +47,7 @@ public class EmailPanelTest extends GuiUnitTest  {
         assertEquals(expectedEmail, emailPanelHandle.getRecipientsText());
         //check that the subject box is empty
         assertEquals("", emailPanelHandle.getSubjectText());
-        //check that the Message box is 
+        //check that the Message box is
         assertEquals("", emailPanelHandle.getMessageText());
-        
     }
 }

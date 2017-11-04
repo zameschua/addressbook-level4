@@ -12,20 +12,20 @@ import javafx.scene.layout.Pane;
  */
 
 public class EmailPanelHandle extends NodeHandle<Node>  {
-    
+
     public static final String EMAIL_ID = "#emailpanel";
     public static final String SUBJECT_TEXTBOX_ID = "emailSubjectBox";
     public static final String TO_TEXTBOX_ID = "recipientsBox";
     public static final String SEND_BUTTON_ID = "sendButton";
     public static final String MESSAGE_TEXTBOX_ID = "emailMessage";
-    
-    Node recipientBox; 
-    Node SubjectBox; 
-    Node SendButton; 
-    Node emailMessage;
 
-    public EmailPanelHandle(Node EmailPanelNode) {
-        super(EmailPanelNode);
+    private Node recipientBox;
+    private Node subjectBox;
+    private Node sendButton;
+    private Node emailMessage;
+
+    public EmailPanelHandle(Node emailPanelNode) {
+        super(emailPanelNode);
         Pane pane = getChildNode(EMAIL_ID);
         ObservableList<Node> listNode = pane.getChildren();
         for (int i = 0; i < listNode.size(); i++) {
@@ -33,30 +33,29 @@ public class EmailPanelHandle extends NodeHandle<Node>  {
                 if (listNode.get(i).getId().equals(TO_TEXTBOX_ID)) {
                     recipientBox = listNode.get(i);
                 } else if (listNode.get(i).getId().equals(SEND_BUTTON_ID)) {
-                    SendButton = listNode.get(i);
+                    sendButton = listNode.get(i);
                 } else if (listNode.get(i).getId().equals(MESSAGE_TEXTBOX_ID)) {
-                    emailMessage = listNode.get(i); 
+                    emailMessage = listNode.get(i);
                 } else if (listNode.get(i).getId().equals(SUBJECT_TEXTBOX_ID)) {
-                    SubjectBox = listNode.get(i); 
+                    subjectBox = listNode.get(i);
                 }
             }
         }
     }
-    
-    public String getRecipientsText(){ 
-        TextField f = (TextField)recipientBox;
+
+    public String getRecipientsText() {
+        TextField f = (TextField) recipientBox;
         return f.getText();
     }
 
-    public String getSubjectText(){
-        TextField f = (TextField)SubjectBox;
+    public String getSubjectText() {
+        TextField f = (TextField) subjectBox;
         return f.getText();
     }
-    
-    public String getMessageText(){
-        TextArea f = (TextArea)emailMessage;
+
+    public String getMessageText() {
+        TextArea f = (TextArea) emailMessage;
         return f.getText();
     }
-    
-    
+
 }
