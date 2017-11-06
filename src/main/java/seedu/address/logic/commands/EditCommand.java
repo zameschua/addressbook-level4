@@ -18,6 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.JoinDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -100,8 +101,11 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        //@@author ReneeSeet
+        JoinDate date = editPersonDescriptor.getJoinDate();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, date, updatedTags);
+        //@@author
     }
 
     @Override
@@ -133,6 +137,9 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
 
+        //@@author ReneeSeet
+        private JoinDate date;
+
         public EditPersonDescriptor() {}
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
@@ -141,6 +148,9 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            //@@author ReneeSeet
+            this.date = toCopy.date;
+            //@@author
         }
 
         /**
@@ -189,6 +199,18 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
         }
+
+        //@@author ReneeSeet
+
+        public void setJoinDate(JoinDate date) {
+            this.date = date;
+        }
+
+        public JoinDate getJoinDate() {
+            return date;
+        }
+
+        //@@author
 
         @Override
         public boolean equals(Object other) {
