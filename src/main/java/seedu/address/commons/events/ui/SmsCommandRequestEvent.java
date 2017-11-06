@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author zameschua
 /**
  * Indicates a request for SmsCommand
  */
-
 public class SmsCommandRequestEvent extends BaseEvent {
 
     private final ArrayList<String> phoneNumbers;

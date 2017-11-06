@@ -8,12 +8,12 @@ import seedu.address.commons.events.ui.SmsCommandRequestEvent;
 import seedu.address.model.person.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author zameschua
 /**
  * Brings up the smsPanel
  * Then finds and lists all persons in address book whose tags match those in the command, for group SMSsing
  * Keyword matching is case-sensitive.
  */
-
 public class SmsCommand extends Command {
 
     public static final String COMMAND_WORD = "sms";

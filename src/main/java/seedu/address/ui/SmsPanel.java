@@ -15,11 +15,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendSmsRequestEvent;
 import seedu.address.external.sms.SmsManager;
 
+//@@author zameschua
 /**
  * The Sms Panel of the App
  * Appears on the main page after typing the "sms" command
  */
-
 public class SmsPanel extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "SmsPanel.fxml";

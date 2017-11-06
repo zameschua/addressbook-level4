@@ -2,6 +2,7 @@ package seedu.address.commons.events.external;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author zameschua
 /**
  * Indicates a request for Sending an SMS
  */

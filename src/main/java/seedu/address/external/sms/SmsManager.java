@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.external.SendSmsRequestEvent;
 
+//@@author zameschua
 /**
  * Follows Singleton and Facade design pattern,
  * for other parts of the app to interface with the Twilio SMS service
