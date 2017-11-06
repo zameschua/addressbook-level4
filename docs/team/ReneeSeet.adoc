@@ -30,7 +30,7 @@ For businesses to reach out to all their customers or to different group of cust
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=umassemail]
+include::../DeveloperGuide.adoc[tag=massemail]
 
 #End of Extract#
 
