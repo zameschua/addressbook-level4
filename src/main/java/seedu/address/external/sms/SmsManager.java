@@ -19,6 +19,10 @@ public class SmsManager {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Creates an instance of the SmsManager and registers it as an event handler
+     * @return The Singleton instance of the SmsManager
+     */
     public static SmsManager init() {
         if (instance == null) {
             instance = new SmsManager();
