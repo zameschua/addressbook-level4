@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author zameschua
 /**
  * Indicates a change in selection of the CommandPredictionPanel
  */

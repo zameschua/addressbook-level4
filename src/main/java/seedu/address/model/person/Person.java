@@ -26,11 +26,14 @@ public class Person implements ReadOnlyPerson {
     //@@author pohjie
     private ProfilePicture profilePic;
     private Attendance attendance;
+    //@@author ReneeSeet
+    private ObjectProperty<JoinDate> joinDate;
+    //@@author
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, JoinDate joinDate, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -38,6 +41,8 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.joinDate = new SimpleObjectProperty<>(joinDate);
+        this.joinDate = new SimpleObjectProperty<>(new JoinDate());
         this.profilePic = new ProfilePicture();
         this.attendance = new Attendance();
     }
@@ -47,7 +52,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getJoinDate(),
                 source.getTags());
     }
 
@@ -129,11 +134,25 @@ public class Person implements ReadOnlyPerson {
 
     //@@author pohjie
     @Override
-    public ProfilePicture getProfilePic() { return profilePic; }
+    public ProfilePicture getProfilePic() {
+        return profilePic;
+    }
+
+    public Attendance getAttendance() { 
+      return attendance; 
+    }
+
+    //@@author ReneeSeet
+    public JoinDate getJoinDate() {
+        return joinDate.get();
+    }
 
     @Override
-    public Attendance getAttendance() { return attendance; }
+    public ObjectProperty<JoinDate> joinDateProperty() {
+        return joinDate;
+    }
     //@@author
+
 
     @Override
     public boolean equals(Object other) {

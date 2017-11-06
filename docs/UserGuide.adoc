@@ -28,23 +28,30 @@ It's Command Line Interface (CLI) allows users to add or retrieve customer's dat
 == Getting Started
 
 // Preface here
+Thank you for selecting CYNC as your preferred customer manager!
+Here are some steps to get you started:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
+If you are unsure how to check Java version on your computer, do check out this link:https://www.java.com/en/download/help/version_manual.xml[link]. +
+To download the latest Java version, click link:https://java.com/en/download/[here].
+
++
+[WARNING]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `CYNC.jar` link:https://github.com/CS2103AUG2017-W15-B2/main/releases[here].
+.  Copy the file to the folder you want to use as the home folder for CYNC.
 // What is GUI?
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The link:#GUI[GUI] should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::updatedUi.png[width="790"]
 +
-
 // Where is the command box?
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+
+.  Type the command in the link:#UI[command box] and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
@@ -58,16 +65,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Features
 
 // Preface here
+The features provided in CYNC were mainly designed to speed up the process of businesses reaching out to their customers and to store customers' information efficiently.
 
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
-=======
 === Navigating the command predictions
 
 CYNC has a command prediction feature, which tries to predict the commands that you will type
@@ -93,38 +92,27 @@ _Figure 3.3 : Pressing the `tab` button will select the highlighted command pred
 
 === Viewing help : `help`
 
-If you need help with the usage of the software, type `help` in the command box to open up the guide +
+If you need help with the usage of the software, type `help` in the command box to open up this guide +
 Format: `help`
 
-=== Display Google Calendar: `calendar`
-
-To help you plan your schedule, we have integrated google calendar into the software +
-To open up google calendar in the browser panel, type `calendar` in the command box +
-Format: `calendar`
-
-[TIP]
-Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
-
-The UI should appear as such:
-
-image::Calendar.png[width="790"]
-
-=== Adding a event to the calendar: `addEvent`
-
-To add an event to the google calendar linked, type the command `addEvent` in the command box. +
-The calendar shown should be updated automatically. +
-Format: `addEvent n/EVENT NAME s/START TIME((YYYY-MM-DD + T + HH:MM) e/END TIME(YYYY-MM-DD + T + HH:MM)`
-
-Examples:
-
-* `addEvent n/Halloween Party s/2017-10-30T17:00 e/2017-10-30T22:00`
-
-=== Adding a person: `add`
+=== Adding a new customer: `add`
 
 // "add a person" is too stiff- use "to add a contact to your address book"
 // special notes (another section) - elaborate what tag is- "if you want to sort users by groups"
-Adds a person to the address book +
+Adds a new customer to the CYNC +
+Every customer will require a name[n/], email[e/], address[a/]. +
+tags[t/] could be added to a customer for grouping.
+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+====
+*Command Format*
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+====
+
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -137,7 +125,7 @@ Examples:
 
 === Listing all people : `list`
 
-Shows a list of all people in the address book. +
+Shows a list of all customers stored in the CYNC. +
 Format: `list`
 
 === Listing all tags : `listalltags`
@@ -259,6 +247,30 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Display Google Calendar: `calendar`
+
+To help you plan your schedule, we have integrated google calendar into the software +
+To open up google calendar in the browser panel, type `calendar` in the command box +
+Format: `calendar`
+
+[TIP]
+Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
+
+The UI should appear as such:
+
+image::Calendar.png[width="790"]
+
+=== Adding a event to the calendar: `addEvent`
+
+To add an event to the google calendar linked, type the command `addEvent` in the command box. +
+The calendar shown should be updated automatically. +
+Format: `addEvent n/EVENT NAME s/START TIME((YYYY-MM-DD + T + HH:MM) e/END TIME(YYYY-MM-DD + T + HH:MM)`
+
+Examples:
+
+* `addEvent n/Halloween Party s/2017-10-30T17:00 e/2017-10-30T22:00`
+
+//tag::massemail[]
 === Mass Emailing : `mass`
 Allows user to customise and send out emails to all customers or to specific tagged customers. +
 Format: `mass all` or `mass TAG [MORE_TAG]` +
@@ -294,6 +306,7 @@ It is possible to add additional email addresses in `To:` textbox by typing the 
 
 After composing your email, click send. +
 CYNC will indicate if the emails are successfully sent.
+//end::massemail[]
 
 === Mass SMS : `sms`
 Allows user to customise and send out SMSses to all customers or to specific tagged customers. +
@@ -426,3 +439,21 @@ e.g `mass friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Glossary
+
+[#GUI]
+GUI +
+
+* stands for Graphical User Interface : allows users to interact with electronic devices through graphical icons and visual indicators.
+
+== UI Segments
+We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components.
+
+[#UI]
+
+image::UiExplain.png[width="790"]
+
+
+
+

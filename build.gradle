@@ -44,6 +44,7 @@ allprojects {
         monocleVersion = '1.8.0_20'
         checkstyleVersion = '8.1'
 
+
         libDir = 'lib'
     }
 
@@ -71,6 +72,7 @@ allprojects {
         //compile 'com.google.api-client:google-api-client:1.23.0'
         //compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
         //compile 'com.google.apis:google-api-services-gmail:v1-rev72-1.23.0'
+        //compile 'com.google.apis:google-api-services-calendar:v3-rev262-1.23.0'
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"

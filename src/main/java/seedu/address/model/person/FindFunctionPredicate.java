@@ -18,6 +18,7 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    //@@author yilun-zhu
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean name = keywords.stream()
@@ -36,7 +37,9 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
             return false;
         }
     }
+    //@@author
 
+    //@@author reneeseet
     /**
      * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
      */
@@ -51,6 +54,7 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         }
         return false;
     }
+    //@@author
 
 
     @Override

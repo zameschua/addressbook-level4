@@ -143,6 +143,7 @@ public class MainWindow extends UiPart<Region> {
     void fillLogin() {
         loginPanel = new LoginPanel();
         browserPanel = new BrowserPanel();
+        calendarPanel = new CalendarPanel();
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
         resultDisplay = new ResultDisplay();
@@ -154,14 +155,13 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        //browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().clear();
+        browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        //ResultDisplay resultDisplay = new ResultDisplay();
+        ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         // Overlay CommandPredictionPanel over ResultDisplay
@@ -173,7 +173,7 @@ public class MainWindow extends UiPart<Region> {
 
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        //CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -239,7 +239,7 @@ public class MainWindow extends UiPart<Region> {
     //@@author
 
     /**
-     * Switch to the Email panel.
+     * Switch to the Calendar panel.
      */
     @FXML
     public void handleCalendar() {
