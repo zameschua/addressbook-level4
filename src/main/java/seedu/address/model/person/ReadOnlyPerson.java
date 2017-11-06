@@ -27,6 +27,11 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
+    //@@author ReneeSeet
+    ObjectProperty<JoinDate> joinDateProperty();
+    JoinDate getJoinDate();
+    //@@author
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -51,6 +56,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                //@@author ReneeSeet
+                .append(" Join Date: ")
+                .append(getJoinDate())
+                //@@author
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

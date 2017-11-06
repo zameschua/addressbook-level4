@@ -473,7 +473,7 @@ The `CommandPredictionPanel` then handles this event by finding the commands tha
 The `CommandPredictionPanel` should update it's database automatically whenever a new command is added +
 **Pros**: More automation, less prone to bugs in the `CommandPredictionPanel`. The app also becomes more open to extension +
 **Cons**: This implementation is more coupled and may cause some bugs in `Command` if it is not handled carefully +
-
+//tag::massemail[]
 === Mass Emailing mechanism
 
 The Mass Emailing mechanism is facilitated by the `EventsCenter`, in which it receives an event from `MassEmail` command,
@@ -496,7 +496,7 @@ image::email.png[width="800"]
 As we can see from the above diagram, the `To:` textbox is filled with the required emails.
 When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
 In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
-
+//end::massemail[]
 === List All Tags mechanism
 
 // create another section
