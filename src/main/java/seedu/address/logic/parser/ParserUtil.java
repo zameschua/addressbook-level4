@@ -10,9 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.calendarevent.EventEnd;
+import seedu.address.model.calendarevent.EventEndDate;
+import seedu.address.model.calendarevent.EventEndTime;
 import seedu.address.model.calendarevent.EventName;
-import seedu.address.model.calendarevent.EventStart;
+import seedu.address.model.calendarevent.EventStartDate;
+import seedu.address.model.calendarevent.EventStartTime;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -46,6 +48,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author yilun-zhu
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<EventName>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -56,22 +59,41 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> time} into an {@code Optional<EventStart>} if {@code time} is present.
+     * Parses a {@code Optional<String> date} into an {@code Optional<EventStartDate>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<EventStart> parseStartTime(Optional<String> time) throws IllegalValueException {
-        requireNonNull(time);
-        return time.isPresent() ? Optional.of(new EventStart(time.get())) : Optional.empty();
+    public static Optional<EventStartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new EventStartDate(date.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> time} into an {@code Optional<EventEnd>} if {@code time} is present.
+     * Parses a {@code Optional<String> time} into an {@code Optional<EventStartDate>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<EventEnd> parseEndTime(Optional<String> time) throws IllegalValueException {
+    public static Optional<EventStartTime> parseStartTime(Optional<String> time) throws IllegalValueException {
         requireNonNull(time);
-        return time.isPresent() ? Optional.of(new EventEnd(time.get())) : Optional.empty();
+        return time.isPresent() ? Optional.of(new EventStartTime(time.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<EventEndDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventEndDate> parseEndDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new EventEndDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<EventStartDate>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventEndTime> parseEndTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(new EventEndTime(time.get())) : Optional.empty();
+    }
+    //@@author
 
 
     /**
