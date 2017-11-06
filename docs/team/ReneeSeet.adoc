@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=massemail]
 
 ==== Justification
 
-For businesses to reach out to all their customers or to different group of customers easily. 
+For businesses to reach out to all their customers or to different group of customers easily.
 
 ==== Implementation
 
