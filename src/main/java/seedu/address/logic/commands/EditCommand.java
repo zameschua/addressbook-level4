@@ -139,6 +139,7 @@ public class EditCommand extends UndoableCommand {
 
         //@@author ReneeSeet
         private JoinDate date;
+        //@@author
 
         public EditPersonDescriptor() {}
 
@@ -201,7 +202,6 @@ public class EditCommand extends UndoableCommand {
         }
 
         //@@author ReneeSeet
-
         public void setJoinDate(JoinDate date) {
             this.date = date;
         }
@@ -209,7 +209,6 @@ public class EditCommand extends UndoableCommand {
         public JoinDate getJoinDate() {
             return date;
         }
-
         //@@author
 
         @Override

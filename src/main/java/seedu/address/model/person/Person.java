@@ -41,6 +41,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.joinDate = new SimpleObjectProperty<>(joinDate);
         this.joinDate = new SimpleObjectProperty<>(new JoinDate());
         this.profilePic = new ProfilePicture();
         this.attendancePic = new Attendance();
