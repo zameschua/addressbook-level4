@@ -704,7 +704,7 @@ public class LoginPanel extends UiPart<Region> {
 
 <Pane fx:id="LoginPanel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="605.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@DarkTheme.css" />
+        <URL value="@Styles.css" />
         <URL value="@Extensions.css" />
     </stylesheets>
     <children>
