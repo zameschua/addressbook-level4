@@ -1,11 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -14,14 +9,15 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Attendance;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JoinDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonMaxAttendanceException;
@@ -29,43 +25,34 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Increment attendance count of an existing person in the address book.
  */
-public class EditCommand extends UndoableCommand {
+public class AddAttendanceCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD = "addAttendance";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Increment the attendance person identified"
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + "Parameters: INDEX (must be a positive integer) ";
 
+    public static final String MESSAGE_ADD_ATTENDANCE_SUCCESS = "Edited Person's Attendance: %1$s";
     public static final String MESSAGE_ATTENDANCE_NOT_ADDED = "Either invalid index or the attended sessions is already 8";
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditAttendancePersonDescriptor editAttendancePersonDescriptor;
 
     /**
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public AddAttendanceCommand(Index index, EditAttendancePersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editAttendancePersonDescriptor = new EditAttendancePersonDescriptor(editPersonDescriptor);
     }
 
     @Override
@@ -77,19 +64,19 @@ public class EditCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Person editedPerson = createEditedPerson(personToEdit, editAttendancePersonDescriptor);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
-        }   catch (PersonMaxAttendanceException pmae) {
+        } catch (PersonMaxAttendanceException pmae) {
             throw new CommandException(MESSAGE_ATTENDANCE_NOT_ADDED);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_ADD_ATTENDANCE_SUCCESS, editedPerson));
     }
 
     /**
@@ -97,17 +84,19 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                                             EditAttendancePersonDescriptor editAttendancePersonDescriptor) {
         assert personToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editAttendancePersonDescriptor.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editAttendancePersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editAttendancePersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Address updatedAddress = editAttendancePersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Set<Tag> updatedTags = editAttendancePersonDescriptor.getTags().orElse(personToEdit.getTags());
         //@@author ReneeSeet
-        JoinDate date = editPersonDescriptor.getJoinDate();
-
+        JoinDate date = editAttendancePersonDescriptor.getJoinDate();
+        //@@author pohjie
+        Attendance attendance = editAttendancePersonDescriptor.getAttendance();
+        ProfilePicture updatedProfilePicture = editAttendancePersonDescriptor.getProfilePicture();
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, date, updatedTags);
         //@@author
     }
@@ -120,49 +109,48 @@ public class EditCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof AddAttendanceCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
+        AddAttendanceCommand e = (AddAttendanceCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+                && editAttendancePersonDescriptor.equals(e.editAttendancePersonDescriptor);
     }
 
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
-    public static class EditPersonDescriptor {
+    public static class EditAttendancePersonDescriptor {
         private Name name;
         private Phone phone;
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Attendance attendance;
+        private ProfilePicture profilePicture;
 
         //@@author ReneeSeet
         private JoinDate date;
         //@@author
 
-        public EditPersonDescriptor() {}
+        public EditAttendancePersonDescriptor() {}
 
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditAttendancePersonDescriptor(EditAttendancePersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            //@@author pohjie
+            this.attendance = toCopy.attendance;
+            this.attendance.addAttendance();
+            this.profilePicture = toCopy.profilePicture;
             //@@author ReneeSeet
             this.date = toCopy.date;
             //@@author
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
         }
 
         public void setName(Name name) {
@@ -213,6 +201,15 @@ public class EditCommand extends UndoableCommand {
         public JoinDate getJoinDate() {
             return date;
         }
+
+        //@@author pohjie
+        public void setAttendance(Attendance attendance) { this.attendance = attendance; }
+
+        public Attendance getAttendance() { return attendance; }
+
+        public void setProfilePicture(ProfilePicture profilePicture) {this.profilePicture = profilePicture; }
+
+        public ProfilePicture getProfilePicture() { return profilePicture; }
         //@@author
 
         @Override
@@ -223,18 +220,21 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditAttendancePersonDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditAttendancePersonDescriptor e = (EditAttendancePersonDescriptor) other;
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getJoinDate().equals(e.getJoinDate())
+                    && getAttendance().equals(e.getAttendance())
+                    && getProfilePicture().equals(e.getProfilePicture());
         }
     }
 }

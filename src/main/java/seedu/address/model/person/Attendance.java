@@ -41,6 +41,11 @@ public class Attendance {
         return missed;
     }
 
+    public void addAttendance() {
+        attended ++;
+        missed --;
+    }
+
     @Override
     public String toString() {
         return "Attended is: " + attended + ", and missed is: " + missed;
