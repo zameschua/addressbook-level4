@@ -129,6 +129,7 @@ public class AddAttendanceCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        //@@author pohjie
         private Attendance attendance;
         private ProfilePicture profilePicture;
 

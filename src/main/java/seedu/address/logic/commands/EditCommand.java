@@ -17,11 +17,13 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Attendance;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.JoinDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonMaxAttendanceException;
@@ -141,6 +143,10 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
 
+        //@@author pohjie
+        private ProfilePicture profilePicture;
+        private Attendance attendance;
+
         //@@author ReneeSeet
         private JoinDate date;
         //@@author
@@ -155,6 +161,9 @@ public class EditCommand extends UndoableCommand {
             this.tags = toCopy.tags;
             //@@author ReneeSeet
             this.date = toCopy.date;
+            //@@author pohjie
+            this.profilePicture = toCopy.profilePicture;
+            this.attendance = toCopy.attendance;
             //@@author
         }
 
@@ -213,7 +222,19 @@ public class EditCommand extends UndoableCommand {
         public JoinDate getJoinDate() {
             return date;
         }
-        //@@author
+        //@@author pohjie
+
+        public void setProfilePicture(ProfilePicture profilePicture) {
+            this.profilePicture = profilePicture;
+        }
+
+        public ProfilePicture getProfilePicture() { return profilePicture; }
+
+        public void setAttendance(Attendance attendance) {
+            this.attendance = attendance;
+        }
+
+        public Attendance getAttendance() { return attendance; }
 
         @Override
         public boolean equals(Object other) {
