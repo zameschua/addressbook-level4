@@ -19,7 +19,7 @@ public class SmsManager {
         registerAsAnEventHandler(this);
     }
 
-    public static SmsManager getInstance() {
+    public static SmsManager init() {
         if (instance == null) {
             instance = new SmsManager();
         }
