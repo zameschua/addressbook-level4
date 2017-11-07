@@ -33,8 +33,8 @@ public class CommandPredictionPanel extends UiPart<Region> {
     private static final String FXML = "CommandPredictionPanel.fxml";
     private static final ArrayList<String> COMMAND_PREDICTION_RESULTS_INITIAL =
             new ArrayList<String>(Arrays.asList(
-                    "help", "add", "list", "edit", "find", "delete", "select",
-                    "history", "undo", "redo", "clear", "exit"));
+                    "help", "add", "list", "listalltags", "edit", "find", "delete", "select",
+                    "history", "calendar", "addEvent", "mass", "sms", "undo", "redo", "clear", "exit"));
 
     private static ObservableList<String> commandPredictionResults;
     // tempPredictionResults used to store the results from filtering through COMMAND_PREDICTION_RESULTS_INITIAL
