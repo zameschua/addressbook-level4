@@ -26,6 +26,7 @@ public class SmsManager {
     public static SmsManager init() {
         if (instance == null) {
             instance = new SmsManager();
+            TwilioApiHelper.init();
         }
         return instance;
     }
