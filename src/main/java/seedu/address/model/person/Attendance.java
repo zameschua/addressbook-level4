@@ -41,9 +41,13 @@ public class Attendance {
         return missed;
     }
 
+    /**
+     * Increments attended by one and decrements missed by one
+     * to signify that a person has attended a session.
+     */
     public void addAttendance() {
-        attended ++;
-        missed --;
+        attended++;
+        missed--;
     }
 
     @Override

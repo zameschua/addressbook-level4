@@ -138,8 +138,8 @@ public class Person implements ReadOnlyPerson {
         return profilePic;
     }
 
-    public Attendance getAttendance() { 
-      return attendance; 
+    public Attendance getAttendance() {
+        return attendance;
     }
 
     //@@author ReneeSeet

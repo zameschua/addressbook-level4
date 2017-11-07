@@ -50,7 +50,8 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_ATTENDANCE_NOT_ADDED = "Either invalid index or the attended sessions is already 8";
+    public static final String MESSAGE_ATTENDANCE_NOT_ADDED =
+            "Either invalid index or the attended sessions is already 8";
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -228,13 +229,17 @@ public class EditCommand extends UndoableCommand {
             this.profilePicture = profilePicture;
         }
 
-        public ProfilePicture getProfilePicture() { return profilePicture; }
+        public ProfilePicture getProfilePicture() {
+            return profilePicture;
+        }
 
         public void setAttendance(Attendance attendance) {
             this.attendance = attendance;
         }
 
-        public Attendance getAttendance() { return attendance; }
+        public Attendance getAttendance() {
+            return attendance;
+        }
 
         @Override
         public boolean equals(Object other) {

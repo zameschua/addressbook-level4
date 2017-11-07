@@ -37,7 +37,8 @@ public class AddAttendanceCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) ";
 
     public static final String MESSAGE_ADD_ATTENDANCE_SUCCESS = "Edited Person's Attendance: %1$s";
-    public static final String MESSAGE_ATTENDANCE_NOT_ADDED = "Either invalid index or the attended sessions is already 8";
+    public static final String MESSAGE_ATTENDANCE_NOT_ADDED =
+            "Either invalid index or the attended sessions is already 8";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
@@ -204,13 +205,21 @@ public class AddAttendanceCommand extends UndoableCommand {
         }
 
         //@@author pohjie
-        public void setAttendance(Attendance attendance) { this.attendance = attendance; }
+        public void setAttendance(Attendance attendance) {
+            this.attendance = attendance;
+        }
 
-        public Attendance getAttendance() { return attendance; }
+        public Attendance getAttendance() {
+            return attendance;
+        }
 
-        public void setProfilePicture(ProfilePicture profilePicture) {this.profilePicture = profilePicture; }
+        public void setProfilePicture(ProfilePicture profilePicture) {
+            this.profilePicture = profilePicture;
+        }
 
-        public ProfilePicture getProfilePicture() { return profilePicture; }
+        public ProfilePicture getProfilePicture() {
+            return profilePicture;
+        }
         //@@author
 
         @Override
