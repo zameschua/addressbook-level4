@@ -1,9 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_TIME;
 
 import java.util.stream.Stream;
 
@@ -11,9 +13,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.calendarevent.EventEnd;
+import seedu.address.model.calendarevent.EventEndDate;
+import seedu.address.model.calendarevent.EventEndTime;
 import seedu.address.model.calendarevent.EventName;
-import seedu.address.model.calendarevent.EventStart;
+import seedu.address.model.calendarevent.EventStartDate;
+import seedu.address.model.calendarevent.EventStartTime;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
 //@@author yilun-zhu
@@ -29,18 +33,22 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
      */
     public AddEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_EVENT_START, PREFIX_EVENT_END);
+                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_EVENT_START_DATE,
+                        PREFIX_EVENT_START_TIME, PREFIX_EVENT_END_DATE, PREFIX_EVENT_END_TIME);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_EVENT_START, PREFIX_EVENT_END)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_EVENT_START_DATE, PREFIX_EVENT_START_TIME,
+                PREFIX_EVENT_END_DATE, PREFIX_EVENT_END_TIME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
         }
 
         try {
             EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME)).get();
-            EventStart start = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_EVENT_START)).get();
-            EventEnd end = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_EVENT_END)).get();
+            EventStartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_EVENT_START_DATE)).get();
+            EventStartTime startTime = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_EVENT_START_TIME)).get();
+            EventEndDate endDate = ParserUtil.parseEndDate(argMultimap.getValue(PREFIX_EVENT_END_DATE)).get();
+            EventEndTime endTime = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_EVENT_END_TIME)).get();
 
-            ReadOnlyCalendarEvent event = new CalendarEvent(name, start, end);
+            ReadOnlyCalendarEvent event = new CalendarEvent(name, startDate, startTime, endDate, endTime);
 
             return new AddEventCommand(event);
         } catch (IllegalValueException ive) {

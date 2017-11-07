@@ -9,12 +9,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents event start time.
  * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
-public class EventStart {
+public class EventStartTime {
 
 
     public static final String START_TIME_CONSTRAINTS =
-            "Time can only contain numbers, and should be at least 3 digits long 2015-05-29T17:00:00-07:00";
-    public static final String TIME_VALIDATION_REGEX = "";
+            "Time should be in the format HH:MM, and must be valid. Eg. 09:00";
+    public static final String TIME_VALIDATION_REGEX = "^[0-2][0-9]:[0-5][0-9]$";
     public final String value;
 
     /**
@@ -22,12 +22,12 @@ public class EventStart {
      *
      * @throws IllegalValueException if given time string is invalid.
      */
-    public EventStart(String time) throws IllegalValueException {
+    public EventStartTime(String time) throws IllegalValueException {
         requireNonNull(time);
         String trimmedTime = time.trim();
-        /*if (!isValidTime(trimmedTime)) {
+        if (!isValidTime(trimmedTime)) {
             throw new IllegalValueException(START_TIME_CONSTRAINTS);
-        }*/
+        }
         this.value = trimmedTime;
     }
 
@@ -46,8 +46,8 @@ public class EventStart {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EventStart // instanceof handles nulls
-                && this.value.equals(((EventStart) other).value)); // state check
+                || (other instanceof EventStartDate // instanceof handles nulls
+                && this.value.equals(((EventStartDate) other).value)); // state check
     }
 
     @Override

@@ -1,10 +1,11 @@
-package seedu.address.commons.events.model;
+package seedu.address.external;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -21,12 +22,15 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.calendarevent.CalendarEvent;
 
 //@@author yilun-zhu
 /** Calls Calendar API **/
 
 public class CalendarApi {
+
+    private static final Logger logger = LogsCenter.getLogger(CalendarApi.class);
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
@@ -109,25 +113,28 @@ public class CalendarApi {
         com.google.api.services.calendar.Calendar service =
                 getCalendarService();
         String nameSent = eventSent.getEventName().toString();
-        String startTime = eventSent.getStartTime().toString() + "+08:00";
-        String endTime = eventSent.getEndTime().toString() + "+08:00";
+        String startDate = eventSent.getStartDate().toString();
+        String startTime = eventSent.getStartTime().toString() + ":00+08:00";
+        String endDate = eventSent.getEndDate().toString();
+        String endTime = eventSent.getEndTime().toString() + ":00+08:00";
         Event event = new Event()
                 .setSummary(nameSent);
 
 
-        DateTime startDateTime = new DateTime(startTime);
+        DateTime startDateTime = new DateTime(startDate + "T" + startTime);
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("Singapore");
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime(endTime);
+        DateTime endDateTime = new DateTime(endDate + "T" + endTime);
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("Singapore");
         event.setEnd(end);
         String calendarId = "primary";
         event = service.events().insert(calendarId, event).execute();
+        logger.info("Event created");
     }
 
 }

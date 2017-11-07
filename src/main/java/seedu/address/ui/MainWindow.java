@@ -18,12 +18,14 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SmsCommandRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -49,6 +51,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private EmailPanel emailPanel;
     private CalendarPanel calendarPanel;
+    private SmsPanel smsPanel;
     private PersonListPanel personListPanel;
     private PersonInfo personInfo;
     private StatusBarFooter statusBarFooter;
@@ -231,7 +234,7 @@ public class MainWindow extends UiPart<Region> {
      * Switch to the Email panel.
      */
     @FXML
-   public void handleEmail(ArrayList<String> emails) {
+    public void handleEmail(ArrayList<String> emails) {
         emailPanel = new EmailPanel(emails);
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
@@ -246,6 +249,16 @@ public class MainWindow extends UiPart<Region> {
         calendarPanel = new CalendarPanel();
         browserPlaceholder.getChildren().add(calendarPanel.getRoot());
         browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
+    }
+
+    /**
+     * Switch to the SMS panel.
+     */
+    @FXML
+    public void handleSms(ArrayList<String> phoneNumbers) {
+        smsPanel = new SmsPanel(phoneNumbers);
+        browserPlaceholder.getChildren().add(smsPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(smsPanel.getRoot());
     }
 
     /**
@@ -312,6 +325,12 @@ public class MainWindow extends UiPart<Region> {
         handleEmail(event.getEmailList());
     }
     //@@author
+
+    @Subscribe
+    private void handleSmsCommandEvent(SmsCommandRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSms(event.getPhoneNumbers());
+    }
 
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
