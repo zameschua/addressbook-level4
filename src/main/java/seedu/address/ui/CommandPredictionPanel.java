@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelShowEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.CalendarCommand;
@@ -101,7 +102,8 @@ public class CommandPredictionPanel extends UiPart<Region> {
      * Helper method for the constructor to initialise the ListView UI
      */
     private void initListView() {
-        commandPredictionListView.setVisible(false);
+        // Make commandPredictionListView hide completely when hidden so it doesn't block the result box
+        hideCommandPredictionPanel();
         // Attach ObservableList to ListView
         commandPredictionListView.setItems(commandPredictionResults);
     }
@@ -124,10 +126,24 @@ public class CommandPredictionPanel extends UiPart<Region> {
         // Set the prediction to be invisible if there is nothing typed in the Command Box
         // Or if there is no prediction to show
         if (newText.equals("") || commandPredictionResults.isEmpty()) {
-            commandPredictionListView.setVisible(false);
+            hideCommandPredictionPanel();
         } else {
-            commandPredictionListView.setVisible(true);
+            showCommandPredictionPanel();
         }
+    }
+
+    /**
+     * Helper method to raise an event to hide the {@link CommandPredictionPanel}
+     */
+    private void hideCommandPredictionPanel() {
+        raise(new CommandPredictionPanelHideEvent());
+    }
+
+    /**
+     * Helper method to raise an event to show the {@link CommandPredictionPanel}
+     */
+    private void showCommandPredictionPanel() {
+        raise(new CommandPredictionPanelShowEvent());
     }
 
     /**
@@ -165,11 +181,5 @@ public class CommandPredictionPanel extends UiPart<Region> {
             CommandPredictionPanelPreviousSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.getSelectionModel().selectPrevious();
-    }
-
-    @Subscribe
-    private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandPredictionListView.setVisible(false);
     }
 }
