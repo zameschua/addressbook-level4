@@ -210,7 +210,7 @@ _Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows
 Below is a simple explanation of what happens when user enters a command.
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/logic[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -224,14 +224,13 @@ _Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/model[`Model.java`]
 
-The `Model`,
+The `Model` component of CYNC is an independent component as it does not depend on the other four components, its functions are: 
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Storage of  `UserPref` object that represents the user's preferences such as the GUI settings
+* Storage of CYNC's data
+* Exposing of unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 
 Refer to _Figure 3.4.1_ below for an overview of the Model component.
 
@@ -497,7 +496,18 @@ image::email.png[width="800"]
 
 As we can see from the above diagram, the `To:` textbox is filled with the required emails.
 When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
-In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
+In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`.
+
+
+==== Design Considerations
+**Aspect:** Emailing platform to use +
+**Alternative 1 (current choice):** Gmail email service +
+**Pros:** Gmail is the must used and free email service around the globe. Since the Calender feature also requires Google account, using Gmail, will allow users to use both features with 1 account. + 
+**Cons:** Limited to only sending emails through Gmail. +
+**Alternative 2:** OutLook email service +
+**Pros:** OutLook is also a common email service used by many, able to send emails through OutLook. +
+**Cons:** User must have an Outlook account and Google account to use emailing and Calender function.
+
 //end::massemail[]
 
 //tag::smscommand[]
