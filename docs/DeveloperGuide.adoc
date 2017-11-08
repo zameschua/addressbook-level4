@@ -434,6 +434,8 @@ In the event where you want to change certain properties of the application (e.g
 you can do so by editing the configuration file (default: `config.json`) located in the root folder.
 
 == Features Implementation
+
+// tag::commandprediction[]
 === Command Prediction Mechanism
 
 The `CommandPredictionPanel` updates it's contents to show relevant command predictions to the user
@@ -452,8 +454,8 @@ and updates itself to show the new command predictions (if there are any command
 This is illustrated in the diagram below.
 
 // TODO: Check with tutor if diagram is acceptable
-image::command-prediction-panel-event-diagram.png[width="800"]
-_Figure 4.4.2 : Event Diagram of the Command Prediction Panel_
+image::command-prediction-panel-sequence-diagram.png[width="800"]
+_Figure 4.4.2 : Sequence Diagram of the Command Prediction Panel_
 
 ==== Implementation
 
@@ -471,6 +473,8 @@ The `CommandPredictionPanel` then handles this event by finding the commands tha
 The `CommandPredictionPanel` should update it's database automatically whenever a new command is added +
 **Pros**: More automation, less prone to bugs in the `CommandPredictionPanel`. The app also becomes more open to extension +
 **Cons**: This implementation is more coupled and may cause some bugs in `Command` if it is not handled carefully +
+//end::commandprediction[]
+
 //tag::massemail[]
 === Mass Emailing mechanism
 
@@ -495,6 +499,35 @@ As we can see from the above diagram, the `To:` textbox is filled with the requi
 When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
 In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
 //end::massemail[]
+
+//tag::smscommand[]
+=== SMS mechanism
+==== Description
+The SMS command allows the user to SMS multiple customers at once.
+The SMS service is being facilitated by the Twilio Java API.
+
+==== Implementation
+There are two types of SMS commands: +
+1. `sms all` : Send an SMS to every contact being stored in CYNC +
+2.`sms <TAG> [MORE TAGS]`: Send an SMS to all persons containing the tags as specified in the command
+
+On entering an `sms` command, the `SmsPanel` will appear in the `MainDisplayPanel` area,
+with the phone numbers of the SMS targets extracted from the relavent persons and
+pre-filled, as demonstrated in the diagram below.
+
+image::SmsCommandScreenshot1.png[width="800"]
+_Figure 5.3.1: Screenshot of CYNC upon entering the SMS Command_
+
+After the user composes an SMS and clicks on the `send` button, an event is fired to the
+`SmsManager`, which follows the Facade design pattern and in turn interacts with the
+`TwilioApiHelper` which handles the actual sending of the SMS. This is demonstrated in the sequence diagram below.
+
+image::SmsCommandSequenceDiagram.png[width="800"]
+_Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel_
+
+
+//end::smscommand[]
+
 === List All Tags mechanism
 
 // create another section

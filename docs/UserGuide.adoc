@@ -67,6 +67,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 // Preface here
 The features provided in CYNC were mainly designed to speed up the process of businesses reaching out to their customers and to store customers' information efficiently.
 
+// tag::commandprediction[]
 === Navigating the command predictions
 
 CYNC has a command prediction feature, which tries to predict the commands that you will type
@@ -89,6 +90,7 @@ The input field will immediately be updated to contain the text prediction!
 
 image::command-prediction-3.png[width="790"]
 _Figure 3.3 : Pressing the `tab` button will select the highlighted command prediction_
+//end::commandprediction[]
 
 === Viewing help : `help`
 
@@ -308,6 +310,7 @@ After composing your email, click send. +
 CYNC will indicate if the emails are successfully sent.
 //end::massemail[]
 
+//tag::smscommand
 === Mass SMS : `sms`
 Allows user to customise and send out SMSses to all customers or to specific tagged customers. +
 Format: `sms all` or `sms TAG [MORE_TAGS]` +
@@ -332,18 +335,18 @@ SMS to all customers in CYNC.
 * `sms OwesMoney` +
 SMS to customers with tag OwesMoney
 
-The UI should appear as such:
+The UI should appear as such, with the `To` field already filled up:
 
-// TODO: REPLACE IMAGE LATER AFTER FEATURE IS DONE
-image::email.png[width="790"]
+image::SmsCommandScreenshot1.png[width="790"]
 
 [TIP]
 ====
-It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+It is possible to add additional email addresses in `To:` textbox by typing the phone numbers followed by `;`. +
+eg. `<phoneNumber1>;<phoneNumber2>`
 ====
 
-After composing your email, click send. +
-CYNC will indicate if the emails are successfully sent.
+After composing your SMS, click send. +
+//end::smscommand[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
