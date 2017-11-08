@@ -138,6 +138,7 @@ Examples:
 If you wish to see a list of all customers stored in CYNC, you can use this feature +
 Format: `list`
 
+//tag::listalltags[]
 === Listing all tags : `listalltags`
 
 You can use this feature when you've forgotten some of the tags that you've added or if you want to check for duplicate tags. +
@@ -148,6 +149,8 @@ Upon entering this command, you should see the list of tags shown beside the Per
 This is illustrated by the diagram below.
 
 image::ListAllTagsFeature.png[width="790"]
+
+//end::listalltags[]
 
 === Editing a person : `edit`
 
@@ -220,6 +223,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::select[]
 === Selecting a person : `select`
 
 If you wish to view more detailed information about a particular person (such as attendance and picture), you can use this command to do so. +
@@ -243,6 +247,7 @@ Selects the 1st person in the results of the `find` command.
 Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
 image::PersonInfoPieChart.png[width="790"]
+// end::select[]
 
 === Listing entered commands : `history`
 

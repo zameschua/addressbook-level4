@@ -497,9 +497,10 @@ As we can see from the above diagram, the `To:` textbox is filled with the requi
 When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
 In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
 //end::massemail[]
+
+// tag::listalltags[]
 === List All Tags mechanism
 
-// create another section
 The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` receives an event from `listalltags` command
 and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
 
@@ -522,6 +523,8 @@ Upon receiving the request, `EventsCenter` will then send a signal to the UI, sp
 **Alternative 2:** List the tags in the return message of the command, under the command box. +
 **Pros:** User retains functionality of `BrowserPanel`, whereby the user can still click on the person to find out more information. +
 **Cons:** This is less aesthetically pleasing. With many tags, it may be harder for the user to see the desired tag.
+
+// end::listalltags[]
 
 == Documentation
 
