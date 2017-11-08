@@ -262,159 +262,29 @@ public abstract class ExternalCall {
     }
 }
 ```
-###### \java\seedu\address\external\SendEmail.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
+        JoinDate date = editPersonDescriptor.getJoinDate();
 
-/**
- * This Class contains the different email creation methods.
- */
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, date, updatedTags);
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        private JoinDate date;
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+            this.date = toCopy.date;
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        public void setJoinDate(JoinDate date) {
+            this.date = date;
+        }
 
-public class SendEmail {
-
-    /**
-     * Create draft email.
-     *
-     * @param service an authorized Gmail API instance
-     * @param userId user's email address. The special value "me"
-     * can be used to indicate the authenticated user
-     * @param emailContent the MimeMessage used as email within the draft
-     * @return the created draft
-     * @throws MessagingException
-     * @throws IOException
-     */
-    public static Draft createDraft(Gmail service,
-                                    String userId,
-                                    MimeMessage emailContent)
-            throws MessagingException, IOException {
-        Message message = createMessageWithEmail(emailContent);
-        Draft draft = new Draft();
-        draft.setMessage(message);
-        draft = service.users().drafts().create(userId, draft).execute();
-
-        System.out.println("Draft id: " + draft.getId());
-        System.out.println(draft.toPrettyString());
-        return draft;
-    }
-
-
-    /**
-     * Send an email from the user's mailbox to its recipient.
-     *
-     * @param service Authorized Gmail API instance.
-     * @param userId User's email address. The special value "me"
-     * can be used to indicate the authenticated user.
-     * @param emailContent Email to be sent.
-     * @return The sent message
-     * @throws MessagingException
-     * @throws IOException
-     */
-    public static Message sendMessage(Gmail service,
-                                      String userId,
-                                      MimeMessage emailContent)
-            throws MessagingException, IOException {
-        Message message = createMessageWithEmail(emailContent);
-        message = service.users().messages().send(userId, message).execute();
-
-        System.out.println("Message id: " + message.getId());
-        System.out.println(message.toPrettyString());
-        return message;
-    }
-
-
-    /**
-     * Create a message from an email.
-     *
-     * @param emailContent Email to be set to raw of message
-     * @return a message containing a base64url encoded email
-     * @throws IOException
-     * @throws MessagingException
-     */
-    public static Message createMessageWithEmail(MimeMessage emailContent)
-            throws MessagingException, IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        emailContent.writeTo(buffer);
-        byte[] bytes = buffer.toByteArray();
-        String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
-        Message message = new Message();
-        message.setRaw(encodedEmail);
-        return message;
-    }
-
-    /**
-     * Create a MimeMessage using the parameters provided.
-     *
-     * @param to email address of the receiver
-     * @param from email address of the sender, the mailbox account
-     * @param subject subject of the email
-     * @param bodyText body text of the email
-     * @return the MimeMessage to be used to send email
-     * @throws MessagingException
-     */
-    public static MimeMessage createEmail(String to,
-                                          String from,
-                                          String subject,
-                                          String bodyText)
-            throws MessagingException {
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage email = new MimeMessage(session);
-
-        email.setFrom(new InternetAddress(from));
-        email.addRecipient(javax.mail.Message.RecipientType.TO,
-                new InternetAddress(to));
-        email.setSubject(subject);
-        email.setText(bodyText);
-        return email;
-    }
-
-
-    /**
-     * Create a MimeMessage using the parameters provided.
-     *
-     * @param to Email address of the receiver.
-     * @param from Email address of the sender, the mailbox account.
-     * @param subject Subject of the email.
-     * @param bodyText Body text of the email.
-     * @param file Path to the file to be attached.
-     * @return MimeMessage to be used to send email.
-     * @throws MessagingException
-     */
-    public static MimeMessage createEmailWithAttachment(String to,
-                                                        String from,
-                                                        String subject,
-                                                        String bodyText,
-                                                        File file)
-            throws MessagingException, IOException {
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage email = new MimeMessage(session);
-
-        email.setFrom(new InternetAddress(from));
-        email.addRecipient(javax.mail.Message.RecipientType.TO,
-                new InternetAddress(to));
-        email.setSubject(subject);
-
-        MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(bodyText, "text/plain");
-
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(mimeBodyPart);
-
-        mimeBodyPart = new MimeBodyPart();
-        DataSource source = new FileDataSource(file);
-
-        mimeBodyPart.setDataHandler(new DataHandler(source));
-        mimeBodyPart.setFileName(file.getName());
-
-        multipart.addBodyPart(mimeBodyPart);
-        email.setContent(multipart);
-
-        return email;
-    }
-
-}
+        public JoinDate getJoinDate() {
+            return date;
+        }
 ```
 ###### \java\seedu\address\logic\commands\MassEmailCommand.java
 ``` java
@@ -463,6 +333,11 @@ public class MassEmailCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\AddCommandParser.java
+``` java
+            JoinDate date = new JoinDate();
+            ReadOnlyPerson person = new Person(name, phone, email, address, date, tagList);
+```
 ###### \java\seedu\address\logic\parser\MassEmailParser.java
 ``` java
 
@@ -489,6 +364,34 @@ public class MassEmailParser implements Parser<MassEmailCommand> {
 
         return new MassEmailCommand(new MassEmailPredicate(Arrays.asList(nameKeywords)));
     }
+}
+```
+###### \java\seedu\address\model\person\JoinDate.java
+``` java
+
+public class JoinDate {
+
+    private String joinDate;
+
+    /**
+     * Default constructor
+     * only used for testing
+     */
+    public JoinDate(String date) {
+        joinDate = date;
+    }
+
+    public JoinDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //e.g 16/10/2017
+        LocalDate localDate = LocalDate.now();
+        joinDate = dtf.format(localDate);
+    }
+
+    @Override
+    public String toString() {
+        return joinDate;
+    }
+
 }
 ```
 ###### \java\seedu\address\model\person\MassEmailPredicate.java
@@ -533,6 +436,44 @@ public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    private ObjectProperty<JoinDate> joinDate;
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public JoinDate getJoinDate() {
+        return joinDate.get();
+    }
+
+    @Override
+    public ObjectProperty<JoinDate> joinDateProperty() {
+        return joinDate;
+    }
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    ObjectProperty<JoinDate> joinDateProperty();
+    JoinDate getJoinDate();
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+                .append(" Join Date: ")
+                .append(getJoinDate())
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
+    @XmlElement(required = true)
+    private String date;
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
+        date = source.getJoinDate().toString();
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
+``` java
+        final JoinDate joinDate = new JoinDate(this.date);
+```
 ###### \java\seedu\address\ui\EmailPanel.java
 ``` java
 
@@ -543,8 +484,6 @@ public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
 public class EmailPanel extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "EmailPanel.fxml";
-    private static final String signature = "Best Regards,\n"
-            + "Ms.Renee Seet\n" + "Customer Manager\n";  // Should be able to customise
     private static final Logger logger = LogsCenter.getLogger(EmailPanel.class);
 
     @FXML
@@ -567,7 +506,6 @@ public class EmailPanel extends UiPart<Region> {
             });
         String recipients = appendEmails(emailList);
         recipientsBox.setText(recipients);
-        emailMessage.setText(signature);
         registerAsAnEventHandler(this);
     }
 
@@ -641,7 +579,7 @@ public class LoginPanel extends UiPart<Region> {
      * Switch to the Email panel.
      */
     @FXML
-   public void handleEmail(ArrayList<String> emails) {
+    public void handleEmail(ArrayList<String> emails) {
         emailPanel = new EmailPanel(emails);
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
@@ -674,7 +612,7 @@ public class LoginPanel extends UiPart<Region> {
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="678.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="emailpanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="678.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
          <font>

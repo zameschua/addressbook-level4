@@ -45,6 +45,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonMaxAttendanceException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -217,6 +218,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         } catch (DuplicatePersonException | PersonNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
+        } catch (PersonMaxAttendanceException e) {
+            throw new IllegalArgumentException(
+                    "editedPerson's attendance is already maximum!");
         }
 
         assertCommandSuccess(command, expectedModel,
