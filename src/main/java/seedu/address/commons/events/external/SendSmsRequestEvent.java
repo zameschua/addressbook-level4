@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author zameschua
 /**
- * Indicates a request for Sending an SMS
+ * Indicates a request for sending an SMS
  */
 public class SendSmsRequestEvent extends BaseEvent {
 
