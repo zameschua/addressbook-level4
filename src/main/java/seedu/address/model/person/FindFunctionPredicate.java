@@ -47,7 +47,7 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         Set<Tag> tags = person.getTags();
         for (Tag s : tags) {
             for (String key : keywords) {
-                if (key.equals(s.tagName)) {
+                if (key.equalsIgnoreCase(s.tagName)) {
                     return true;
                 }
             }
