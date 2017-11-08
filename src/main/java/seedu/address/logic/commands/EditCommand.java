@@ -223,7 +223,7 @@ public class EditCommand extends UndoableCommand {
         public JoinDate getJoinDate() {
             return date;
         }
-        
+
         //@@author pohjie
         public void setProfilePicture(ProfilePicture profilePicture) {
             this.profilePicture = profilePicture;
