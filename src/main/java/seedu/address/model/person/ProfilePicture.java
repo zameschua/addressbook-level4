@@ -32,7 +32,9 @@ public class ProfilePicture {
     }
 
     @Override
-    public String toString() { return profilePicPath; }
+    public String toString() {
+        return profilePicPath;
+    }
 
     @Override
     public boolean equals(Object other) {

@@ -244,21 +244,6 @@ public class Attendance {
 ``` java
     private ProfilePicture profilePic;
     private Attendance attendancePic;
-
-    /**
-     * Every field must be present and not null.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.profilePic = new ProfilePicture();
-        this.attendancePic = new Attendance();
-    }
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
@@ -267,7 +252,7 @@ public class Attendance {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getJoinDate(),
                 source.getTags());
     }
 
@@ -351,10 +336,14 @@ public class Attendance {
 ###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
-    public ProfilePicture getProfilePic() { return profilePic; }
+    public ProfilePicture getProfilePic() {
+        return profilePic;
+    }
 
     @Override
-    public Attendance getAttendancePic() { return attendancePic; }
+    public Attendance getAttendancePic() {
+        return attendancePic;
+    }
 ```
 ###### \java\seedu\address\model\person\ProfilePicture.java
 ``` java

@@ -22,7 +22,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     //@@author pohjie
     ProfilePicture getProfilePic();
-    Attendance getAttendancePic();
+    Attendance getAttendance();
     //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
