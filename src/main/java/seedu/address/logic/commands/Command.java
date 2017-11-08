@@ -54,6 +54,30 @@ public abstract class Command {
         mess.append("\n");
         return mess.toString();
     }
+
+    //@@author zameschua
+    /**
+     * Constructs a feedback message to summarise an operation for mass emailing
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for persons displayed
+     */
+
+    public static String getMessageForSms(int displaySize, ArrayList<String> phoneNumbers) {
+        if (displaySize != 0) {
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
+            mess.append("\n");
+            for (String phoneNumber : phoneNumbers) {
+                mess.append(phoneNumber);
+                mess.append("\n");
+            }
+            return mess.toString();
+        } else {
+            return "0 persons found";
+        }
+    }
+    //@@author
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of all tags.
      *

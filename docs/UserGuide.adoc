@@ -270,7 +270,7 @@ Examples:
 
 * `addEvent n/Halloween Party s/2017-10-30T17:00 e/2017-10-30T22:00`
 
-
+//tag::massemail[]
 === Mass Emailing : `mass`
 Allows user to customise and send out emails to all customers or to specific tagged customers. +
 Format: `mass all` or `mass TAG [MORE_TAG]` +
@@ -306,6 +306,7 @@ It is possible to add additional email addresses in `To:` textbox by typing the 
 
 After composing your email, click send. +
 CYNC will indicate if the emails are successfully sent.
+//end::massemail[]
 
 === Mass SMS : `sms`
 Allows user to customise and send out SMSses to all customers or to specific tagged customers. +
