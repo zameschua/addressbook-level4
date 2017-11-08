@@ -1,4 +1,33 @@
 # zameschua
+###### \java\seedu\address\commons\events\external\SendSmsRequestEvent.java
+``` java
+/**
+ * Indicates a request for Sending an SMS
+ */
+public class SendSmsRequestEvent extends BaseEvent {
+
+    private String message;
+    private String[] recipients;
+
+    public SendSmsRequestEvent(String message, String[] recipients) {
+        this.message = message;
+        this.recipients = recipients;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String[] getRecipients() {
+        return recipients;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\CommandBoxContentsChangedEvent.java
 ``` java
 /**
@@ -81,6 +110,175 @@ public class CommandPredictionPanelSelectionChangedEvent extends BaseEvent {
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\SmsCommandRequestEvent.java
+``` java
+/**
+ * Indicates a request for SmsCommand
+ */
+public class SmsCommandRequestEvent extends BaseEvent {
+
+    private final ArrayList<String> phoneNumbers;
+
+    public SmsCommandRequestEvent(ArrayList<String> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public ArrayList<String> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\external\sms\SmsManager.java
+``` java
+/**
+ * Follows Singleton and Facade design pattern,
+ * for other parts of the app to interface with the Twilio SMS service
+ */
+public class SmsManager {
+
+    private static SmsManager instance = null;
+
+    protected SmsManager() {
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Creates an instance of the SmsManager and registers it as an event handler
+     * @return The Singleton instance of the SmsManager
+     */
+    public static SmsManager init() {
+        if (instance == null) {
+            instance = new SmsManager();
+        }
+        return instance;
+    }
+
+    /**
+     * Registers the object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
+    }
+
+    @Subscribe
+    public void handleSendSmsRequestEvent(SendSmsRequestEvent event) {
+        String[] recipients = event.getRecipients();
+        String message = event.getMessage();
+
+        for (String phoneNumber : recipients) {
+            TwilioApiHelper.sendSms(message, phoneNumber);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\Command.java
+``` java
+    /**
+     * Constructs a feedback message to summarise an operation for mass emailing
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for persons displayed
+     */
+
+    public static String getMessageForSms(int displaySize, ArrayList<String> phoneNumbers) {
+        if (displaySize != 0) {
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
+            mess.append("\n");
+            for (String phoneNumber : phoneNumbers) {
+                mess.append(phoneNumber);
+                mess.append("\n");
+            }
+            return mess.toString();
+        } else {
+            return "0 persons found";
+        }
+    }
+```
+###### \java\seedu\address\logic\commands\SmsCommand.java
+``` java
+/**
+ * Brings up the smsPanel
+ * Then finds and lists all persons in address book whose tags match those in the command, for group SMSsing
+ * Keyword matching is case-sensitive.
+ */
+public class SmsCommand extends Command {
+
+    public static final String COMMAND_WORD = "sms";
+    public static final String MESSAGE_SUCCESS = "Listed all required SMSses";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": To SMS all persons with tag\n"
+            + COMMAND_WORD + " all : To send an SMS to everyone in CYNC\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"
+            + "Example: " + COMMAND_WORD + " Sec 2 Sec 3\n";
+
+    // TODO: Change to something like tagMatchingPredicate
+    private final MassEmailPredicate predicate;
+
+    public SmsCommand(MassEmailPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        ObservableList<ReadOnlyPerson> allPerson = model.getFilteredPersonList();
+        ArrayList<String> phoneNumbers = new ArrayList<String>();
+        for (ReadOnlyPerson person : allPerson) {
+            phoneNumbers.add(person.getPhone().toString());
+        }
+        EventsCenter.getInstance().post(new SmsCommandRequestEvent(phoneNumbers));
+        return new CommandResult(getMessageForSms(allPerson.size(), phoneNumbers));
+    }
+
+    // TODO: Change to something like tag matching predicate
+    public MassEmailPredicate getPredicate() {
+        return predicate;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MassEmailCommand // instanceof handles nulls
+                && this.predicate.equals(((SmsCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case SmsCommand.COMMAND_WORD:
+            return new SmsCommandParser().parse(arguments);
+```
+###### \java\seedu\address\logic\parser\SmsCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SmsCommand object
+ */
+public class SmsCommandParser {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SmsCommand
+     * and returns an SmsCommand object for execution.
+     */
+    public SmsCommand parse(String args)throws ParseException {
+        String trimmedArgs = args.trim();
+
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SmsCommand.MESSAGE_USAGE));
+        }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        // TODO: Change to TagPredicate or something
+        return new SmsCommand(new MassEmailPredicate(Arrays.asList(nameKeywords)));
     }
 }
 ```
@@ -178,6 +376,61 @@ public class CommandPredictionPanel extends UiPart<Region> {
     private void handleSearchPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.setVisible(false);
+    }
+}
+```
+###### \java\seedu\address\ui\SmsPanel.java
+``` java
+/**
+ * The Sms Panel of the App
+ * Appears on the main page after typing the "sms" command
+ */
+public class SmsPanel extends UiPart<Region> {
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "SmsPanel.fxml";
+    private static final Logger logger = LogsCenter.getLogger(SmsPanel.class);
+
+    @FXML
+    private TextField recipientsBox;
+    @FXML
+    private TextArea smsMessage;
+    @FXML
+    private Button sendButton;
+
+    public SmsPanel(ArrayList<String> phoneNumbersList) {
+        super(FXML);
+
+        SmsManager.init();
+        sendButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                sendSms();
+                logger.info("SEND BUTTON CLICKED");
+            }
+        });
+        String recipients = appendPhoneNumbers(phoneNumbersList);
+        recipientsBox.setText(recipients);
+    }
+
+    /**
+     * Method returns a string of phone numbers, joined by semicolons `;`
+     * to be displayed in recipientBox
+     */
+    private String appendPhoneNumbers(ArrayList<String> phoneNumbers) {
+        StringBuilder phoneNumbersStringBuilder = new StringBuilder();
+        for (String phoneNumber: phoneNumbers) {
+            phoneNumbersStringBuilder.append(phoneNumber).append(";");
+        }
+        return phoneNumbersStringBuilder.toString();
+    }
+
+    /**
+     * Method posts {@link SendSmsRequestEvent}
+     */
+    private void sendSms() {
+        String message = smsMessage.getText();
+        String[] recipients = recipientsBox.getText().split(";");
+        EventsCenter.getInstance().post(new SendSmsRequestEvent(message, recipients));
     }
 }
 ```
