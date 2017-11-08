@@ -60,12 +60,24 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for details of each command. Before you do so, you may
+wish to familiarise yourself with the layout of CYNC. This will help you to better understand the instructions for each
+feature later on.
+
+== UI Segments
+We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components.
+
+[#UI]
+
+image::UiExplain.png[width="790"]
 
 == Features
 
-// Preface here
-The features provided in CYNC were mainly designed to speed up the process of businesses reaching out to their customers and to store customers' information efficiently.
+The features in CYNC are designed to assist businesses in storing their customers' information.
+We understand that small business owners are often strapped for time, so we have kept the commands short and intuitive.
+
+Feel free to jump to the relevant command that you think will be useful to you. If you have no idea where to start,
+we recommend you to read the `add` command instruction as you will definitely need this command to get started.
 
 === Navigating the command predictions
 
@@ -97,11 +109,10 @@ Format: `help`
 
 === Adding a new customer: `add`
 
-// "add a person" is too stiff- use "to add a contact to your address book"
-// special notes (another section) - elaborate what tag is- "if you want to sort users by groups"
-Adds a new customer to the CYNC +
-Every customer will require a name[n/], email[e/], address[a/]. +
-tags[t/] could be added to a customer for grouping.
+This is your most important feature of Cync as it allows you to add a customer's information into Cync. +
+Every customer will require a name[n/], email[e/], address[a/].
+
+If you wish to group the customers together, you can use our tags[t/] feature.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 ====
@@ -119,21 +130,18 @@ A person can have any number of tags (including 0)
 
 Examples:
 
-// elaborate what does the n all these stand for?
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all people : `list`
 
-Shows a list of all customers stored in the CYNC. +
+If you wish to see a list of all customers stored in CYNC, you can use this feature +
 Format: `list`
 
 === Listing all tags : `listalltags`
 
 You can use this feature when you've forgotten some of the tags that you've added or if you want to check for duplicate tags. +
 Format: `listalltags`
-
-// Replace the "Shows a list of..." above with this line
 
 Upon entering this command, you should see the list of tags shown beside the Person List.
 
@@ -143,16 +151,16 @@ image::ListAllTagsFeature.png[width="790"]
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Your customer may have changed his/her details recently and you need to update them.
+If so, you can edit an existing person in CYNC by using this feature. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 // What is "INDEX"? Where is it? What is an integer?
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown beside a customer's name in your current window. The index *must be a positive whole number* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-// Line below is not evident
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When editing tags, we replace the existing tags with the updated ones.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -234,12 +242,12 @@ Selects the 1st person in the results of the `find` command.
 
 Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
-image::PersonDetailedInfo.png[width="790"]
+image::PersonInfoPieChart.png[width="790"]
 
 === Listing entered commands : `history`
 
-// Motivation for the features
-Lists all the commands that you have entered in reverse chronological order. +
+You may have forgotten how you ended up at your current state of customers' information in CYNC and you will like to look back at your history.
+If so, you can use this command, which will lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 [NOTE]
@@ -249,7 +257,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 === Display Google Calendar: `calendar`
 
-To help you plan your schedule, we have integrated google calendar into the software +
+To help you plan your schedule, we have integrated Google Calendar into the software +
 To open up google calendar in the browser panel, type `calendar` in the command box +
 Format: `calendar`
 
@@ -348,8 +356,8 @@ CYNC will indicate if the emails are successfully sent.
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-// Motivation
-Restores the address book to the state before the previous _undoable_ command was executed. +
+If you have accidentally keyed in a command and you wish to revert CYNC to its previous state, you can use this command.
+This command will restore CYNC to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
@@ -418,7 +426,9 @@ There is no need to save manually.
 
 == Command Summary
 
-// Preface
+We understand that there is a ton of information in this User Guide and you may just need a quick reference on how to use a certain command.
+If so, you can refer to this list.
+
 // Put in a table
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -446,14 +456,3 @@ e.g `mass friends`
 GUI +
 
 * stands for Graphical User Interface : allows users to interact with electronic devices through graphical icons and visual indicators.
-
-== UI Segments
-We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components.
-
-[#UI]
-
-image::UiExplain.png[width="790"]
-
-
-
-
