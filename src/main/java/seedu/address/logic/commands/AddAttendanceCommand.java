@@ -24,6 +24,7 @@ import seedu.address.model.person.exceptions.PersonMaxAttendanceException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author pohjie
 /**
  * Increment attendance count of an existing person in the address book.
  */
