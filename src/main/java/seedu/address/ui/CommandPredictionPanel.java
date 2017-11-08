@@ -102,8 +102,6 @@ public class CommandPredictionPanel extends UiPart<Region> {
      * Helper method for the constructor to initialise the ListView UI
      */
     private void initListView() {
-        // Make commandPredictionListView hide completely when hidden so it doesn't block the result box
-        hideCommandPredictionPanel();
         // Attach ObservableList to ListView
         commandPredictionListView.setItems(commandPredictionResults);
     }

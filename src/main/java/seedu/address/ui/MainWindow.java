@@ -358,16 +358,27 @@ public class MainWindow extends UiPart<Region> {
     //@@author
 
     //@@author zameschua
+    /**
+     * Hides the {@link CommandPredictionPanel}
+     * @param event The event thrown by the {@link CommandBox}
+     */
     @Subscribe
     private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        assert resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot());
         resultDisplayPlaceholder.getChildren().remove(commandPredictionPanel.getRoot());
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
     }
 
+    /**
+     * Shows the {@link CommandPredictionPanel} only if it isn't visible
+     * @param event The event thrown by the {@link CommandBox}
+     */
     @Subscribe
     private void handleCommandPredictionPanelShowEvent(CommandPredictionPanelShowEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
+        if (!resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot())) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
+        }
     }
     //@@author
 }
