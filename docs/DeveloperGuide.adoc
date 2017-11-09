@@ -226,7 +226,7 @@ _Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 *API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/model[`Model.java`]
 
-The `Model` component of CYNC is an independent component as it does not depend on the other four components, its functions are: 
+The `Model` component of CYNC is an independent component as it does not depend on the other four components, its functions are:
 
 * Storage of  `UserPref` object that represents the user's preferences such as the GUI settings
 * Storage of CYNC's data
@@ -502,7 +502,7 @@ In the external component,it will authenticate the user's Gmail account before t
 ==== Design Considerations
 **Aspect:** Emailing platform to use +
 **Alternative 1 (current choice):** Gmail email service +
-**Pros:** Gmail is the must used and free email service around the globe. Since the Calender feature also requires Google account, using Gmail, will allow users to use both features with 1 account. + 
+**Pros:** Gmail is the must used and free email service around the globe. Since the Calender feature also requires Google account, using Gmail, will allow users to use both features with 1 account. +
 **Cons:** Limited to only sending emails through Gmail. +
 **Alternative 2:** OutLook email service +
 **Pros:** OutLook is also a common email service used by many, able to send emails through OutLook. +
