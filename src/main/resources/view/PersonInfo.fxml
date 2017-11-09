@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,16 +11,17 @@
 <?import javafx.scene.text.Font?>
 
 <!-- @@author pohjie -->
-<VBox styleClass="card" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+
+<VBox styleClass="card" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane VBox.vgrow="ALWAYS">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints valignment="CENTER" minHeight="10.0" prefHeight="165.0" vgrow="SOMETIMES" />
-          <RowConstraints valignment="CENTER" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
-          <RowConstraints valignment="CENTER" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="165.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="74.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="139.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <GridPane alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -27,10 +29,10 @@
                 <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints valignment="CENTER" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints valignment="CENTER" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints valignment="CENTER" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints valignment="CENTER" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label fx:id="name" alignment="CENTER" text="Name" textAlignment="JUSTIFY">
@@ -59,7 +61,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></ImageView>
-            <ImageView fx:id="attendance" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+            <PieChart fx:id="attendance" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

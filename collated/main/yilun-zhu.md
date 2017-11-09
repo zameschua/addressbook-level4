@@ -1,9 +1,29 @@
 # yilun-zhu
-###### \java\seedu\address\commons\events\model\CalendarApi.java
+###### \java\seedu\address\commons\events\ui\CalendarRequestEvent.java
+``` java
+/**
+ * Indicates a request for Calendar
+ */
+
+public class CalendarRequestEvent extends BaseEvent {
+
+    public CalendarRequestEvent() {
+    ;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\external\CalendarApi.java
 ``` java
 /** Calls Calendar API **/
 
 public class CalendarApi {
+
+    private static final Logger logger = LogsCenter.getLogger(CalendarApi.class);
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
@@ -86,45 +106,30 @@ public class CalendarApi {
         com.google.api.services.calendar.Calendar service =
                 getCalendarService();
         String nameSent = eventSent.getEventName().toString();
-        String startTime = eventSent.getStartTime().toString() + "+08:00";
-        String endTime = eventSent.getEndTime().toString() + "+08:00";
+        String startDate = eventSent.getStartDate().toString();
+        String startTime = eventSent.getStartTime().toString() + ":00+08:00";
+        String endDate = eventSent.getEndDate().toString();
+        String endTime = eventSent.getEndTime().toString() + ":00+08:00";
         Event event = new Event()
                 .setSummary(nameSent);
 
 
-        DateTime startDateTime = new DateTime(startTime);
+        DateTime startDateTime = new DateTime(startDate + "T" + startTime);
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("Singapore");
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime(endTime);
+        DateTime endDateTime = new DateTime(endDate + "T" + endTime);
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("Singapore");
         event.setEnd(end);
         String calendarId = "primary";
         event = service.events().insert(calendarId, event).execute();
+        logger.info("Event created");
     }
 
-}
-```
-###### \java\seedu\address\commons\events\ui\CalendarRequestEvent.java
-``` java
-/**
- * Indicates a request for Calendar
- */
-
-public class CalendarRequestEvent extends BaseEvent {
-
-    public CalendarRequestEvent() {
-    ;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
 }
 ```
 ###### \java\seedu\address\logic\commands\AddEventCommand.java
@@ -139,12 +144,16 @@ public class AddEventCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the google calendar. "
             + "Parameters: "
             + PREFIX_EVENT_NAME + "EVENT NAME "
-            + PREFIX_EVENT_START + "START DATE AND TIME "
-            + PREFIX_EVENT_END + "END DATE AND TIME "
+            + PREFIX_EVENT_START_DATE + "START DATE "
+            + PREFIX_EVENT_START_TIME + "START TIME "
+            + PREFIX_EVENT_END_DATE + "END DATE "
+            + PREFIX_EVENT_END_TIME + "END TIME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_NAME + "Halloween Party "
-            + PREFIX_EVENT_START + "2015-07-08T15:00:00 "
-            + PREFIX_EVENT_END + "2015-07-08T18:00:00 ";
+            + PREFIX_EVENT_START_DATE + "2015-07-08 "
+            + PREFIX_EVENT_START_TIME + "15:00 "
+            + PREFIX_EVENT_END_DATE + "2015-07-08 "
+            + PREFIX_EVENT_END_TIME + "18:00";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
 
@@ -214,18 +223,22 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
      */
     public AddEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_EVENT_START, PREFIX_EVENT_END);
+                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_EVENT_START_DATE,
+                        PREFIX_EVENT_START_TIME, PREFIX_EVENT_END_DATE, PREFIX_EVENT_END_TIME);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_EVENT_START, PREFIX_EVENT_END)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_EVENT_START_DATE, PREFIX_EVENT_START_TIME,
+                PREFIX_EVENT_END_DATE, PREFIX_EVENT_END_TIME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
         }
 
         try {
             EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME)).get();
-            EventStart start = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_EVENT_START)).get();
-            EventEnd end = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_EVENT_END)).get();
+            EventStartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_EVENT_START_DATE)).get();
+            EventStartTime startTime = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_EVENT_START_TIME)).get();
+            EventEndDate endDate = ParserUtil.parseEndDate(argMultimap.getValue(PREFIX_EVENT_END_DATE)).get();
+            EventEndTime endTime = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_EVENT_END_TIME)).get();
 
-            ReadOnlyCalendarEvent event = new CalendarEvent(name, start, end);
+            ReadOnlyCalendarEvent event = new CalendarEvent(name, startDate, startTime, endDate, endTime);
 
             return new AddEventCommand(event);
         } catch (IllegalValueException ive) {
@@ -253,6 +266,53 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         case CalendarCommand.COMMAND_WORD:
             return new CalendarCommand();
 ```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<EventName>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventName> parseEventName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new EventName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<EventStartDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventStartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new EventStartDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<EventStartDate>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventStartTime> parseStartTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(new EventStartTime(time.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<EventEndDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventEndDate> parseEndDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new EventEndDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<EventStartDate>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventEndTime> parseEndTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(new EventEndTime(time.get())) : Optional.empty();
+    }
+```
 ###### \java\seedu\address\model\calendarevent\CalendarEvent.java
 ``` java
 /**
@@ -262,25 +322,31 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
 public class CalendarEvent implements ReadOnlyCalendarEvent {
 
     private ObjectProperty<EventName> name;
-    private ObjectProperty<EventStart> start;
-    private ObjectProperty<EventEnd> end;
+    private ObjectProperty<EventStartDate> startDate;
+    private ObjectProperty<EventStartTime> startTime;
+    private ObjectProperty<EventEndDate> endDate;
+    private ObjectProperty<EventEndTime> endTime;
 
 
     /**
      * Every field must be present and not null.
      */
-    public CalendarEvent(EventName name, EventStart start, EventEnd end) {
-        requireAllNonNull(name, start, end);
+    public CalendarEvent(EventName name, EventStartDate startDate, EventStartTime startTime,
+                         EventEndDate endDate, EventEndTime endTime) {
+        requireAllNonNull(name, startDate, startTime, endDate, endTime);
         this.name = new SimpleObjectProperty<>(name);
-        this.start = new SimpleObjectProperty<>(start);
-        this.end = new SimpleObjectProperty<>(end);
+        this.startDate = new SimpleObjectProperty<>(startDate);
+        this.startTime = new SimpleObjectProperty<>(startTime);
+        this.endDate = new SimpleObjectProperty<>(endDate);
+        this.endTime = new SimpleObjectProperty<>(endTime);
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyCalendarEvent.
      */
     public CalendarEvent(ReadOnlyCalendarEvent source) {
-        this(source.getEventName(), source.getStartTime(), source.getEndTime());
+        this(source.getEventName(), source.getStartDate(), source.getStartTime(),
+                source.getEndDate(), source.getEndTime());
     }
 
     public void setName(EventName name) {
@@ -297,32 +363,58 @@ public class CalendarEvent implements ReadOnlyCalendarEvent {
         return name.get();
     }
 
-    public void setStart(EventStart time) {
-        this.start.set(requireNonNull(time));
+    public void setStartDate(EventStartDate date) {
+        this.startDate.set(requireNonNull(date));
     }
 
-    public void setEnd(EventEnd time) {
-        this.end.set(requireNonNull(time));
+    public void setStartTime(EventStartTime time) {
+        this.startTime.set(requireNonNull(time));
+    }
+
+    public void setEndDate(EventEndDate date) {
+        this.endDate.set(requireNonNull(date));
+    }
+
+    public void setEndTime(EventEndTime time) { this.endTime.set(requireNonNull(time)); }
+
+    @Override
+    public ObjectProperty<EventEndDate> endDateProperty() {
+        return this.endDate;
     }
 
     @Override
-    public ObjectProperty<EventEnd> endProperty() {
-        return this.end;
+    public ObjectProperty<EventEndTime> endTimeProperty() {
+        return this.endTime;
     }
 
     @Override
-    public ObjectProperty<EventStart> startProperty() {
-        return this.start;
+    public ObjectProperty<EventStartDate> startDateProperty() {
+        return this.startDate;
     }
 
     @Override
-    public EventStart getStartTime() {
-        return this.start.get();
+    public ObjectProperty<EventStartTime> startTimeProperty() {
+        return this.startTime;
     }
 
     @Override
-    public EventEnd getEndTime() {
-        return this.end.get();
+    public EventStartDate getStartDate() {
+        return this.startDate.get();
+    }
+
+    @Override
+    public EventStartTime getStartTime() {
+        return this.startTime.get();
+    }
+
+    @Override
+    public EventEndDate getEndDate() {
+        return this.endDate.get();
+    }
+
+    @Override
+    public EventEndTime getEndTime() {
+        return this.endTime.get();
     }
 
 
@@ -337,7 +429,7 @@ public class CalendarEvent implements ReadOnlyCalendarEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, start, end);
+        return Objects.hash(name, startDate, startTime, endDate, endTime);
     }
 
     @Override
@@ -347,18 +439,72 @@ public class CalendarEvent implements ReadOnlyCalendarEvent {
 
 }
 ```
-###### \java\seedu\address\model\calendarevent\EventEnd.java
+###### \java\seedu\address\model\calendarevent\EventEndDate.java
 ``` java
 /**
- * Represents time in the calendar.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Represents event end date in the calendar.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class EventEnd {
+public class EventEndDate {
 
 
-    public static final String START_TIME_CONSTRAINTS =
-            "Time can only contain numbers, and should be at least 3 digits long 2015-05-29T17:00:00-07:00";
-    public static final String TIME_VALIDATION_REGEX = "";
+    public static final String END_DATE_CONSTRAINTS =
+            "Date should be in the format YYYY-MM-DD. Date should be valid. Eg. 2017-10-01";
+    public static final String DATE_VALIDATION_REGEX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
+    public final String value;
+
+    /**
+     * Validates given date.
+     *
+     * @throws IllegalValueException if given date string is invalid.
+     */
+    public EventEndDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!isValidDate(trimmedDate)) {
+            throw new IllegalValueException(END_DATE_CONSTRAINTS);
+        }
+        this.value = trimmedDate;
+    }
+
+    /**
+     * Returns true if a given string is a valid date.
+     */
+    public static boolean isValidDate(String test) {
+        return test.matches(DATE_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EventEndDate // instanceof handles nulls
+                && this.value.equals(((EventEndDate) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}
+```
+###### \java\seedu\address\model\calendarevent\EventEndTime.java
+``` java
+/**
+ * Represents event end time in the calendar.
+ * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
+ */
+public class EventEndTime {
+
+
+    public static final String END_TIME_CONSTRAINTS =
+            "Time should be in the format HH:MM, and must be valid. Eg. 09:00";
+    public static final String TIME_VALIDATION_REGEX = "^[0-2][0-9]:[0-5][0-9]$";
     public final String value;
 
     /**
@@ -366,19 +512,19 @@ public class EventEnd {
      *
      * @throws IllegalValueException if given time string is invalid.
      */
-    public EventEnd(String time) throws IllegalValueException {
+    public EventEndTime(String time) throws IllegalValueException {
         requireNonNull(time);
-        String trimmedPhone = time.trim();
-        /*if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(START_TIME_CONSTRAINTS);
-        }*/
-        this.value = trimmedPhone;
+        String trimmedTime = time.trim();
+        if (!isValidTime(trimmedTime)) {
+            throw new IllegalValueException(END_TIME_CONSTRAINTS);
+        }
+        this.value = trimmedTime;
     }
 
     /**
      * Returns true if a given string is a valid time.
      */
-    public static boolean isValidPhone(String test) {
+    public static boolean isValidTime(String test) {
         return test.matches(TIME_VALIDATION_REGEX);
     }
 
@@ -390,8 +536,8 @@ public class EventEnd {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EventStart // instanceof handles nulls
-                && this.value.equals(((EventStart) other).value)); // state check
+                || (other instanceof EventStartDate // instanceof handles nulls
+                && this.value.equals(((EventStartDate) other).value)); // state check
     }
 
     @Override
@@ -410,13 +556,13 @@ public class EventEnd {
 public class EventName {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Event names should not be blank, and should not contain special characters";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String EVENT_NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String EVENT_NAME_VALIDATION_REGEX = "^[^-\\s][a-zA-Z0-9_\\s-]+$";
 
     public final String fullEventName;
 
@@ -461,18 +607,72 @@ public class EventName {
 
 }
 ```
-###### \java\seedu\address\model\calendarevent\EventStart.java
+###### \java\seedu\address\model\calendarevent\EventStartDate.java
+``` java
+/**
+ * Represents event start date.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
+ */
+public class EventStartDate {
+
+
+    public static final String START_DATE_CONSTRAINTS =
+            "Date should be in the format YYYY-MM-DD. Date should be valid. Eg. 2017-10-01";
+    public static final String DATE_VALIDATION_REGEX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
+    public final String value;
+
+    /**
+     * Validates given date.
+     *
+     * @throws IllegalValueException if given date string is invalid.
+     */
+    public EventStartDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!isValidDate(trimmedDate)) {
+            throw new IllegalValueException(START_DATE_CONSTRAINTS);
+        }
+        this.value = trimmedDate;
+    }
+
+    /**
+     * Returns true if a given string is a valid date.
+     */
+    public static boolean isValidDate(String test) {
+        return test.matches(DATE_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EventStartDate // instanceof handles nulls
+                && this.value.equals(((EventStartDate) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}
+```
+###### \java\seedu\address\model\calendarevent\EventStartTime.java
 ``` java
 /**
  * Represents event start time.
  * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
-public class EventStart {
+public class EventStartTime {
 
 
     public static final String START_TIME_CONSTRAINTS =
-            "Time can only contain numbers, and should be at least 3 digits long 2015-05-29T17:00:00-07:00";
-    public static final String TIME_VALIDATION_REGEX = "";
+            "Time should be in the format HH:MM, and must be valid. Eg. 09:00";
+    public static final String TIME_VALIDATION_REGEX = "^[0-2][0-9]:[0-5][0-9]$";
     public final String value;
 
     /**
@@ -480,12 +680,12 @@ public class EventStart {
      *
      * @throws IllegalValueException if given time string is invalid.
      */
-    public EventStart(String time) throws IllegalValueException {
+    public EventStartTime(String time) throws IllegalValueException {
         requireNonNull(time);
         String trimmedTime = time.trim();
-        /*if (!isValidTime(trimmedTime)) {
+        if (!isValidTime(trimmedTime)) {
             throw new IllegalValueException(START_TIME_CONSTRAINTS);
-        }*/
+        }
         this.value = trimmedTime;
     }
 
@@ -504,8 +704,8 @@ public class EventStart {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EventStart // instanceof handles nulls
-                && this.value.equals(((EventStart) other).value)); // state check
+                || (other instanceof EventStartDate // instanceof handles nulls
+                && this.value.equals(((EventStartDate) other).value)); // state check
     }
 
     @Override
@@ -525,10 +725,14 @@ public interface ReadOnlyCalendarEvent {
 
     ObjectProperty<EventName> nameProperty();
     EventName getEventName();
-    ObjectProperty<EventStart> startProperty();
-    EventStart getStartTime();
-    ObjectProperty<EventEnd> endProperty();
-    EventEnd getEndTime();
+    ObjectProperty<EventStartDate> startDateProperty();
+    EventStartDate getStartDate();
+    ObjectProperty<EventStartTime> startTimeProperty();
+    EventStartTime getStartTime();
+    ObjectProperty<EventEndDate> endDateProperty();
+    EventEndDate getEndDate();
+    ObjectProperty<EventEndTime> endTimeProperty();
+    EventEndTime getEndTime();
 
 
     /**
@@ -538,7 +742,9 @@ public interface ReadOnlyCalendarEvent {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getEventName().equals(this.getEventName()) // state checks here onwards
+                && other.getStartDate().equals(this.getStartDate())
                 && other.getStartTime().equals(this.getStartTime())
+                && other.getEndDate().equals(this.getEndDate())
                 && other.getEndTime().equals(this.getEndTime()));
     }
 
@@ -549,8 +755,12 @@ public interface ReadOnlyCalendarEvent {
         final StringBuilder builder = new StringBuilder();
         builder.append(getEventName())
                 .append(" Start: ")
-                .append(getStartTime())
+                .append(getStartDate())
+                .append(" Time: ")
+                .append(getEndTime())
                 .append(" End: ")
+                .append(getEndDate())
+                .append(" Time: ")
                 .append(getEndTime());
         return builder.toString();
     }
@@ -585,24 +795,13 @@ public interface ReadOnlyCalendarEvent {
         Set<Tag> tags = person.getTags();
         for (Tag s : tags) {
             for (String key : keywords) {
-                if (key.equals(s.tagName)) {
+                if (key.equalsIgnoreCase(s.tagName)) {
                     return true;
                 }
             }
         }
         return false;
     }
-
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FindFunctionPredicate // instanceof handles nulls
-                && this.keywords.equals(((FindFunctionPredicate) other).keywords)); // state check
-    }
-
-}
-
 ```
 ###### \java\seedu\address\ui\CalendarPanel.java
 ``` java

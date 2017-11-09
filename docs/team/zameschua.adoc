@@ -1,0 +1,88 @@
+= Zames Chua - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 6 kLoC.
+
+*Code contributed*:
+[https://github.com/zameschua/addressbook-level4/blob/master/collated/main/zameschua.md[Functional code]][https://github.com[Test code]]
+
+=== Enhancement Added: Command Prediction
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=commandprediction]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Because the main mode of interaction with CYNC is via a Command Line Interface,
+as a user, I often find it difficult to recall what are the exact commands that I need to type.
+
+This is where the Command Prediction helps aid the user such that they do not have to remember
+the entire command.
+
+The Command Prediction was intentionally made simple for another developer to add another
+set of predictions (extending beyond the default commands).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=commandprediction]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sms Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=smscommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Because the main mode of interaction with CYNC is via a Command Line Interface,
+as a user, I often find it difficult to recall what are the exact commands that I need to type.
+
+This is where the Command Prediction helps aid the user such that they do not have to remember
+the entire command.
+
+The Command Prediction was intentionally made simple for another developer to add another
+set of predictions (extending beyond the default commands).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=smscommand]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/29[#29])
+* Made additional effort to ensure that the features being implemented by the team do not have
+conflicting functions or implementations.

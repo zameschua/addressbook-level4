@@ -7,30 +7,37 @@ import com.twilio.type.PhoneNumber;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
+//@@author zameschua
 /**
  * Helper class to handle the sending of SMS using Twilio API
  */
 public class TwilioApiHelper {
-    // I shouldn't be storing the Account SIDs here
+    // TODO I shouldn't be storing the Account SIDs here
     public static final String ACCOUNT_SID = "AC8e7d80947bd2e877013c66d99b0faa06";
     public static final String AUTH_TOKEN = "46abad64b64c0b29c468434ff69e36ca";
 
     private static final String MESSAGE_SMS_SUCCESS = "SMS Successfully sent";
     private static final String COUNTRY_CODE_SINGAPORE = "+65";
+    private static final String PHONE_NUMBER_REGEX_SINGAPORE = "\\+65\\d{8}";
+    private static final int PHONE_NUMBER_LENGTH_SINGAPORE = 8;
+
+    /**
+     * Initialises the Twilio API service
+     */
+    public static void init() {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    }
 
     /**
      * Helper method that calls the Twilio REST API for sending SMS
-     * @param to the target phone number. Has to contain the country code like +65
+     * @param smsReceipient the target phone number. Has to contain the country code like +65
      * @param message The message to send as the content of the SMS
      */
-    public static void sendSms(String message, String to) {
-        to = checkPhoneNumberFormat(to);
-
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-
+    public static void sendSms(String message, String smsReceipient) {
+        smsReceipient = checkPhoneNumberFormat(smsReceipient);
+        assert smsReceipient.matches(PHONE_NUMBER_REGEX_SINGAPORE);
         // TODO: Secure the from phone number properly
-        Message.creator(new PhoneNumber(to), new PhoneNumber("+1 954-320-0045"), message).create();
-
+        Message.creator(new PhoneNumber(smsReceipient), new PhoneNumber("+1 954-320-0045"), message).create();
         EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_SMS_SUCCESS));
     }
 
@@ -40,6 +47,7 @@ public class TwilioApiHelper {
      * @param phoneNumber The phone number to check
      */
     public static String checkPhoneNumberFormat(String phoneNumber) {
+        assert phoneNumber.length() >= PHONE_NUMBER_LENGTH_SINGAPORE;
         if (!phoneNumber.startsWith(COUNTRY_CODE_SINGAPORE)) {
             return COUNTRY_CODE_SINGAPORE + phoneNumber;
         } else {

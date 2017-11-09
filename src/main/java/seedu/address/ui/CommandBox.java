@@ -176,15 +176,29 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author zameschua
+    /**
+     * Changes the state of the {@link CommandBox} in commandPredictionSelectionText
+     * which stores the current selection of the {@link CommandPredictionPanel}
+     * @param event The event fired from the {@link CommandPredictionPanel}
+     */
     @Subscribe
-    private void handleSearchPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
+    private void handleCommandPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionSelectionText = event.getCurrentSelection();
     }
 
+    /**
+     * Updates the state of the {@link CommandBox} in commandPredictionSelectionText
+     * whenever the user changes its text. This is to produce the expected behaviour where
+     * the user's command should not disappear upon pressing tab, when the user was not
+     * expecting a command prediction
+     * @param event The event fired from the constructor in {@link CommandBox}
+     */
     @Subscribe
     private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionSelectionText = event.getCommandText();
     }
+    //@@author
 }

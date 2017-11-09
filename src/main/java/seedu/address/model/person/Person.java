@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
     //@@author pohjie
     private ProfilePicture profilePic;
-    private Attendance attendancePic;
+    private Attendance attendance;
     //@@author ReneeSeet
     private ObjectProperty<JoinDate> joinDate;
     //@@author
@@ -44,7 +44,7 @@ public class Person implements ReadOnlyPerson {
         this.joinDate = new SimpleObjectProperty<>(joinDate);
         this.joinDate = new SimpleObjectProperty<>(new JoinDate());
         this.profilePic = new ProfilePicture();
-        this.attendancePic = new Attendance();
+        this.attendance = new Attendance();
     }
     //@@author pohjie
 
@@ -138,11 +138,9 @@ public class Person implements ReadOnlyPerson {
         return profilePic;
     }
 
-    @Override
-    public Attendance getAttendancePic() {
-        return attendancePic;
+    public Attendance getAttendance() {
+        return attendance;
     }
-    //@@author
 
     //@@author ReneeSeet
     public JoinDate getJoinDate() {
@@ -159,8 +157,8 @@ public class Person implements ReadOnlyPerson {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+            || (other instanceof ReadOnlyPerson // instanceof handles nulls
+            && this.isSameStateAs((ReadOnlyPerson) other));
     }
 
     @Override
