@@ -577,6 +577,11 @@ _Figure 5.5.1: Upon first use of the command after every restart_
 image::Calendar.png[width="800"]
 _Figure 5.5.2: Subsequent usages of the command after logging in_
 
+After the `calendar` command is entered, an `event` is sent to the `EventsCenter`, which sends an update to the UI such
+that the google calendar can be displayed in the main panel. As demonstrated in the diagram below.
+
+
+
 
 
 //end::calendar[]

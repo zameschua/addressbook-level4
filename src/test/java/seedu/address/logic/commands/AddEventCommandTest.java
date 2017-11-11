@@ -28,7 +28,7 @@ public class AddEventCommandTest {
     public void executeEventSuccessful() {
         CalendarEvent validEvent = new CalendarEventBuilder().build();
         CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent).execute();
-        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertTrue(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent).equals(commandResult.feedbackToUser));
     }
 
 
