@@ -19,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonInfo extends UiPart<Region> {
     private static final String FXML = "PersonInfo.fxml";
+    private static final String JOIN_DATE = "Joined date: ";
     public final ReadOnlyPerson person;
     private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
 
@@ -48,7 +49,7 @@ public class PersonInfo extends UiPart<Region> {
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
         //@@author ReneeSeet
-        date.setText(person.getJoinDate().toString());
+        date.setText(JOIN_DATE + person.getJoinDate().toString());
         //@@author
 
         // This is not bound to the person. If we change attendance or missed when the person is
