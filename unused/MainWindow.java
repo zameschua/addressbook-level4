@@ -31,6 +31,7 @@ import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
@@ -57,6 +58,7 @@ public class MainWindow extends UiPart<Region> {
     private StatusBarFooter statusBarFooter;
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
+    private LoginPanel loginPanel;
     private CommandPredictionPanel commandPredictionPanel;
     private TagListPanel tagListPanel;
     private Config config;
@@ -138,6 +140,23 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
+    //@@author ReneeSeet
+    /**
+     * Fills up all the placeholders of this window for login.
+     */
+    void fillLogin() {
+        loginPanel = new LoginPanel();
+        browserPanel = new BrowserPanel();
+        calendarPanel = new CalendarPanel();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size());
+        resultDisplay = new ResultDisplay();
+        commandBox = new CommandBox(logic);
+        browserPlaceholder.getChildren().add(loginPanel.getRoot());
+    }
+
+    //@@author
+
     /**
      * Fills up all the placeholders of this window.
      */
@@ -270,7 +289,6 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    //@@author pohjie
     /**
      * Opens the tag list panel
      */
@@ -289,7 +307,6 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(personInfo.getRoot());
     }
-    //@@author
 
     void releaseResources() {
         browserPanel.freeResources();
@@ -322,7 +339,6 @@ public class MainWindow extends UiPart<Region> {
         handleCalendar();
     }
 
-    //@@author pohjie
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

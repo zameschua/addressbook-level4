@@ -2,7 +2,7 @@
 ###### \java\seedu\address\commons\events\external\SendSmsRequestEvent.java
 ``` java
 /**
- * Indicates a request for Sending an SMS
+ * Indicates a request for sending an SMS
  */
 public class SendSmsRequestEvent extends BaseEvent {
 
@@ -113,6 +113,29 @@ public class CommandPredictionPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\CommandPredictionPanelSelectionEvent.java
+``` java
+/**
+ * Indicates a change in selection of the CommandPredictionPanel
+ */
+public class CommandPredictionPanelSelectionEvent extends BaseEvent {
+
+    private String currentSelection;
+
+    public CommandPredictionPanelSelectionEvent(String currentSelection) {
+        this.currentSelection = currentSelection;
+    }
+
+    public String getCurrentSelection() {
+        return currentSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\SmsCommandRequestEvent.java
 ``` java
 /**
@@ -157,6 +180,7 @@ public class SmsManager {
     public static SmsManager init() {
         if (instance == null) {
             instance = new SmsManager();
+            TwilioApiHelper.init();
         }
         return instance;
     }
@@ -176,6 +200,56 @@ public class SmsManager {
 
         for (String phoneNumber : recipients) {
             TwilioApiHelper.sendSms(message, phoneNumber);
+        }
+    }
+}
+```
+###### \java\seedu\address\external\sms\TwilioApiHelper.java
+``` java
+/**
+ * Helper class to handle the sending of SMS using Twilio API
+ */
+public class TwilioApiHelper {
+    // TODO I shouldn't be storing the Account SIDs here
+    public static final String ACCOUNT_SID = "AC8e7d80947bd2e877013c66d99b0faa06";
+    public static final String AUTH_TOKEN = "46abad64b64c0b29c468434ff69e36ca";
+
+    private static final String MESSAGE_SMS_SUCCESS = "SMS Successfully sent";
+    private static final String COUNTRY_CODE_SINGAPORE = "+65";
+    private static final String PHONE_NUMBER_REGEX_SINGAPORE = "\\+65\\d{8}";
+    private static final int PHONE_NUMBER_LENGTH_SINGAPORE = 8;
+
+    /**
+     * Initialises the Twilio API service
+     */
+    public static void init() {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    }
+
+    /**
+     * Helper method that calls the Twilio REST API for sending SMS
+     * @param smsReceipient the target phone number. Has to contain the country code like +65
+     * @param message The message to send as the content of the SMS
+     */
+    public static void sendSms(String message, String smsReceipient) {
+        smsReceipient = checkPhoneNumberFormat(smsReceipient);
+        assert smsReceipient.matches(PHONE_NUMBER_REGEX_SINGAPORE);
+        // TODO: Secure the from phone number properly
+        Message.creator(new PhoneNumber(smsReceipient), new PhoneNumber("+1 954-320-0045"), message).create();
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_SMS_SUCCESS));
+    }
+
+    /**
+     * Helper method that prepends the country code to a phone number if
+     * it doesn't have the country code
+     * @param phoneNumber The phone number to check
+     */
+    public static String checkPhoneNumberFormat(String phoneNumber) {
+        assert phoneNumber.length() >= PHONE_NUMBER_LENGTH_SINGAPORE;
+        if (!phoneNumber.startsWith(COUNTRY_CODE_SINGAPORE)) {
+            return COUNTRY_CODE_SINGAPORE + phoneNumber;
+        } else {
+            return phoneNumber;
         }
     }
 }
@@ -282,21 +356,47 @@ public class SmsCommandParser {
     }
 }
 ```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+    /**
+     * Changes the state of the {@link CommandBox} in commandPredictionSelectionText
+     * which stores the current selection of the {@link CommandPredictionPanel}
+     * @param event The event fired from the {@link CommandPredictionPanel}
+     */
+    @Subscribe
+    private void handleCommandPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        commandPredictionSelectionText = event.getCurrentSelection();
+    }
+
+    /**
+     * Updates the state of the {@link CommandBox} in commandPredictionSelectionText
+     * whenever the user changes its text. This is to produce the expected behaviour where
+     * the user's command should not disappear upon pressing tab, when the user was not
+     * expecting a command prediction
+     * @param event The event fired from the constructor in {@link CommandBox}
+     */
+    @Subscribe
+    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        commandPredictionSelectionText = event.getCommandText();
+    }
+```
 ###### \java\seedu\address\ui\CommandPredictionPanel.java
 ``` java
 /**
  * Panel containing command predictions
  * It only shows when the user types something into the search box
  * And a command prediction is expected
- * Kinda like Google's search prediction.
+ * Works similarly to Google's search prediction.
  */
 public class CommandPredictionPanel extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(CommandPredictionPanel.class);
     private static final String FXML = "CommandPredictionPanel.fxml";
     private static final ArrayList<String> COMMAND_PREDICTION_RESULTS_INITIAL =
             new ArrayList<String>(Arrays.asList(
-                    "help", "add", "list", "edit", "find", "delete", "select",
-                    "history", "undo", "redo", "clear", "exit"));
+                    "help", "add", "list", "listalltags", "edit", "find", "delete", "select",
+                    "history", "calendar", "addEvent", "mass", "sms", "undo", "redo", "clear", "exit"));
 
     private static ObservableList<String> commandPredictionResults;
     // tempPredictionResults used to store the results from filtering through COMMAND_PREDICTION_RESULTS_INITIAL
@@ -308,15 +408,27 @@ public class CommandPredictionPanel extends UiPart<Region> {
     public CommandPredictionPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
+        initDataStructures();
+        initListView();
+        setEventHandlerForSelectionChangeEvent();
+    }
 
-        commandPredictionListView.setVisible(false);
-
+    /**
+     * Helper method for the constructor to initialise the various data structures used
+     * in the CommandPredictionPanel
+     */
+    private void initDataStructures() {
         tempPredictionResults = new ArrayList<String>();
         commandPredictionResults = FXCollections.observableArrayList(tempPredictionResults);
+    }
+
+    /**
+     * Helper method for the constructor to initialise the ListView UI
+     */
+    private void initListView() {
+        commandPredictionListView.setVisible(false);
         // Attach ObservableList to ListView
         commandPredictionListView.setItems(commandPredictionResults);
-
-        setEventHandlerForSelectionChangeEvent();
     }
 
     /**
@@ -343,6 +455,14 @@ public class CommandPredictionPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Helper method for the constructor
+     * Attaches an event handler to the CommandPredictionPanel to track when
+     * the user changes the CommandPrediction
+     *
+     * The method fires another event to the {@link seedu.address.commons.core.EventsCenter},
+     * which is handled by {@link CommandBox} and in turns changes its state
+     */
     private void setEventHandlerForSelectionChangeEvent() {
         commandPredictionListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -359,21 +479,21 @@ public class CommandPredictionPanel extends UiPart<Region> {
         updatePredictionResults(event.getCommandText());
     }
 
-
     @Subscribe
-    private void handleSearchPredictionPanelNextSelectionEvent(CommandPredictionPanelNextSelectionEvent event) {
+    private void handleCommandPredictionPanelNextSelectionEvent(CommandPredictionPanelNextSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.getSelectionModel().selectNext();
     }
 
     @Subscribe
-    private void handleSearchPredictionPanelPreviousSelectionEvent(CommandPredictionPanelPreviousSelectionEvent event) {
+    private void handleCommandPredictionPanelPreviousSelectionEvent(
+            CommandPredictionPanelPreviousSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.getSelectionModel().selectPrevious();
     }
 
     @Subscribe
-    private void handleSearchPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
+    private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.setVisible(false);
     }

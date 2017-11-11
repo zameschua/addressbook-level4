@@ -12,8 +12,8 @@
 
 <Pane fx:id="LoginPanel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="605.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@Styles.css" />
-        <URL value="@Extensions.css" />
+        <URL value="@../src/main/resources/view/Styles.css" />
+        <URL value="@../src/main/resources/view/Extensions.css" />
     </stylesheets>
     <children>
         <PasswordField fx:id="passwordBox" layoutX="246.0" layoutY="406.0" onAction="#onEnter" />
