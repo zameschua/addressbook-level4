@@ -55,6 +55,13 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                   <!-- @@author renee -->
+                   <Label fx:id="date" alignment="CENTER" text="Date" GridPane.rowIndex="4">
+                       <font>
+                           <Font size="18.0" />
+                       </font>
+                   </Label>
+                   <!-- @@author -->
                </children>
             </GridPane>
             <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
