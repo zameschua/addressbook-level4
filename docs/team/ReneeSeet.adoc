@@ -23,7 +23,11 @@ include::../UserGuide.adoc[tag=massemail]
 
 ==== Justification
 
-For businesses to reach out to all their customers or to different group of customers easily.
+A mass emailing function would allow to businesses to send monthly newsletters, greetings or reminders to all their customers. 
+Furthermore, it would be more efficient if businesses can send to different group of customers, I decided to 
+or reminders to all 
+The mass emailling function w businesses to reach out to all their customers or to different group of customers easily.
+
 
 ==== Implementation
 
@@ -36,10 +40,65 @@ include::../DeveloperGuide.adoc[tag=massemail]
 
 ---
 
+=== Enhancement Added: Add Joined Date
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For businesses to reach out to all their customers or to different group of customers easily.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Login Page
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+
+#End of Extract#
+
+---
+
+
 === Enhancement Proposed: Add command `remark`
 
 {Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Solved bug for clear command #link:https://github.com/CS2103AUG2017-W15-B2/main/issues/60 
+*pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/80
+
