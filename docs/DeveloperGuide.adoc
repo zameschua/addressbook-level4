@@ -528,6 +528,22 @@ _Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel_
 
 //end::smscommand[]
 
+//tag::calendar[]
+=== Calendar mechanism
+==== Description
+The calendar mechanism integrates with Google Calendar, and allows the user to view / add upcoming events.
+The calendar service is facilitated by the Google Calendar API.
+
+==== Implementation
+There are two types of calendar commands: +
+1. `calendar` : Displays the google calendar in the browser window +
+2. `addEvent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
+
+Upon entering a `calendar` command, the `CalendarPanel` will appear in the `MainDisplayPanel` area,
+showing the user's google calendar, or a google login page if it is first time the command is used after
+the app is restarted. As demonstrated in the diagram below.
+
+
 //tag::listalltags[]
 === List All Tags mechanism
 

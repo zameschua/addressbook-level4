@@ -8,6 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_TIME;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.external.AddEventRequestEvent;
+import seedu.address.external.CalendarApi;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
@@ -40,7 +43,7 @@ public class AddEventCommand extends Command {
     private final CalendarEvent toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an AddCommand to add the specified {@code ReadOnlyCalendarEvent}
      */
     public AddEventCommand(ReadOnlyCalendarEvent event) {
         toAdd = new CalendarEvent(event);
@@ -48,8 +51,9 @@ public class AddEventCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        requireNonNull(model);
-        model.addEvent(toAdd);
+        requireNonNull(toAdd);
+        new CalendarApi();
+        EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
     }

@@ -30,14 +30,13 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default calendar page should not be the same as browser panel
+        // default calendar page should not be blank
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertFalse(expectedDefaultPageUrl.equals(calendarPanelHandle.getLoadedUrl()));
 
-        /*
+        /* unused. Passes AppVeyor but not Travis.
         postNow(calendarRequestEvent);
 
-        //expected google login page, does not pass Travis for some reason
         URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"
                 + "passive=1209600&osid=1&continue=https://calendar.google.com/calendar/render&followup="
                 + "https://calendar.google.com/calendar/render&scc=1");
