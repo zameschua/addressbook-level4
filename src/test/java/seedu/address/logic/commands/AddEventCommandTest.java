@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,13 +23,7 @@ public class AddEventCommandTest {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
-
-    @Test
-    public void executeEventSuccessful() {
-        CalendarEvent validEvent = new CalendarEventBuilder().build();
-        CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent).execute();
-        assertTrue(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent).equals(commandResult.feedbackToUser));
-    }
+    
 
 
     @Test

@@ -556,7 +556,7 @@ Upon receiving the request, `EventsCenter` will then send a signal to the UI, sp
 
 // end::listalltags[]
 
-//tag::calendar[]
+// tag::calendar[]
 === Calendar mechanism
 ==== Description
 The calendar mechanism integrates with Google Calendar, and allows the user to view / add upcoming events.
@@ -567,24 +567,32 @@ There are two types of calendar commands: +
 1. `calendar` : Displays the google calendar in the browser window +
 2. `addEvent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
 
+==== Command `calendar`
 Upon entering the `calendar` command, the `CalendarPanel` will appear in the `MainDisplayPanel` area,
 showing the user's google calendar, or a google login page if it is first time the command is used after
 the app is restarted. As demonstrated in the two diagrams below.
 
 image::CalendarLogin.png[width="800"]
-_Figure 5.5.1: Upon first use of the command after every restart_
+_Figure 5.5.3.1: Upon first use of the command after every restart_
 
 image::Calendar.png[width="800"]
-_Figure 5.5.2: Subsequent usages of the command after logging in_
+_Figure 5.5.3.2: Subsequent usages of the command after logging in_
 
-After the `calendar` command is entered, an `event` is sent to the `EventsCenter`, which sends an update to the UI such
-that the google calendar can be displayed in the main panel. As demonstrated in the diagram below.
+After the `calendar` command is entered, an `event` is sent to the `EventsCenter`, which sends an update to the `UI`
+such that the google calendar can be displayed in the `MainDisplayPanel`. As demonstrated in the diagram below.
 
+image::calendarCommand.png[width="800"]
+_Figure 5.5.3.3: Sequence diagram for the execution of `calendar` command_
 
+==== Command `addEvent`
+Upon entering the `addEvent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
+an update to `CalendarApi` for google calendar to add the event. If the event is added successfully, an event is
+sent to the `UI` to refresh the calendar. As demonstrated in the diagram below.
 
+image::addEvent.png[width="800"]
+_Figure 5.5.4.1: Sequence diagram for the execution of `addEvent` command_
 
-
-//end::calendar[]
+// end::calendar[]
 
 
 == Documentation

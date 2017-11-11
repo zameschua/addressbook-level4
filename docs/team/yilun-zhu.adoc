@@ -35,7 +35,7 @@ For businesses to reach out to all their customers or to different group of cust
 ---
 #Start of Extract [from: Developer Guide]#
 
-include:
+include::../DeveloperGuide.adoc[tag==calendar]
 
 #End of Extract#
 
