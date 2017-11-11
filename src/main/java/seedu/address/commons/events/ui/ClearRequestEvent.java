@@ -9,9 +9,6 @@ import seedu.address.commons.events.BaseEvent;
 
 public class ClearRequestEvent extends BaseEvent {
 
-    public ClearRequestEvent() {
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
