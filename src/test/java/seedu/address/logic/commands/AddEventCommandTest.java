@@ -3,26 +3,12 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendarevent.CalendarEvent;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.CalendarEventBuilder;
 
 //@@author yilun-zhu
@@ -39,12 +25,9 @@ public class AddEventCommandTest {
     }
 
     @Test
-    public void executeEventAcceptedByModelAddSuccessful() throws Exception {
-        ModelStubAcceptingCalendarEventAdded modelStub = new ModelStubAcceptingCalendarEventAdded();
+    public void executeEventSuccessful() throws Exception {
         CalendarEvent validEvent = new CalendarEventBuilder().build();
-
-        CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent, modelStub).execute();
-
+        CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent).execute();
         assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
     }
 
@@ -73,77 +56,10 @@ public class AddEventCommandTest {
     /**
      * Generates a new AddEventCommand with the details of the given event.
      */
-    private AddEventCommand getAddEventCommandForCalendarEvent(CalendarEvent event, Model model) {
+    private AddEventCommand getAddEventCommandForCalendarEvent(CalendarEvent event) {
         AddEventCommand command = new AddEventCommand(event);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Tag> getFilteredTagList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredTagList(Predicate<Tag> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-
-    /**
-     * A Model stub that always accept the event being added.
-     */
-    private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
-        private final ArrayList<CalendarEvent> eventsAdded = new ArrayList<>();
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
 
 }
