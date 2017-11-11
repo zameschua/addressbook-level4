@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.CalendarRequestEvent;
+import seedu.address.commons.events.ui.ClearRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
@@ -220,6 +221,14 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
     }
+
+    /**
+     * Clear the browser when clear command called
+     */
+    @FXML
+    public void handleClear() {
+        browserPlaceholder.getChildren().clear();
+    }
     //@@author
 
     /**
@@ -304,6 +313,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
+    }
+
+    @Subscribe
+    private void handleClearEvent(ClearRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleClear();
     }
     //@@author
 
