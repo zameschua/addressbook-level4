@@ -23,8 +23,6 @@ public class AddEventCommandTest {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
-    
-
 
     @Test
     public void equals() {
