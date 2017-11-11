@@ -288,7 +288,7 @@ public class MainWindow extends UiPart<Region> {
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
-    
+
     /**
      * Opens the tag list panel
      */
