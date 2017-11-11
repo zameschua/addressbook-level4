@@ -54,9 +54,6 @@ public class MainWindow extends UiPart<Region> {
     private SmsPanel smsPanel;
     private PersonListPanel personListPanel;
     private PersonInfo personInfo;
-    private StatusBarFooter statusBarFooter;
-    private ResultDisplay resultDisplay;
-    private CommandBox commandBox;
     private CommandPredictionPanel commandPredictionPanel;
     private TagListPanel tagListPanel;
     private Config config;
