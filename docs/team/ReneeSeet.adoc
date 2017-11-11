@@ -6,9 +6,17 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/yilun-zhu.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/yilun-zhu.md[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/ReneeSeet.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/ReneeSeet.md[Test code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/unused/ReneeSeet.md[Unused code]]  
 
 === Enhancement Added: Mass Emailing
+
+The mass emailing function aims to help businesses reach out to their customers efficiently.
+
+==== Justification
+
+A mass emailing function would allow to businesses to send out monthly newsletters, greetings or reminders to all their customers. 
+Furthermore, it would be more efficient if businesses can send to specific different group of customers defined by their tags.
+By having this function, users need to go through the hassle switch to other platforms just to email their customers.
 
 ==== External behavior
 
@@ -21,14 +29,6 @@ include::../UserGuide.adoc[tag=massemail]
 
 ---
 
-==== Justification
-
-A mass emailing function would allow to businesses to send monthly newsletters, greetings or reminders to all their customers. 
-Furthermore, it would be more efficient if businesses can send to different group of customers, I decided to 
-or reminders to all 
-The mass emailling function w businesses to reach out to all their customers or to different group of customers easily.
-Since user can add emails manually to the `To:` textbox, even with an invalid tag, user can still call the `EmailPanel` and send their emails through CYNC. 
-
 ==== Implementation
 
 ---
@@ -40,70 +40,72 @@ include::../DeveloperGuide.adoc[tag=massemail]
 
 ---
 
+==== Future Improvements
+
+It is possible to change the command word for mass emailing to `email` instead of `mass` as it is more intuitive.
+
 === Enhancement Added: Add Joined Date
+
+
+
+==== Justification
+Businesses would want to keep track of when their customers joined date. Joined date can be useful for tracking customers' fees due date or
+how long this customer has been supporting the business.
 
 ==== External behavior
 
----
-#Start of Extract [from: User Guide]#
-
-
-#End of Extract#
-
----
-
-==== Justification
-
-
+When a new customer is added to CYNC, a joined date is automatically stored 
 
 ==== Implementation
 
----
-#Start of Extract [from: Developer Guide]#
 
-
-#End of Extract#
-
----
-
+==== Future Improvements
+* Allow users to edit the joined date for customers.
+* With the joined date of each customer, CYNC can calculate when customers' fees are due and send out automated reminders to customers.
+* CYNC can also send out automated anniversary emails to customers. 
 
 === Enhancement Added: Login Page
 
 I decided not to use the Login Page after I implemented it. As I realised that it led to much coupling which is undesirable.
 I edited the test cases to go through the Login Page before every test. This cause the testcases to be dependent on the function.
-Furthermore, it is not safe to store default password and username.
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-
-#End of Extract#
-
----
 
 ==== Justification
 
 Customers' information are valuable and businesses would want to protect and store them safely. 
-A Login Page on CYNC would deter unauthorised users to gain access to customers' data.
-Furthermore, since both the Mass Emailing and the Calendar functions requires Google authentication, it can be done when logging in to CYNC.
+A login page on CYNC would deter unauthorised users to gain access to customers' data.
+Furthermore, since both the Mass Emailing and the Calendar functions requires Google authentication, it can be done when logging into CYNC.
 
+==== External behavior
+
+Upon launching the application, you will be greeted with a login page as shown below.
+
+image::login.png[width="500"] 
+
+You will be required to sign in with your Google email and password.
 
 ==== Implementation
 
----
+Upon launching the application, the UI manager will load the login Panel only.
+When user click the `Login` button or pressed `enter`, if the `email:` and `password:` textboxes are correct, a `LoginRequestEvent`
+will be posted to the `EventsCenter`. This will unlock the rest of the components of `MainWindow` as well as displaying customers' informations.
+If the textboxes are empty, CYNC will prompt the user to fill them.
 
----
+==== Alternative Implementation 
+
+In order for the login function to be less coupled with the other functions, I should have implemented the login page on a different scene.
+This will allow testing to be less coupled as we can test the login page on its own. Furthermore, it is not safe to store default password and email thus
+first time users should be prompted to login to their google account first. Then, CYNC will update with the vaild email and password.
+We can do so by integrating with Google Authetification API.
 
 
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Proposed: View email inbox
+This is a possible feature for CYNC in the future.
+A command `inbox` will list out all emails that user have and user can view their emails and reply to them on CYNC.
+This will require them to 
 
 === Other contributions
 
-* Solved bug for clear command #link:https://github.com/CS2103AUG2017-W15-B2/main/issues/60 
-* pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/80
+* Solved bug for clear command found issue  #link:https://github.com/CS2103AUG2017-W15-B2/main/issues/60  pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/80
 * Updating User guide and developer guide
+* Wrote test that 
 
