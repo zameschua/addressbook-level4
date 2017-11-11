@@ -143,7 +143,7 @@ public class AddEventCommandTest {
     private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
         private final ArrayList<CalendarEvent> eventsAdded = new ArrayList<>();
 
-        public void addEvent(ReadOnlyCalendarEvent event){
+        public void addEvent(ReadOnlyCalendarEvent event) {
             eventsAdded.add(new CalendarEvent(event));
         }
 
