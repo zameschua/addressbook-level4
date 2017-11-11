@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoginRequestEvent;
 
+//@@author ReneeSeet
 /**
  * Provides a handle to the main menu of the app.
  */
