@@ -500,13 +500,16 @@ An email array that consists of desired customers' emails will also be pass to U
 The `EmailPanel` will appear in the `MainDisplayPanel` area as seen in the diagram below.
 
 image::email.png[width="800"]
+_Figure 5.2.1: Screenshot of CYNC upon entering the email command_
 
 After the user composes an email and clicks on the `send` button, a `SendEmailRequestEvent` is fired to the
 `EmailManager`, which follows the Facade design pattern. It will interact with the
 `GmailApi` which handles the actual sending of the emails. This is demonstrated in the sequence diagram below.
 
+image::massemailmech.png[width="800"]
+_Figure 5.2.2: Sequence diagram upon clicking the `send` button on the email Panel_
 
-Once the emails are send out successfully, the `EmailManager` will fire an event `NewResultAvailableEvent` to indicate success.
+Once the emails are send out successfully, the `EmailManager` will fire an event `NewResultAvailableEvent` to indicate success to user.
 
 ==== Design Considerations
 **Aspect:** Emailing platform to use +
