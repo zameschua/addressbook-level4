@@ -80,7 +80,18 @@ Feel free to jump to the relevant command that you think will be useful to you. 
 we recommend you to read the `add` command instruction as you will definitely need this command to get started.
 
 // tag::commandprediction[]
-=== Navigating the command predictions
+=== Navigating the `Command Box`
+
+The `Command Box` is where you input commands into CYNC.
+====
+*Basic Shortcuts*
+
+* To enter a command, type a `command` into the `Command Box` and press the `Enter` key
+* Use the `Page Up` key to view previously entered commands, and the `Page Down` key to return to a more
+recently entered command
+* Use the `Up Arrow` key and `Down Arrow` key to navigate the `Command Predictions` (explained below) , and the `Tab` key to
+select a prediction
+====
 
 CYNC has a command prediction feature, which tries to predict the commands that you will type
 before you even finish typing it. This allows the user to save time on typing and focus on
