@@ -109,7 +109,7 @@ public class MassEmailCommandTest {
             }
             return mess.toString();
         } else {
-            return Messages.MESSAGE_NOBODY_FOUND;
+            return MESSAGE_NOBODY_FOUND;
         }
     }
 }
