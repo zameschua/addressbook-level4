@@ -298,22 +298,24 @@ Examples:
 // end::addEvent[]
 
 // tag::massemail[]
-=== Mass Emailing : `email`
-Allows user to customise and send out emails to all customers or to specific tagged customers. +
-Format: `email all` or `email TAG [MORE_TAG]` +
+=== Mass Emailing : `mass`
+This feature allows you to customise and send out emails to all customers or to specific tagged customers in CYNC. +
+In order to do so, you would require a Google account as well.
+
+Format: `mass all` or `mass TAG [MORE_TAG]` +
+
+[NOTE]
+====
+First time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
+====
 
 ****
 * The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
 * The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
-* Only full words will be matched e.g. `Friends` will not match `Friends`
+* Only full words will be matched e.g. `Friends` will not match `Friend`
 * People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
 ****
-
-[NOTE]
-====
-First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC.
-====
 
 Examples:
 
@@ -322,13 +324,15 @@ Email to all customers in CYNC.
 * `email OwesMoney` +
 Email to customers with tag OwesMoney
 
-The UI should appear as such:
+Upon entering a valid `mass` command, the UI should appear as such. +
+With the `To:` textbox prefilled with the desired customers' email addresses.
 
 image::email.png[width="790"]
 
 [TIP]
 ====
-It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+It is possible to add additional email addresses in `To:` textbox by typing the email addresses followed by `;`. +
+ e.g `<emailAddress1>;<emailAddress2>`
 ====
 
 After composing your email, click send. +
