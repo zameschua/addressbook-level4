@@ -6,7 +6,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddAttendanceCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -21,6 +23,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SmsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -54,6 +57,11 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        //@@author yilun-zhu
+        case AddEventCommand.COMMAND_WORD:
+            return new AddEventCommandParser().parse(arguments);
+        //@@author
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
@@ -72,8 +80,12 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        //@@author pohjie
         case ListAllTagsCommand.COMMAND_WORD:
             return new ListAllTagsCommand();
+        case AddAttendanceCommand.COMMAND_WORD:
+            return new AddAttendanceCommandParser().parse(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -91,10 +103,17 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case MassEmailCommand.COMMAND_WORD:
-            return new MassEmailCommand();
+            return new MassEmailParser().parse(arguments);
 
+        //@@author yilun-zhu
         case CalendarCommand.COMMAND_WORD:
             return new CalendarCommand();
+        //@@author
+
+        //@@author zameschua
+        case SmsCommand.COMMAND_WORD:
+            return new SmsCommandParser().parse(arguments);
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

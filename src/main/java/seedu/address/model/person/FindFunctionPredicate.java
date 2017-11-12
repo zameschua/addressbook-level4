@@ -18,6 +18,7 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    //@@author yilun-zhu
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean name = keywords.stream()
@@ -44,13 +45,14 @@ public class FindFunctionPredicate implements Predicate<ReadOnlyPerson> {
         Set<Tag> tags = person.getTags();
         for (Tag s : tags) {
             for (String key : keywords) {
-                if (key.equals(s.tagName)) {
+                if (key.equalsIgnoreCase(s.tagName)) {
                     return true;
                 }
             }
         }
         return false;
     }
+    //@@author
 
 
     @Override

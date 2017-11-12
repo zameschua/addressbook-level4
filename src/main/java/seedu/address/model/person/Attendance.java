@@ -1,47 +1,67 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author pohjie
 /**
  * Represents a Person's attendance in the address book.
  * Hardcoded now till further versions support actual implementation of attendance
  */
 public class Attendance {
 
-    public final String attendancePicPath;
+    public final int maxAttendance = 8;
+    private int attended;
+    private int missed;
 
     /**
      * Default constructor
      * All Person will get this default image in V1.4 and V1.5
      */
     public Attendance() {
-        attendancePicPath = "/images/attendance.jpg";
+        attended = 0;
+        missed = 8;
+    }
+
+
+    /**
+     * User can choose to set the number of attended sessions if it is not zero.
+     * @param attended
+     * @throws IllegalValueException
+     */
+    public Attendance(int attended) throws IllegalValueException { // make sure attendance is valid. Tests here
+        this.attended = attended;
+        missed = maxAttendance - attended;
+    }
+
+    public int getAttended() {
+        return attended;
+    }
+
+    public int getMissed() {
+        return missed;
     }
 
     /**
-     * User can choose to add in attendance pictures hosted on personal file hosting service.
-     * @param path
-     * @throws IllegalValueException
+     * Increments attended by one and decrements missed by one
+     * to signify that a person has attended a session.
      */
-    public Attendance(String path) throws IllegalValueException {
-        requireNonNull(path);
-        attendancePicPath = path;
+    public void addAttendance() {
+        attended++;
+        missed--;
     }
 
     @Override
-    public String toString() { return attendancePicPath; }
+    public String toString() {
+        return "Attended is: " + attended + ", and missed is: " + missed;
+    }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof Attendance
-                && this.attendancePicPath.equals(((Attendance) other).attendancePicPath));
+                && this.attended == (((Attendance) other).attended)
+                && this.missed == (((Attendance) other).missed));
+
     }
 
-    @Override
-    public int hashCode() {
-        return attendancePicPath.hashCode();
-    }
 }

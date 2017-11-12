@@ -1,0 +1,50 @@
+= Zhu Yilun - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: CYNC
+CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Find, Calendar, AddEvent functions
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findfunction]
+
+include::../UserGuide.adoc[tag=calendar]
+
+include::../UserGuide.adoc[tag=addEvent]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For businesses to reach out to all their customers or to different group of customers easily.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include:
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])

@@ -20,11 +20,17 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    //ObjectProperty<ProfilePicture> profilePicProperty();
+    //@@author pohjie
     ProfilePicture getProfilePic();
-    Attendance getAttendancePic();
+    Attendance getAttendance();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+
+    //@@author ReneeSeet
+    ObjectProperty<JoinDate> joinDateProperty();
+    JoinDate getJoinDate();
+    //@@author
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -50,6 +56,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                //@@author ReneeSeet
+                .append(" Join Date: ")
+                .append(getJoinDate())
+                //@@author
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

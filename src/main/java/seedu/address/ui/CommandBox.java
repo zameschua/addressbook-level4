@@ -11,13 +11,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 
-import seedu.address.commons.events.ui.CommandBoxKeyInputEvent;
+import seedu.address.commons.events.ui.CommandBoxContentsChangedEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -48,7 +47,7 @@ public class CommandBox extends UiPart<Region> {
         // a change to the text of the command box
         // then calls #setStyleToDefault()
         commandTextField.textProperty().addListener((observable, oldText, newText) -> {
-            raise(new CommandBoxKeyInputEvent(newText));
+            raise(new CommandBoxContentsChangedEvent(newText));
             setStyleToDefault();
         });
         historySnapshot = logic.getHistorySnapshot();
@@ -177,15 +176,29 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author zameschua
+    /**
+     * Changes the state of the {@link CommandBox} in commandPredictionSelectionText
+     * which stores the current selection of the {@link CommandPredictionPanel}
+     * @param event The event fired from the {@link CommandPredictionPanel}
+     */
     @Subscribe
-    private void handleSearchPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
+    private void handleCommandPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionSelectionText = event.getCurrentSelection();
     }
 
+    /**
+     * Updates the state of the {@link CommandBox} in commandPredictionSelectionText
+     * whenever the user changes its text. This is to produce the expected behaviour where
+     * the user's command should not disappear upon pressing tab, when the user was not
+     * expecting a command prediction
+     * @param event The event fired from the constructor in {@link CommandBox}
+     */
     @Subscribe
-    private void handleCommandBoxKeyInputEvent(CommandBoxKeyInputEvent event) {
+    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionSelectionText = event.getCommandText();
     }
+    //@@author
 }

@@ -1,9 +1,11 @@
-package seedu.address.commons.events.model;
+package seedu.address.external;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -14,27 +16,31 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.GmailScopes;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.calendarevent.CalendarEvent;
 
+//@@author yilun-zhu
+/** Calls Calendar API **/
 
+public class CalendarApi {
 
-/** call gmail API */
-
-public class CallGmailApi {
-
+    private static final Logger logger = LogsCenter.getLogger(CalendarApi.class);
     /** Application name. */
     private static final String APPLICATION_NAME =
-            "Gmail API Java Quickstart";
+            "Google Calendar API Java Quickstart";
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/gmail-java-quickstart");
+            System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory dataStoryFactory;
+    private static FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
@@ -46,18 +52,17 @@ public class CallGmailApi {
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/gmail-java-quickstart
+     * at ~/.credentials/calendar-java-quickstart
      */
     private static final List<String> SCOPES =
-            Arrays.asList(GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_SEND);
+            Arrays.asList(CalendarScopes.CALENDAR);
 
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            dataStoryFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
-            System.exit(1);
         }
     }
 
@@ -69,7 +74,7 @@ public class CallGmailApi {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                CallGmailApi.class.getResourceAsStream("/client_secret.json");
+                CalendarApi.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -77,7 +82,7 @@ public class CallGmailApi {
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
                         httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(dataStoryFactory)
+                        .setDataStoreFactory(dataStoreFactory)
                         .setAccessType("offline")
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
@@ -88,14 +93,48 @@ public class CallGmailApi {
     }
 
     /**
-     * Build and return an authorized Gmail client service.
-     * @return an authorized Gmail client service
+     * Build and return an authorized Calendar client service.
+     * @return an authorized Calendar client service
      * @throws IOException
      */
-    public static Gmail getGmailService() throws IOException {
+    public static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
         Credential credential = authorize();
-        return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
+        return new com.google.api.services.calendar.Calendar.Builder(
+                httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
+
+    /**
+     * Build and return an authorized Calendar client service.
+     * @throws IOException
+     */
+    public static void addEvent(CalendarEvent eventSent) throws IOException {
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService();
+        String nameSent = eventSent.getEventName().toString();
+        String startDate = eventSent.getStartDate().toString();
+        String startTime = eventSent.getStartTime().toString() + ":00+08:00";
+        String endDate = eventSent.getEndDate().toString();
+        String endTime = eventSent.getEndTime().toString() + ":00+08:00";
+        Event event = new Event()
+                .setSummary(nameSent);
+
+
+        DateTime startDateTime = new DateTime(startDate + "T" + startTime);
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone("Singapore");
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime(endDate + "T" + endTime);
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone("Singapore");
+        event.setEnd(end);
+        String calendarId = "primary";
+        event = service.events().insert(calendarId, event).execute();
+        logger.info("Event created");
+    }
+
 }

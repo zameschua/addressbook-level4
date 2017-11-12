@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoginRequestEvent;
 
+//@@author ReneeSeet
 /**
  * Provides a handle to the main menu of the app.
  */
@@ -22,6 +23,7 @@ public class MainWindowWithLoginHandle extends StageHandle {
     public MainWindowWithLoginHandle(Stage stage) {
         super(stage);
         loginPanel = new LoginHandle(getChildNode(LoginHandle.LOGIN_DISPLAY_ID));
+        EventsCenter.getInstance().post(new LoginRequestEvent()); //unlock for system test
         try {
             personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
             resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));

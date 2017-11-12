@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author pohjie
 /**
  * Represents a Person's profile picture in the address book.
  * Hardcoded now till further versions support image uploading
@@ -31,7 +32,9 @@ public class ProfilePicture {
     }
 
     @Override
-    public String toString() { return profilePicPath; }
+    public String toString() {
+        return profilePicPath;
+    }
 
     @Override
     public boolean equals(Object other) {

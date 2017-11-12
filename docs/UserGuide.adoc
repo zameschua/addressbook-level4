@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= CYNC - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,36 +10,48 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W15-B2
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Welcome to CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. +
-Derived from the word " Sync ", CYNC aims to keep customers and businesses in sync. CYNC ensures that customers are businesses' main priority
-by storing customers' information and tracking their activities. CYNC also focuses on efficiency thus its
-Command Line Interface (CLI) allows users to add or retrieve customer's data quickly.
+'CYNC' was derived from the word " Sync ", and aims to keep customers and businesses in sync.
+
+The first 'C' in CYNC stands for the customer. This shows how much we value your customers and understand that it's
+a businesses' main priority. Hence, we store the customers' information safely and allow you to
+effectively monitor their activities.
+
+CYNC also places a large focuses on efficiency.
+It's Command Line Interface (CLI) allows users to add or retrieve customer's data quickly.
 
 == Getting Started
 
 // Preface here
+Thank you for selecting CYNC as your preferred customer manager!
+Here are some steps to get you started:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
+If you are unsure how to check Java version on your computer, do check out this link:https://www.java.com/en/download/help/version_manual.xml[link]. +
+To download the latest Java version, click link:https://java.com/en/download/[here].
+
++
+[WARNING]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `CYNC.jar` link:https://github.com/CS2103AUG2017-W15-B2/main/releases[here].
+.  Copy the file to the folder you want to use as the home folder for CYNC.
 // What is GUI?
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The link:#GUI[GUI] should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::updatedUi.png[width="790"]
 +
-
 // Where is the command box?
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+
+.  Type the command in the link:#UI[command box] and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
@@ -48,12 +60,63 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for details of each command. Before you do so, you may
+wish to familiarise yourself with the layout of CYNC. This will help you to better understand the instructions for each
+feature later on.
+
+== UI Segments
+We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components.
+
+[#UI]
+
+image::UiExplain.png[width="790"]
 
 == Features
 
-// Preface here
+The features in CYNC are designed to assist businesses in storing their customers' information.
+We understand that small business owners are often strapped for time, so we have kept the commands short and intuitive.
 
+Feel free to jump to the relevant command that you think will be useful to you. If you have no idea where to start,
+we recommend you to read the `add` command instruction as you will definitely need this command to get started.
+
+// tag::commandprediction[]
+=== Navigating the command predictions
+
+CYNC has a command prediction feature, which tries to predict the commands that you will type
+before you even finish typing it. This allows the user to save time on typing and focus on
+making their customers happy.
+
+While entering a command, if a command prediction is available, it will appear as a list
+below the input field, as shown in the image below.
+
+image::command-prediction-1.png[width="790"]
+_Figure 3.1 : The Command Prediction Panel_
+
+Use the `up` and `down` arrow keys to navigate up or down the list.
+
+image::command-prediction-2.png[width="790"]
+_Figure 3.2 : Pressing the `down` arrow key will navigate to the next command prediction_
+
+Use the `tab` key to select a prediction.
+The input field will immediately be updated to contain the text prediction!
+
+image::command-prediction-3.png[width="790"]
+_Figure 3.3 : Pressing the `tab` button will select the highlighted command prediction_
+//end::commandprediction[]
+
+=== Viewing help : `help`
+
+If you need help with the usage of the software, type `help` in the command box to open up this guide +
+Format: `help`
+
+=== Adding a new customer: `add`
+
+This is your most important feature of Cync as it allows you to add a customer's information into Cync. +
+Every customer will require a name[n/], email[e/], address[a/].
+
+If you wish to group the customers together, you can use our tags[t/] feature.
+
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 ====
 *Command Format*
 
@@ -63,37 +126,25 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a person: `add`
-
-// "add a person" is too stiff- use "to add a contact to your address book"
-// special notes (another section) - elaborate what tag is- "if you want to sort users by groups"
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-// elaborate what does the n all these stand for?
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all people : `list`
 
-Shows a list of all people in the address book. +
+If you wish to see a list of all customers stored in CYNC, you can use this feature +
 Format: `list`
 
+//tag::listalltags[]
 === Listing all tags : `listalltags`
 
 You can use this feature when you've forgotten some of the tags that you've added or if you want to check for duplicate tags. +
 Format: `listalltags`
-
-// Replace the "Shows a list of..." above with this line
 
 Upon entering this command, you should see the list of tags shown beside the Person List.
 
@@ -101,18 +152,20 @@ This is illustrated by the diagram below.
 
 image::ListAllTagsFeature.png[width="790"]
 
+//end::listalltags[]
+
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Your customer may have changed his/her details recently and you need to update them.
+If so, you can edit an existing person in CYNC by using this feature. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 // What is "INDEX"? Where is it? What is an integer?
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown beside a customer's name in your current window. The index *must be a positive whole number* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-// Line below is not evident
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When editing tags, we replace the existing tags with the updated ones.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -123,16 +176,18 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Search people by name / address / tags / email / phone: `find`
+// tag::findfunction[]
+=== Search people by details: `find`
 
-Finds people whose names / address / tags / email / phone contain any of the given keywords. +
+To help you filter out customers by their details, type `find` in the command box, followed by the keywords you want to search by. +
+This command can help you find people whose names, address, tags, email, or phone contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* The full email address does not have to be keyed in e.g. `find johndo` will match with `johndoe@gmail.com` and return `John Doe`.
+* Only full words will be matched for names, adresses and tags e.g. `Han` will not match `Hans`, `Ser` will not match `Serangoon`
+* The full email address does not have to be keyed in e.g. `find johndo` will match with `johndoe@gmail.com` and return `John Doe`
 * The full phone number does not have to be keyed in e.g. `9987` will match with `99876261`.
 * Can search multiple categories at the same time e.g. `find hans(name) friends(tag) serangoon(address)` will return people matching any keywords.
 * People matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
@@ -149,7 +204,10 @@ Returns any person with the tag `friends`
 * `find serangoon` +
 Returns any person whose address contains `serangoon`
 * `find serangoon 99876261` +
-Returns any person whose address contains `serangoon` and whose phone number is `99876261`
+Returns any person either whose address contains `serangoon` or whose phone number is `99876261`
+* `find gmail` +
+Returns any person whose email address contains `gmail` e.g. `johndoe@gmail.com`
+// end::findfunction[]
 
 === Deleting a person : `delete`
 
@@ -171,6 +229,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::select[]
 === Selecting a person : `select`
 
 If you wish to view more detailed information about a particular person (such as attendance and picture), you can use this command to do so. +
@@ -193,12 +252,13 @@ Selects the 1st person in the results of the `find` command.
 
 Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
-image::PersonDetailedInfo.png[width="790"]
+image::PersonInfoPieChart.png[width="790"]
+// end::select[]
 
 === Listing entered commands : `history`
 
-// Motivation for the features
-Lists all the commands that you have entered in reverse chronological order. +
+You may have forgotten how you ended up at your current state of customers' information in CYNC and you will like to look back at your history.
+If so, you can use this command, which will lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 [NOTE]
@@ -206,13 +266,58 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Mass Emailing : `mass`
-Allows user to customise and send out email to all customers or to specific tagged customers. +
-Format: `mass` or `mass KEYWORD` +
+// tag::calendar[]
+=== Display Google Calendar: `calendar`
+
+
+To help you plan your schedule, we have integrated google calendar service into the software. +
+To use this service, you will need a google account. +
+To open up google calendar in the browser panel, type `calendar` in the command box. +
+Format: `calendar`
+
+[TIP]
+Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
+
+The UI should appear as such after you have logged in:
+
+image::Calendar.png[width="790"]
+// end::calendar[]
+
+// tag::addEvent[]
+=== Adding a event to the calendar: `addEvent`
+
+To add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addEvent` +
+To use the `addEvent` command, type the command `addEvent` in the command box, followed by the details of the event. +
+The calendar shown should be updated automatically. +
+Time has to be in 24hrs format. e.g. `16:00` for 4pm +
+Format: `addEvent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
 
 Examples:
 
-* `mass` +
+* `addEvent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
+// end::addEvent[]
+
+// tag::massemail[]
+=== Mass Emailing : `mass`
+Allows user to customise and send out emails to all customers or to specific tagged customers. +
+Format: `mass all` or `mass TAG [MORE_TAG]` +
+
+****
+* The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
+* The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
+* Only full words will be matched e.g. `Friends` will not match `Friends`
+* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+****
+
+[NOTE]
+====
+First Time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
+====
+
+Examples:
+
+* `mass all` +
 Email to all customers in CYNC.
 * `mass OwesMoney` +
 Email to customers with tag OwesMoney
@@ -221,19 +326,58 @@ The UI should appear as such:
 
 image::email.png[width="790"]
 
-After composing your email, click send.
+[TIP]
+====
+It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+====
 
+After composing your email, click send. +
+CYNC will indicate if the emails are successfully sent.
+// end::massemail[]
+
+//tag::smscommand
+=== Mass SMS : `sms`
+Allows user to customise and send out SMSses to all customers or to specific tagged customers. +
+Format: `sms all` or `sms TAG [MORE_TAGS]` +
+
+****
+* The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
+* The order of the tags does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
+* Only full words will be matched e.g. `Friends` will not match `Friends`
+* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+****
+
+// TODO: Show how to sign up on Twilio, and insert their phone numbers in the system
 [NOTE]
 ====
-First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC.
+The SMS Service uses Twilio's API, so make sure that  the phone number supplied has been verified on Twilio.
 ====
+
+Examples:
+
+* `sms all` +
+SMS to all customers in CYNC.
+* `sms OwesMoney` +
+SMS to customers with tag OwesMoney
+
+The UI should appear as such, with the `To` field already filled up:
+
+image::SmsCommandScreenshot1.png[width="790"]
+
+[TIP]
+====
+It is possible to add additional email addresses in `To:` textbox by typing the phone numbers followed by `;`. +
+eg. `<phoneNumber1>;<phoneNumber2>`
+====
+
+After composing your SMS, click send. +
+//end::smscommand[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-// Motivation
-Restores the address book to the state before the previous _undoable_ command was executed. +
+If you have accidentally keyed in a command and you wish to revert CYNC to its previous state, you can use this command.
+This command will restore CYNC to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
@@ -302,7 +446,9 @@ There is no need to save manually.
 
 == Command Summary
 
-// Preface
+We understand that there is a ton of information in this User Guide and you may just need a quick reference on how to use a certain command.
+If so, you can refer to this list.
+
 // Put in a table
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -318,8 +464,15 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Mass Emailing*: `mass` / `mass KEYWORD` +
+* *Mass Emailing*: `mass all` / `mass KEYWORD [MORE_KEYWORDS]` +
 e.g `mass friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Glossary
+
+[#GUI]
+GUI +
+
+* stands for Graphical User Interface : allows users to interact with electronic devices through graphical icons and visual indicators.
