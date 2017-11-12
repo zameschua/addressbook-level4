@@ -45,6 +45,8 @@ public class CalendarApi extends ExternalCall {
     private static final String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
 
+    private static CalendarApi instance = null;
+
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
@@ -78,6 +80,17 @@ public class CalendarApi extends ExternalCall {
 
     public CalendarApi() {
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Creates an instance of the CalendarApi and registers it as an event handler
+     * @return The Singleton instance of the CalendarApi
+     */
+    public static CalendarApi init() {
+        if (instance == null) {
+            instance = new CalendarApi();
+        }
+        return instance;
     }
 
     /**
@@ -160,7 +173,7 @@ public class CalendarApi extends ExternalCall {
 
         EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_ADD_EVENT_SUCCESS));
         EventsCenter.getInstance().post(new CalendarRequestEvent());
-        logger.info("Event created");
+        logger.info("Event created: " + eventSent.toString());
     }
 
 }

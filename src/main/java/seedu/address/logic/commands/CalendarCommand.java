@@ -5,7 +5,7 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
 
 //@@author yilun-zhu
 /**
- * List all emails in address book.
+ * Opens the calendar panel.
  */
 
 public class CalendarCommand extends Command {

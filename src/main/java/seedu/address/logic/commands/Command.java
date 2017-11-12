@@ -60,6 +60,7 @@ public abstract class Command {
         StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_ADD_EVENT_SUCCESS, toAdd));
         return mess.toString();
     }
+    //@@author
 
     //@@author zameschua
     /**

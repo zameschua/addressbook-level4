@@ -52,7 +52,7 @@ public class AddEventCommand extends Command {
     @Override
     public CommandResult execute() {
         requireNonNull(toAdd);
-        new CalendarApi();
+        CalendarApi.init();
         EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
         return new CommandResult(getMessageForAddEvent(toAdd));
 
