@@ -9,6 +9,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
+import sun.plugin2.message.Message;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
@@ -27,7 +28,8 @@ public abstract class Command {
     public static String getMessageForPersonListShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
-
+    
+    //@@author ReneeSeet
     /**
      * Constructs a feedback message to summarise an operation for mass emailing
      *
@@ -37,7 +39,7 @@ public abstract class Command {
 
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
         if (displaySize != 0) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
             mess.append("\n");
             for (String email : emails) {
                 mess.append(email);
@@ -45,9 +47,10 @@ public abstract class Command {
             }
             return mess.toString();
         } else {
-            return "0 persons found";
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
+    //@@author
 
     public static String getMessageForCalendar() {
         StringBuilder mess = new StringBuilder(String.format(Messages.CALENDAR_MESSAGE));
@@ -73,7 +76,7 @@ public abstract class Command {
             }
             return mess.toString();
         } else {
-            return "0 persons found";
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
     //@@author
