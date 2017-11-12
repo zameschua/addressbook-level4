@@ -298,9 +298,9 @@ Examples:
 // end::addEvent[]
 
 // tag::massemail[]
-=== Mass Emailing : `mass`
+=== Mass Emailing : `email`
 Allows user to customise and send out emails to all customers or to specific tagged customers. +
-Format: `mass all` or `mass TAG [MORE_TAG]` +
+Format: `email all` or `email TAG [MORE_TAG]` +
 
 ****
 * The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
@@ -317,9 +317,9 @@ send out emails through CYNC.
 
 Examples:
 
-* `mass all` +
+* `email all` +
 Email to all customers in CYNC.
-* `mass OwesMoney` +
+* `email OwesMoney` +
 Email to customers with tag OwesMoney
 
 The UI should appear as such:
