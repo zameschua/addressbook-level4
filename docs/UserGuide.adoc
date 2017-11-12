@@ -111,10 +111,12 @@ Format: `help`
 
 === Adding a new customer: `add`
 
-This is your most important feature of Cync as it allows you to add a customer's information into Cync. +
+This is your most important feature of CYNC as it allows you to add a customer's information into Cync. +
 Every customer will require a name[n/], email[e/], address[a/].
 
 If you wish to group the customers together, you can use our tags[t/] feature.
+
+CYNC would also auto generate a joined date based on the current day and assigned it to your new customer.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 ====
@@ -125,7 +127,6 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -168,6 +169,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * When editing tags, we replace the existing tags with the updated ones.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[NOTE]
+ CYNC currently does not allow you to modify customers' joined date.
 
 Examples:
 
