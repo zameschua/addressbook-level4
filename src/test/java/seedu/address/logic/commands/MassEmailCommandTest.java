@@ -19,7 +19,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TagMatchingPredicate;
+import seedu.address.model.tag.TagMatchingPredicate;
 
 //@@author ReneeSeet
 
@@ -37,20 +37,20 @@ public class MassEmailCommandTest {
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
+    @Test
     //test 'all' predicate
-   @Test
-    public void execute_massEmail_all_success() throws Exception {
+    public void execute_massEmail_allsuccess() throws Exception {
         MassEmailCommand command = prepareCommand("all");
         String expectedMessage = buildExpectedMessage(getTypicalAddressBook().getPersonList());
-        assertCommandSuccess(command,expectedMessage,  getTypicalAddressBook().getPersonList());
+        assertCommandSuccess(command, expectedMessage , getTypicalAddressBook().getPersonList());
     }
 
     @Test
     // one valid tag
     public void  execute_tagEmail_success() throws  Exception {
         MassEmailCommand command = prepareCommand("family");
-        String expectedMessage = buildExpectedMessage( Arrays.asList(ALICE));
-        assertCommandSuccess(command,expectedMessage, Arrays.asList(ALICE));
+        String expectedMessage = buildExpectedMessage(Arrays.asList(ALICE));
+        assertCommandSuccess(command, expectedMessage , Arrays.asList(ALICE));
     }
 
     @Test
@@ -58,15 +58,15 @@ public class MassEmailCommandTest {
     public void  executenoVaildTagEmailsuccess() throws  Exception {
         MassEmailCommand command = prepareCommand("hello");
         String expectedMessage = buildExpectedMessage(Collections.emptyList());
-        assertCommandSuccess(command,expectedMessage, Collections.emptyList());
+        assertCommandSuccess(command, expectedMessage , Collections.emptyList());
     }
 
     @Test
     // 1 vaild tag and 1 invalid tag
     public void  executevalidInvalidtagEmailsuccess() throws  Exception {
         MassEmailCommand command = prepareCommand("family hello");
-        String expectedMessage = buildExpectedMessage( Arrays.asList(ALICE));
-        assertCommandSuccess(command,expectedMessage, Arrays.asList(ALICE));
+        String expectedMessage = buildExpectedMessage(Arrays.asList(ALICE));
+        assertCommandSuccess(command, expectedMessage , Arrays.asList(ALICE));
     }
 
     /**
@@ -75,7 +75,7 @@ public class MassEmailCommandTest {
     private MassEmailCommand prepareCommand(String userInput) {
         MassEmailCommand command =
                 new MassEmailCommand(new TagMatchingPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory() , new UndoRedoStack());
         return command;
     }
 
@@ -85,13 +85,14 @@ public class MassEmailCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(MassEmailCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(MassEmailCommand command,
+                                      String expectedMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
+        assertEquals(expectedMessage , commandResult.feedbackToUser);
+        assertEquals(expectedList , model.getFilteredPersonList());
+        assertEquals(expectedAddressBook , model.getAddressBook());
     }
 
     /**
@@ -99,9 +100,10 @@ public class MassEmailCommandTest {
      */
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+            StringBuilder mess = new StringBuilder(
+                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
             mess.append("\n");
-            for (int i = 0; i<expectedList.size(); i++) {
+            for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());
                 mess.append("\n");
             }

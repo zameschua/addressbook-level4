@@ -2,8 +2,6 @@ package systemtests;
 
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,18 +14,18 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.MassEmailPredicate;
+import seedu.address.model.tag.TagMatchingPredicate;
 
 //@@author ReneeSeet
 
-public class MassEmailCommandSystemTest extends AddressBookSystemTest{
+public class MassEmailCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_EMAIL_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, MassEmailCommand.MESSAGE_USAGE);
     @Test
-    public void MassEmail() throws Exception {
+    public void massEmail() throws Exception {
         Model expectedModel = getModel();
-       //Case: Invalid mass email command
+        //Case: Invalid mass email command
         String command = MassEmailCommand.COMMAND_WORD;
         String expectedResultMessage = String.format(MESSAGE_INVALID_EMAIL_COMMAND_FORMAT);
         assertCommandFailure(command, expectedResultMessage);
@@ -39,13 +37,13 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest{
 
         //Case: one valid tag
         command = MassEmailCommand.COMMAND_WORD + " " + "family";
-        expectedModel.updateFilteredPersonList(new MassEmailPredicate(Arrays.asList("family")));
+        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList("family")));
         expectedResultMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         //Case: no valid tag
         command = MassEmailCommand.COMMAND_WORD + " " + "hello";
-        expectedModel.updateFilteredPersonList(new MassEmailPredicate(Arrays.asList("hello")));
+        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList("hello")));
         expectedResultMessage = buildExpectedMessage(Collections.emptyList());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -58,7 +56,7 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest{
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
-       }
+    }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
@@ -96,9 +94,10 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest{
      */
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+            StringBuilder mess = new StringBuilder(
+                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
             mess.append("\n");
-            for (int i = 0; i<expectedList.size(); i++) {
+            for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());
                 mess.append("\n");
             }

@@ -7,18 +7,15 @@ import java.util.function.Predicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author ReneeSeet
-
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the Tag keywords given.
  * if Tag Keywords is "all", returns true for everyone
  */
-
-
-public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
+public class TagMatchingPredicate implements Predicate<ReadOnlyPerson> {
 
     private final List<String> keytags;
 
-    public MassEmailPredicate(List<String> keytags) {
+    public TagMatchingPredicate(List<String> keytags) {
         this.keytags = keytags;
     }
 
@@ -41,8 +38,8 @@ public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof MassEmailPredicate // instanceof handles nulls
-                && this.keytags.equals(((MassEmailPredicate) other).keytags)); // state check
+                || (other instanceof TagMatchingPredicate // instanceof handles nulls
+                && this.keytags.equals(((TagMatchingPredicate) other).keytags)); // state check
     }
 
 }

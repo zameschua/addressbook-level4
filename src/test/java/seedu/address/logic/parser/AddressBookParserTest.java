@@ -32,8 +32,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FindFunctionPredicate;
-import seedu.address.model.tag.MassEmailPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagMatchingPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -119,11 +119,11 @@ public class AddressBookParserTest {
 
     //@@author ReneeSeet
     @Test
-    public void parseCommand_MassEmail() throws Exception {
+    public void parseCommand_massEmail() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         MassEmailCommand command = (MassEmailCommand) parser.parseCommand(
                 MassEmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new MassEmailCommand(new MassEmailPredicate(keywords)), command);
+        assertEquals(new MassEmailCommand(new TagMatchingPredicate(keywords)), command);
     }
     //@@author
 

@@ -15,9 +15,9 @@ public class JoinDateTest {
         // invalid Join Date
         assertFalse(JoinDate.isValidDate("")); // empty string
         assertFalse(JoinDate.isValidDate(" ")); // spaces only
-        assertFalse(JoinDate.isValidDate("41/10/2010"));//invalid day
-        assertFalse(JoinDate.isValidDate("27/10/20100"));//invalid year
-        assertFalse(JoinDate.isValidDate("27/13/2010"));//invalid month
+        assertFalse(JoinDate.isValidDate("41/10/2010")); //invalid day
+        assertFalse(JoinDate.isValidDate("27/10/20100")); //invalid year
+        assertFalse(JoinDate.isValidDate("27/13/2010")); //invalid month
 
         // valid Join Date
         assertTrue(JoinDate.isValidDate("27/10/2010"));
