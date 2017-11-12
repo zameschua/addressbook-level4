@@ -20,6 +20,23 @@ import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.CalendarCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAllTagsCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MassEmailCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SmsCommand;
+import seedu.address.logic.commands.UndoCommand;
 
 //@@author zameschua
 /**
@@ -31,10 +48,30 @@ import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEve
 public class CommandPredictionPanel extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(CommandPredictionPanel.class);
     private static final String FXML = "CommandPredictionPanel.fxml";
+    private static final String helpCommandWord = HelpCommand.COMMAND_WORD;
+    private static final String addCommandWord = AddCommand.COMMAND_WORD;
+    private static final String listCommandWord = ListCommand.COMMAND_WORD;
+    private static final String listAllTagsCommandWord = ListAllTagsCommand.COMMAND_WORD;
+    private static final String editCommandWord = EditCommand.COMMAND_WORD;
+    private static final String findCommandWord = FindCommand.COMMAND_WORD;
+    private static final String deleteCommandWord = DeleteCommand.COMMAND_WORD;
+    private static final String selectCommandWord = SelectCommand.COMMAND_WORD;
+    private static final String historyCommandWord = HistoryCommand.COMMAND_WORD;
+    private static final String calendarCommandWord = CalendarCommand.COMMAND_WORD;
+    private static final String addEventCommandWord = AddEventCommand.COMMAND_WORD;
+    private static final String massEmailCommandWord = MassEmailCommand.COMMAND_WORD;
+    private static final String smsCommandWord = SmsCommand.COMMAND_WORD;
+    private static final String undoCommandWord = UndoCommand.COMMAND_WORD;
+    private static final String redoCommandWord = RedoCommand.COMMAND_WORD;
+    private static final String clearCommandWord = ClearCommand.COMMAND_WORD;
+    private static final String exitCommandWord = ExitCommand.COMMAND_WORD;
+
     private static final ArrayList<String> COMMAND_PREDICTION_RESULTS_INITIAL =
             new ArrayList<String>(Arrays.asList(
-                    "help", "add", "list", "listalltags", "edit", "find", "delete", "select",
-                    "history", "calendar", "addEvent", "mass", "sms", "undo", "redo", "clear", "exit"));
+                    helpCommandWord, addCommandWord, listCommandWord, listAllTagsCommandWord, editCommandWord,
+                    findCommandWord, deleteCommandWord, selectCommandWord, historyCommandWord, calendarCommandWord,
+                    addEventCommandWord, massEmailCommandWord, smsCommandWord, undoCommandWord, redoCommandWord,
+                    clearCommandWord, exitCommandWord));
 
     private static ObservableList<String> commandPredictionResults;
     // tempPredictionResults used to store the results from filtering through COMMAND_PREDICTION_RESULTS_INITIAL
