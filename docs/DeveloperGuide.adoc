@@ -492,10 +492,10 @@ There are two types of mass emailing commands: +
 
 2.`email KEYWORD [MORE KEYWORDS]`: get all the required persons emails
 
-The mass emailing mechanism is event driven. When a valid `email` command is entered, it will post a `massEmailRequestEvent` to the `Events Center` 
+The mass emailing mechanism is event driven. When a valid `email` command is entered, it will post a `massEmailRequestEvent` to the `Events Center`
 which will be handled by the `UI Manager` by displaying the `EmailPanel`.
 
-An email array that consists of desired customers' emails will also be pass to UI to be displayed in the `To:` textbox. 
+An email array that consists of desired customers' emails will also be pass to UI to be displayed in the `To:` textbox.
 The `EmailPanel` will appear in the `MainDisplayPanel` area as seen in the diagram below.
 
 image::email.png[width="800"]

@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/ReneeSeet.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/ReneeSeet.md[Test code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/unused/ReneeSeet.md[Unused code]]  
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/ReneeSeet.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/ReneeSeet.md[Test code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/unused/ReneeSeet.md[Unused code]]
 
 === Enhancement Added: Mass Emailing
 
@@ -41,7 +41,7 @@ include::../DeveloperGuide.adoc[tag=massemail]
 ---
 
 ==== Future Improvements
-Here are some possible enhancements for the mass emailing feature: 
+Here are some possible enhancements for the mass emailing feature:
 
 * Allow attachments to be send in emails.
 
@@ -59,17 +59,17 @@ Customer's joined date can be viewed on their respective profile page.
 
 ==== Implementation
 
-Upon entering a valid `add` command, CYNC will create a new `Person` object by creating  which comprises with the as seen in the model diagram below: 
+Upon entering a valid `add` command, CYNC will create a new `Person` object by creating  which comprises with the as seen in the model diagram below:
 
 The person object will then be stored in the Storage locally.
 
 
 ==== Future Improvements
-Here are the possible enhancements: 
- 
+Here are the possible enhancements:
+
 * Allow users to edit the joined date for customers.
 * With the joined date of each customer, CYNC can calculate when customers' fees are due and send out automated reminders through email or sms to customers.
-* CYNC can also send out automated anniversary emails to customers. 
+* CYNC can also send out automated anniversary emails to customers.
 
 === Enhancement Added: Login Page
 
@@ -78,7 +78,7 @@ I edited the test cases to go through the Login Page before every test. This cau
 
 ==== Justification
 
-Customers' information are valuable and businesses would want to protect and store them safely. 
+Customers' information are valuable and businesses would want to protect and store them safely.
 A login page on CYNC would deter unauthorised users to gain access to customers' data.
 Furthermore, since both the Mass Emailing and the Calendar functions requires Google authentication, it can be done when logging into CYNC.
 
@@ -86,7 +86,7 @@ Furthermore, since both the Mass Emailing and the Calendar functions requires Go
 
 Upon launching the application, you will be greeted with a login page as shown below.
 
-image::login.png[width="500"] 
+image::login.png[width="500"]
 
 You will be required to sign in with your Google email and password.
 
@@ -97,7 +97,7 @@ When user click the `Login` button or pressed `enter`, if the `email:` and `pass
 will be posted to the `EventsCenter`. This will unlock the rest of the components of `MainWindow` as well as displaying customers' informations.
 If the textboxes are empty, CYNC will prompt the user to fill them.
 
-==== Alternative Implementation 
+==== Alternative Implementation
 
 In order for the login function to be less coupled with the other functions, I should have implemented the login page on a different scene.
 This will allow testing to be less coupled as we can test the login page on its own. Furthermore, it is not safe to store default password and email thus
@@ -106,7 +106,7 @@ We can do so by integrating with Google Authentication API.
 
 
 === Enhancement Proposed: View user's email inbox
-We should not limit users to only sending out emails. + 
+We should not limit users to only sending out emails. +
 A possible feature for CYNC in the future would be to view emails from CYNC. +
 A command `inbox` will list out all emails that user have and user can read and reply to them on CYNC.
 This will allow them to reply to customers quickly and efficiently.
