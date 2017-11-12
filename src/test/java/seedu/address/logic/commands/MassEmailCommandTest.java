@@ -13,7 +13,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.MassEmailPredicate;
+import seedu.address.model.tag.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author ReneeSeet

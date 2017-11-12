@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SmsCommandRequestEvent;
-import seedu.address.model.person.MassEmailPredicate;
+import seedu.address.model.tag.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author zameschua

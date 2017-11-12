@@ -1,10 +1,10 @@
-package seedu.address.model.person;
+package seedu.address.model.tag;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author ReneeSeet
 
