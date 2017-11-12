@@ -113,8 +113,6 @@ This will allow them to reply to customers quickly and efficiently.
 
 === Other contributions
 
-* Solved bug for clear command found issue  #link:https://github.com/CS2103AUG2017-W15-B2/main/issues/60  pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/80
+* Solved bug for clear command [https://github.com/CS2103AUG2017-W15-B2/main/issues/60[Issue]][https://github.com/CS2103AUG2017-W15-B2/main/pull/80[PR]]
 * Updating User guide and Developer guide
-* Wrote test that 
-*
 
