@@ -6,19 +6,20 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.SmsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.MassEmailPredicate;
+import seedu.address.model.person.TagMatchingPredicate;
+
 
 //@@author zameschua
 /**
  * Parses input arguments and creates a new SmsCommand object
  */
-public class SmsCommandParser {
+public class SmsCommandParser implements Parser<SmsCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the SmsCommand
      * and returns an SmsCommand object for execution.
      */
-    public SmsCommand parse(String args)throws ParseException {
+    public SmsCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
@@ -28,7 +29,6 @@ public class SmsCommandParser {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        // TODO: Change to TagPredicate or something
-        return new SmsCommand(new MassEmailPredicate(Arrays.asList(nameKeywords)));
+        return new SmsCommand(new TagMatchingPredicate(Arrays.asList(nameKeywords)));
     }
 }
