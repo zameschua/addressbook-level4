@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
 
 === Enhancement Added: Find function improvements
 
@@ -50,8 +50,6 @@ include::../DeveloperGuide.adoc[tag=findfunction]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=findfunction]
-
 include::../UserGuide.adoc[tag=calendar]
 
 include::../UserGuide.adoc[tag=addEvent]
@@ -63,7 +61,13 @@ include::../UserGuide.adoc[tag=addEvent]
 
 ==== Justification
 
-For businesses to reach out to all their customers or to different group of customers easily.
+To help the business owners' to manage their business schedule, for example a schedule of the upcoming tuition classes. Since
+CYNC is developed as an application to help small business owners to manage their growing business, a scheduler function
+such as the `calendar` function can help them manage their upcoming business events. +
+As a user of the calendar function, I felt that it is troublesome to interact with the calendar just by clicking, as I would have
+to scroll multiple times if I want to add an event few months in advance, and then scroll all the way back for my current schedule.
+Therefore, I implemented the `addEvent` function. This allows the user to directly add an event to the google calendar without any
+clicking or scrolling.
 
 ==== Implementation
 

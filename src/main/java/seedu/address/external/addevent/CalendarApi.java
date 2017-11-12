@@ -1,4 +1,4 @@
-package seedu.address.external;
+package seedu.address.external.addevent;
 
 import static seedu.address.commons.core.Messages.MESSAGE_ADD_EVENT_SUCCESS;
 
@@ -24,28 +24,21 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
-import com.google.common.eventbus.Subscribe;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.external.AddEventRequestEvent;
 import seedu.address.commons.events.ui.CalendarRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.model.calendarevent.CalendarEvent;
 
-
-
 //@@author yilun-zhu
 /** Calls Calendar API **/
 
-public class CalendarApi extends ExternalCall {
+public class CalendarApi {
 
     private static final Logger logger = LogsCenter.getLogger(CalendarApi.class);
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Google Calendar API Java Quickstart";
-
-    private static CalendarApi instance = null;
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
@@ -76,21 +69,6 @@ public class CalendarApi extends ExternalCall {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-    }
-
-    public CalendarApi() {
-        registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Creates an instance of the CalendarApi and registers it as an event handler
-     * @return The Singleton instance of the CalendarApi
-     */
-    public static CalendarApi init() {
-        if (instance == null) {
-            instance = new CalendarApi();
-        }
-        return instance;
     }
 
     /**
@@ -131,13 +109,6 @@ public class CalendarApi extends ExternalCall {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
-
-    @Subscribe
-    public static void handleAddEventRequestEvent(AddEventRequestEvent addEventRequestEvent) throws IOException {
-        CalendarEvent eventSent = addEventRequestEvent.getCalendarEvent();
-        createEvent(eventSent);
-    }
-
 
     /**
      * Build and return an authorized Calendar client service.

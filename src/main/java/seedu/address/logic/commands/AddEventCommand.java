@@ -10,7 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_TIME;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.external.AddEventRequestEvent;
-import seedu.address.external.CalendarApi;
+import seedu.address.external.addevent.AddEventManager;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
@@ -52,7 +52,7 @@ public class AddEventCommand extends Command {
     @Override
     public CommandResult execute() {
         requireNonNull(toAdd);
-        CalendarApi.init();
+        AddEventManager.init();
         try {
             EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
         } catch (Exception e) {
