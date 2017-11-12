@@ -556,19 +556,21 @@ This helps the user to check that he/she is not adding any similar and undesired
 
 ==== Implementation
 
-The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` receives an event from `listalltags` command
-and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
+The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` posts an event from `listalltags` command
+and send the update to the `MainWindow` so that the tags can be displayed in the `browserPlaceholder`.
 
 The `listalltags` command inherits the abstract `Command` class.
 
 Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
 
 image::CyncStartUpNew.png[width="800"]
+_Figure 5.4.1: Empty `browserPlaceholder` on startup_
 
-As we can see from the above diagram, the `BrowserPanel` is initially empty.
+As we can see from the above diagram, the `BrowserPanel` is initially empty. +
+Upon calling `listalltags`, `browserPlaceholder` is filled to show the list of tags.
 
-The user decides to call the command `listalltags` so as to view all the tags that are currently in the application.
-Upon receiving the request, `EventsCenter` will then send a signal to the UI, specifically the `BrowserPanel`, to refresh and update with the Tag list.
+image::CyncListAllTags.png[width="800"]
+_Figure 5.4.2 List of tags displayed to the right of person list_
 
 ==== Design Considerations
 **Aspect:** Where the `Tag` list is displayed. +
@@ -614,7 +616,7 @@ Hence the BrowserPanel is only responsible for displaying a blank page at startu
  This removes the amount of code that we have and also reduces the possiblity of bugs. +
 **Cons:** As mentioned above, we have to post an artificial stub so that the PersonInfo will be loaded on startup.
 This may violate the single responsibility principle, since PersonInfo may have to change when the start-up conditions or
-the `PersonPanelSelectionChangedEvent` change.
+the specifics of `PersonPanelSelectionChangedEvent` change.
 
 // end::personinfo[]
 
