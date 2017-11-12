@@ -116,7 +116,7 @@ public class AddressBookParserTest {
     public void parseCommand_listAllTags() throws Exception {
         assertTrue(parser.parseCommand(ListAllTagsCommand.COMMAND_WORD) instanceof ListAllTagsCommand);
     }
-    
+
     //@@author ReneeSeet
     @Test
     public void parseCommand_MassEmail() throws Exception {
@@ -126,8 +126,6 @@ public class AddressBookParserTest {
         assertEquals(new MassEmailCommand(new MassEmailPredicate(keywords)), command);
     }
     //@@author
-    
-    
 
     @Test
     public void parseCommand_select() throws Exception {

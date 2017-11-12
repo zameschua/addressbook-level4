@@ -31,18 +31,18 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest{
         String command = MassEmailCommand.COMMAND_WORD;
         String expectedResultMessage = String.format(MESSAGE_INVALID_EMAIL_COMMAND_FORMAT);
         assertCommandFailure(command, expectedResultMessage);
-        
+
         //Case: valid mass email command
         command = MassEmailCommand.COMMAND_WORD + " " + "all";
         expectedResultMessage = buildExpectedMessage(getModel().getAddressBook().getPersonList());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-        
+
         //Case: one valid tag
         command = MassEmailCommand.COMMAND_WORD + " " + "family";
         expectedModel.updateFilteredPersonList(new MassEmailPredicate(Arrays.asList("family")));
         expectedResultMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-        
+
         //Case: no valid tag
         command = MassEmailCommand.COMMAND_WORD + " " + "hello";
         expectedModel.updateFilteredPersonList(new MassEmailPredicate(Arrays.asList("hello")));
@@ -53,7 +53,7 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest{
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
-        
+
         //case:redo -->nothing to redo
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;

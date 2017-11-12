@@ -27,7 +27,7 @@ public abstract class Command {
     public static String getMessageForPersonListShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
-    
+
     //@@author ReneeSeet
     /**
      * Constructs a feedback message to summarise an operation for mass emailing

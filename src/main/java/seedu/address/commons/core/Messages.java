@@ -17,5 +17,4 @@ public class Messages {
     public static final String MESSAGE_SMS_CONFIRMATION = "Would you like to SMS all %1$d persons listed?";
     public static final String MESSAGE_SMS_SUCCESS = "SMSes are sent successfully";
     public static final String CALENDAR_MESSAGE = "Calendar loaded!";
-    
 }
