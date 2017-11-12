@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SmsCommandRequestEvent;
-import seedu.address.model.person.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagMatchingPredicate;
 
 //@@author zameschua
 /**
@@ -23,10 +23,9 @@ public class SmsCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"
             + "Example: " + COMMAND_WORD + " Sec 2 Sec 3\n";
 
-    // TODO: Change to something like tagMatchingPredicate
-    private final MassEmailPredicate predicate;
+    private final TagMatchingPredicate predicate;
 
-    public SmsCommand(MassEmailPredicate predicate) {
+    public SmsCommand(TagMatchingPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -42,15 +41,14 @@ public class SmsCommand extends Command {
         return new CommandResult(getMessageForSms(allPerson.size(), phoneNumbers));
     }
 
-    // TODO: Change to something like tag matching predicate
-    public MassEmailPredicate getPredicate() {
+    public TagMatchingPredicate getPredicate() {
         return predicate;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof MassEmailCommand // instanceof handles nulls
+                || (other instanceof SmsCommand // instanceof handles nulls
                 && this.predicate.equals(((SmsCommand) other).predicate)); // state check
     }
 }

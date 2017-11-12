@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.MassEmailPredicate;
+import seedu.address.model.person.TagMatchingPredicate;
 
 //@@author ReneeSeet
 
@@ -31,6 +31,6 @@ public class MassEmailParser implements Parser<MassEmailCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new MassEmailCommand(new MassEmailPredicate(Arrays.asList(nameKeywords)));
+        return new MassEmailCommand(new TagMatchingPredicate(Arrays.asList(nameKeywords)));
     }
 }

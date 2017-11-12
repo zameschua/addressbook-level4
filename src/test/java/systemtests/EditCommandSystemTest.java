@@ -218,11 +218,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         } catch (DuplicatePersonException | PersonNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
+        //@@author pohjie
         } catch (PersonMaxAttendanceException e) {
             throw new IllegalArgumentException(
                     "editedPerson's attendance is already maximum!");
         }
-
+        //@@author pohjie
         assertCommandSuccess(command, expectedModel,
                 String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), expectedSelectedCardIndex);
     }
