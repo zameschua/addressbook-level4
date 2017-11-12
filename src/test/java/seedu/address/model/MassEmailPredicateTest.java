@@ -54,7 +54,7 @@ public class MassEmailPredicateTest {
         // Only one matching keyword
         predicate = new  MassEmailPredicate(Arrays.asList("sec1"));
         assertTrue(predicate.test(new PersonBuilder().withTags("sec2", "sec1").build()));
-        
+
         //if keyword is 'all'
         predicate = new  MassEmailPredicate(Arrays.asList("all"));
         assertTrue(predicate.test(new PersonBuilder().withTags("sec2", "sec1").build()));
