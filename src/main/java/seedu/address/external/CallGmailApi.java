@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -31,20 +30,13 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
-import com.google.common.eventbus.Subscribe;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.external.SendEmailRequestEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 //@@author ReneeSeet
 
 /** call gmail API * */
 
-public class CallGmailApi extends ExternalCall {
+public class CallGmailApi{
 
-    private static final Logger logger = LogsCenter.getLogger(CallGmailApi.class);
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Gmail API Java Quickstart";
@@ -74,9 +66,6 @@ public class CallGmailApi extends ExternalCall {
             t.printStackTrace();
             System.exit(1);
         }
-    }
-    public CallGmailApi() {
-        registerAsAnEventHandler(this);
     }
 
     /**
@@ -184,24 +173,5 @@ public class CallGmailApi extends ExternalCall {
         message.setRaw(encodedEmail);
         return message;
     }
-    @Subscribe
-    public void handleSendEmailRequestEvent(SendEmailRequestEvent event) throws IOException, MessagingException {
-        // Build a new authorized API client service.
-        try {
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            Gmail service = getGmailService();
-            String user = "me";
-            String[] recipients = event.getRecipients();
-            for (String s : recipients) {
-                MimeMessage email = createEmail(s, user, event.getSubject(), event.getMessage());
-                sendMessage(service, user, email);
-                logger.info("EMAIL SENT");
-            }
-            EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
-        } catch (IOException e) {
-            logger.info("IO");
-        } catch (MessagingException d) {
-            logger.info("messageException");
-        }
-    }
+
 }
