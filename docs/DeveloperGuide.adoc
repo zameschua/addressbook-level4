@@ -586,10 +586,37 @@ Upon receiving the request, `EventsCenter` will then send a signal to the UI, sp
 
 ==== Description
 
+The PersonInfo feature allows the user to see more detailed information regarding a specific customer.
+In future editions, we hope to have more attributes about the customer, such as exact dates of attendance.
+
 ==== Implementation
+
+Upon using the `select` command, `JumpToListRequestEvent` is posted by `EventsCenter`.
+When `MainWindow` receives this event, it will respond by clearing the `browserPlaceholder` and calling `PersonInfo`.
+`PersonInfo` will show the selected person's attributes. +
+
+This is an example of the MVC design pattern,
+whereby the user interacts with the `commandBox`, which then parses and execute the `SelectCommand`.
+It is followed by the `MainWindow` updating the `browserPlaceholder` to show the
+correct view to the user. This decouples the components involved in processing commands and showing the results
+to the user.
 
 ==== Design Considerations
 
+**Aspect:** The presence of the `BrowserPanel` which is used to fill up browserPlaceholder on initialisation of application. +
+**Alternative 1 (current choice):** We keep `BrowserPanel`, and instead clear `browserPlaceholder` and fill with `PersonInfo` when needed. +
+**Pros:** By keeping the BrowserPanel, we do not have to post a `PersonPanelSelectionChangedEvent` stub on the intialisation.
+Hence the BrowserPanel is only responsible for displaying a blank page at startup, and the PersonInfo for displaying a person's detailed information
+ when needed. This follows the Separation of Concern principle. +
+**Cons:** This violates the YAGNI principle, as the BrowserPanel's other functionalities are not actually used in user execution. +
+**Alternative 2:** Remove the BrowserPanel and instead initialise an empty PersonInfo at start-up. +
+**Pros:** Since `BrowserPanel` essentially only has one function that is seemingly trivial, it may make sense just to totally remove it.
+ This removes the amount of code that we have and also reduces the possiblity of bugs. +
+**Cons:** As mentioned above, we have to post an artificial stub so that the PersonInfo will be loaded on startup.
+This may violate the single responsibility principle, since PersonInfo may have to change when the start-up conditions or
+the `PersonPanelSelectionChangedEvent` change.
+
+// end::personinfo[]
 
 == Documentation
 
