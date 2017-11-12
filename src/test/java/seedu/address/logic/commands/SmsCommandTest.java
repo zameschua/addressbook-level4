@@ -14,26 +14,26 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.TagMatchingPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagMatchingPredicate;
 
 //@@author zameschua
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SmsCommand.
  */
 public class SmsCommandTest {
+    private static final String STUB_INPUT_ALL = "all";
+    private static final String STUB_INPUT_VALID = "owesMoney";
+    private static final String STUB_INPUT_INVALID = "invalid";
+
     private Model model;
     private Model originalModel;
-    private static String STUB_USER_INPUT_ALL = "all";
-    private static String STUB_USER_INPUT_VALID = "owesMoney";
-    private static String STUB_USER_INPUT_INVALID = "invalid";
-
 
     @Test
-    public void execute_sms_all_success() throws Exception {
+    public void execute_allTag_success() throws Exception {
         setupModel();
         int expectedCount = originalModel.getAddressBook().getPersonList().size();
-        SmsCommand command = prepareCommand(STUB_USER_INPUT_ALL);
+        SmsCommand command = prepareCommand(STUB_INPUT_ALL);
 
         model.updateFilteredPersonList(command.getPredicate());
         int actualCount = model.getFilteredPersonList().size();
@@ -45,16 +45,16 @@ public class SmsCommandTest {
 
     @Test
     // one valid tag
-    public void  execute_sms_tag_success() throws Exception {
+    public void  execute_oneValidTag_success() throws Exception {
         setupModel();
         ArrayList<String> tagList = new ArrayList<String>();
-        tagList.add(STUB_USER_INPUT_VALID);
+        tagList.add(STUB_INPUT_VALID);
         TagMatchingPredicate predicate = new TagMatchingPredicate(tagList);
         ObservableList expectedPersons =  originalModel.getAddressBook().getPersonList().filtered(predicate);
         int expectedCount = expectedPersons.size();
 
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        SmsCommand command = prepareCommand(STUB_USER_INPUT_VALID);
+        SmsCommand command = prepareCommand(STUB_INPUT_VALID);
         model.updateFilteredPersonList(command.getPredicate());
         int actualCount = model.getFilteredPersonList().size();
 
@@ -65,16 +65,16 @@ public class SmsCommandTest {
 
     @Test
     // no vaild tag
-    public void  execute_sms_tag_invalid_error() throws Exception {
+    public void  execute_oneInvalidTag_error() throws Exception {
         setupModel();
         ArrayList<String> tagList = new ArrayList<String>();
-        tagList.add(STUB_USER_INPUT_INVALID);
+        tagList.add(STUB_INPUT_INVALID);
         TagMatchingPredicate predicate = new TagMatchingPredicate(tagList);
         ObservableList expectedPersons =  originalModel.getAddressBook().getPersonList().filtered(predicate);
         int expectedCount = expectedPersons.size();
 
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        SmsCommand command = prepareCommand(STUB_USER_INPUT_INVALID);
+        SmsCommand command = prepareCommand(STUB_INPUT_INVALID);
         model.updateFilteredPersonList(command.getPredicate());
         int actualCount = model.getFilteredPersonList().size();
 
@@ -85,20 +85,20 @@ public class SmsCommandTest {
 
     @Test
     // 1 vaild tag and 1 invalid tag
-    public void  execute_sms_tag_mixed_invalid_error() throws Exception {
+    public void  execute_mixedValidInvalidTag_error() throws Exception {
         setupModel();
         ArrayList<String> tagList = new ArrayList<String>();
-        tagList.add(STUB_USER_INPUT_VALID);
-        tagList.add(STUB_USER_INPUT_INVALID);
+        tagList.add(STUB_INPUT_VALID);
+        tagList.add(STUB_INPUT_INVALID);
         TagMatchingPredicate predicate = new TagMatchingPredicate(tagList);
         ObservableList expectedPersons =  originalModel.getAddressBook().getPersonList().filtered(predicate);
         int expectedCount = expectedPersons.size();
 
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        SmsCommand command = prepareCommand(STUB_USER_INPUT_INVALID + " " + STUB_USER_INPUT_VALID);
+        SmsCommand command = prepareCommand(STUB_INPUT_INVALID + " " + STUB_INPUT_VALID);
         model.updateFilteredPersonList(command.getPredicate());
         int actualCount = model.getFilteredPersonList().size();
-        
+
         System.out.println("expected persons: " + expectedCount + ", actual persons: " + actualCount);
         assertListSize(expectedCount, actualCount);
         assert(!model.getFilteredPersonList().isEmpty());

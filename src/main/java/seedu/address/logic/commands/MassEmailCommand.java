@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
-import seedu.address.model.person.TagMatchingPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagMatchingPredicate;
 
 //@@author ReneeSeet
 

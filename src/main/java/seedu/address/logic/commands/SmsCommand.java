@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SmsCommandRequestEvent;
-import seedu.address.model.person.TagMatchingPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagMatchingPredicate;
 
 //@@author zameschua
 /**
@@ -48,7 +48,7 @@ public class SmsCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof MassEmailCommand // instanceof handles nulls
+                || (other instanceof SmsCommand // instanceof handles nulls
                 && this.predicate.equals(((SmsCommand) other).predicate)); // state check
     }
 }
