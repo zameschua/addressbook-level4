@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.SmsCommand;
-import seedu.address.model.person.TagMatchingPredicate;
+import seedu.address.model.tag.TagMatchingPredicate;
 
 //@@author zameschua
 public class SmsCommandParserTest {
