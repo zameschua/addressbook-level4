@@ -8,7 +8,42 @@ CYNC is an open-source software that helps small businesses to track and nurture
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Find, Calendar, AddEvent functions
+=== Enhancement Added: Find function improvements
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findfunction]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This improvement is inspired by the search function in Gmail. I felt that Gmail's search function is very intuitive
+for the user as it searches through all the fields in a single search bar. +
+The original find function can only search by `Name`. As a user, I felt that the function is rather limited
+and I wanted to filter people by other fields, such as people living in a
+certain district. However, having separate search functions to search for the respective fields may be confusing for the
+users. Therefore, I improved upon the current `find` function such that the users can use a single intuitive
+search function that filters through all the fields.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findfunction]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Calendar functions
 
 ==== External behavior
 
