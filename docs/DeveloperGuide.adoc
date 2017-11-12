@@ -559,18 +559,22 @@ This helps the user to check that he/she is not adding any similar and undesired
 The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` posts an event from `listalltags` command
 and send the update to the `MainWindow` so that the tags can be displayed in the `browserPlaceholder`.
 
+The mechanism is illustrated in the diagram below.
+
+image::ListAllTagsMechanism.png[width="800"]
+_Figure 5.4.1 List All Tags sequence diagram_
 The `listalltags` command inherits the abstract `Command` class.
 
 Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
 
 image::CyncStartUpNew.png[width="800"]
-_Figure 5.4.1: Empty `browserPlaceholder` on startup_
+_Figure 5.4.3: Empty `browserPlaceholder` on startup_
 
 As we can see from the above diagram, the `BrowserPanel` is initially empty. +
 Upon calling `listalltags`, `browserPlaceholder` is filled to show the list of tags.
 
 image::CyncListAllTags.png[width="800"]
-_Figure 5.4.2 List of tags displayed to the right of person list_
+_Figure 5.4.4 List of tags displayed to the right of person list_
 
 ==== Design Considerations
 **Aspect:** Where the `Tag` list is displayed. +
