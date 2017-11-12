@@ -10,13 +10,13 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 === Enhancement Added: Mass Emailing
 
-The mass emailing function aims to help businesses reach out to their customers efficiently.
+The mass emailing feature aims to help businesses reach out to their customers efficiently.
 
 ==== Justification
 
-A mass emailing function would allow to businesses to send out monthly newsletters, greetings or reminders to all their customers. 
-Furthermore, it would be more efficient if businesses can send to specific different group of customers defined by their tags.
-By having this function, users need to go through the hassle switch to other platforms just to email their customers.
+A mass emailing feature would allow businesses to send out monthly newsletters, greetings or reminders to all their customers.
+It would be more efficient if businesses can send emails to specific group of customers defined by their tags.
+By having this function, users need not go through the hassle of collating and manually typing out email addresses in other emailing platforms just to email their customers.
 
 ==== External behavior
 
@@ -41,27 +41,35 @@ include::../DeveloperGuide.adoc[tag=massemail]
 ---
 
 ==== Future Improvements
+Here are some possible enhancements for the mass emailing feature: 
 
-It is possible to change the command word for mass emailing to `email` instead of `mass` as it is more intuitive.
+* Change command word for mass emailing to `email` instead of `mass` as it is more intuitive.
+* Allow attachments to be send in emails.
+
 
 === Enhancement Added: Add Joined Date
-
-
+Besides the details of customers, businesses especially those that uses a subscription model would want to keep track of customers' joined date as well.
 
 ==== Justification
-Businesses would want to keep track of when their customers joined date. Joined date can be useful for tracking customers' fees due date or
-how long this customer has been supporting the business.
+Joined date can be useful for tracking customers' fees due date or how long customers has been supporting the business.
 
 ==== External behavior
 
-When a new customer is added to CYNC, a joined date is automatically stored 
+When a new customer is added to CYNC, a joined date based on the current day will be generated and stored together with customers' details.
+Customer's joined date can be viewed on their respective profile page.
 
 ==== Implementation
 
+Upon entering a valid `add` command, CYNC will create a new `Person` object by creating  which comprises with the as seen in the model diagram below: 
+
+The person object will then be stored in the Storage locally.
+
 
 ==== Future Improvements
+Here are the possible enhancements: 
+ 
 * Allow users to edit the joined date for customers.
-* With the joined date of each customer, CYNC can calculate when customers' fees are due and send out automated reminders to customers.
+* With the joined date of each customer, CYNC can calculate when customers' fees are due and send out automated reminders through email or sms to customers.
 * CYNC can also send out automated anniversary emails to customers. 
 
 === Enhancement Added: Login Page
@@ -95,7 +103,7 @@ If the textboxes are empty, CYNC will prompt the user to fill them.
 In order for the login function to be less coupled with the other functions, I should have implemented the login page on a different scene.
 This will allow testing to be less coupled as we can test the login page on its own. Furthermore, it is not safe to store default password and email thus
 first time users should be prompted to login to their google account first. Then, CYNC will update with the vaild email and password.
-We can do so by integrating with Google Authetification API.
+We can do so by integrating with Google Authentication API.
 
 
 === Enhancement Proposed: View email inbox
@@ -106,6 +114,7 @@ This will require them to
 === Other contributions
 
 * Solved bug for clear command found issue  #link:https://github.com/CS2103AUG2017-W15-B2/main/issues/60  pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/80
-* Updating User guide and developer guide
+* Updating User guide and Developer guide
 * Wrote test that 
+*
 

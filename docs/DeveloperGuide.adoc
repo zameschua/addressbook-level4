@@ -482,7 +482,7 @@ The `CommandPredictionPanel` should update it's database automatically whenever 
 //end::commandprediction[]
 
 //tag::massemail[]
-=== Mass Emailing mechanism
+=== Mass Emailing Mechanism
 
 The `mass` command allows the user to send emails to all or certain groups of customers at once.
 The emailing service is being facilitated by the Gmail Java API.
