@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 public class MassEmailCommand extends Command {
 
-    public static final String COMMAND_WORD = "mass";
+    public static final String COMMAND_WORD = "email";
     public static final String MESSAGE_SUCCESS = "Listed all required emails";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": To email all persons with tag\n"
              + COMMAND_WORD + " all : To email everyone in CYNC\n"
