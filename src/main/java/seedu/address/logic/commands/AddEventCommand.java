@@ -46,13 +46,13 @@ public class AddEventCommand extends Command {
      * Creates an AddEventCommand to add the specified {@code ReadOnlyCalendarEvent}
      */
     public AddEventCommand(ReadOnlyCalendarEvent event) {
+        CalendarApi.init();
         toAdd = new CalendarEvent(event);
     }
 
     @Override
     public CommandResult execute() {
         requireNonNull(toAdd);
-        CalendarApi.init();
         EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
         return new CommandResult(getMessageForAddEvent(toAdd));
 
