@@ -217,7 +217,6 @@
     -fx-border-color: transparent;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #1d1d1d;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: primary-text-color;
@@ -225,7 +224,6 @@
 }
 
 .button:hover {
-    -fx-background-color: main-background-color;
 }
 
 .button:pressed, .button:default:hover:pressed {

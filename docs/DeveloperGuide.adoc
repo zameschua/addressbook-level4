@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-W15-B2
+:repoURL: https://github.com/CS2103AUG2017-W15-B2/main/blob/master
 
 By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -51,6 +51,7 @@ understand the ins-and-outs of IntelliJ.
 
 Now that you have both *JDK `1.8.0_60`* or later and *IntelliJ* installed, you are ready to
 set up the project.
+//what repo
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -71,7 +72,7 @@ This will generate all resources required by the application and tests.
 To confirm that you've successfully set up the project, do take the time to ensure
 that your set up is correct and ready to run.
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
@@ -121,7 +122,7 @@ motivation for designing it that way.
 
 The *_Architecture Diagram_* given below (_Figure 3.1.1_) explains the high-level design of the App. Read on for a quick overview of each component.
 
-
+// update this diagram
 image::Architecture.png[width="600"]
 _Figure 3.1.1 : Architecture Diagram_
 
@@ -145,7 +146,7 @@ The rest of the App consists of four components.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the `UI`, `Logic`, `Model`, `Storage` components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -176,6 +177,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+[#ui-component]
 === UI component
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
@@ -195,6 +197,7 @@ The `UI` component:
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+[#logic-component]
 === Logic component
 
 The Logic Component concerns itself primarily with processing of commands and giving the relevant output.
@@ -210,7 +213,7 @@ _Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows
 Below is a simple explanation of what happens when user enters a command.
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/logic[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -222,25 +225,26 @@ In case you are still feeling lost, we have provided a Sequence Diagram (_Figure
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
+[#model-component]
 === Model component
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/model[`Model.java`]
 
-The `Model`,
+The `Model` component of CYNC is an independent component as it does not depend on the other four components, its functions are:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Storage of  `UserPref` object that represents the user's preferences such as the GUI settings
+* Storage of CYNC's data
+* Exposing of unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 
 Refer to _Figure 3.4.1_ below for an overview of the Model component.
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 3.4.1 : Structure of the Model Component_
 
+[#storage-component]
 === Storage component
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/storage[`storage.java`]
 
 The `Storage` component,
 
@@ -252,14 +256,16 @@ Refer to _Figure 3.5.1_ below for an overview of the Storage component.
 image::StorageClassDiagram.png[width="800"]
 _Figure 3.5.1 : Structure of the Storage Component_
 
+[#external-component]
 === External component
+
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/external[`external.java`]
 
 The `External` component,
 
-* consist of Gmail API : Authenticate user's Gmail and send out emails
-
-
-
+* consist of Gmail API : Authenticate user's Google account, create and send out emails
+* consist of Google Calendar API : To authenticate Google account, edit and add events to google calendar
+* consist of twilio API:
 
 === Common classes
 
@@ -429,6 +435,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+[#configuration]
 === Configuration
 In the event where you want to change certain properties of the application (e.g App name, logging level)
 you can do so by editing the configuration file (default: `config.json`) located in the root folder.
@@ -497,7 +504,18 @@ image::email.png[width="800"]
 
 As we can see from the above diagram, the `To:` textbox is filled with the required emails.
 When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
-In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`
+In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`.
+
+
+==== Design Considerations
+**Aspect:** Emailing platform to use +
+**Alternative 1 (current choice):** Gmail email service +
+**Pros:** Gmail is the must used and free email service around the globe. Since the Calender feature also requires Google account, using Gmail, will allow users to use both features with 1 account. +
+**Cons:** Limited to only sending emails through Gmail. +
+**Alternative 2:** OutLook email service +
+**Pros:** OutLook is also a common email service used by many, able to send emails through OutLook. +
+**Cons:** User must have an Outlook account and Google account to use emailing and Calender function.
+
 //end::massemail[]
 
 //tag::smscommand[]
@@ -531,6 +549,13 @@ _Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel_
 //tag::listalltags[]
 === List All Tags mechanism
 
+==== Description
+
+The feature `listalltags` allows the user to view all the tags in the unique tag list.
+This helps the user to check that he/she is not adding any similar and undesired tags.
+
+==== Implementation
+
 The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` receives an event from `listalltags` command
 and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
 
@@ -555,6 +580,19 @@ Upon receiving the request, `EventsCenter` will then send a signal to the UI, sp
 **Cons:** This is less aesthetically pleasing. With many tags, it may be harder for the user to see the desired tag.
 
 // end::listalltags[]
+
+
+=======
+// tag::personinfo[]
+=== PersonInfo mechanism
+
+==== Description
+
+==== Implementation
+
+==== Design Considerations
+
+
 
 // tag::calendar[]
 === Calendar mechanism
@@ -662,6 +700,9 @@ _Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
+It is highly important to build a stable and effective software system for both users and developers of CYNC.
+As such, we have dedicated a section on testing to aid you on writing and executing your test cases.
+
 [TIP]
 It is recommended for you to test the software after every update you make.
 
@@ -754,6 +795,7 @@ Some enhancements suggestions are given in this section link:#improving-each-com
  Learning Outcome: To learn how to implement an end-to-end feature across all components. +
  The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
+[#improving-each-component]
 === Improving each component
 
 Exercises in this section aims to help you understand the 4 major components of CYNC. Each exercise is component-based thus you would not need to modify the other components for it to function.
@@ -871,6 +913,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
+[#creating-a-new-command-code-remark-code]
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.

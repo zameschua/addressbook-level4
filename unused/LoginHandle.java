@@ -5,7 +5,7 @@ import javafx.scene.control.PasswordField;
 import  javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-
+//@@author ReneeSeet
 /**
  * A handle to the {@code LoginPage} in the GUI.
  */
@@ -17,9 +17,9 @@ public class LoginHandle extends NodeHandle<Node> {
     public LoginHandle(Node loginPanelNode) {
         super(loginPanelNode);
         TextField s = getChildNode("#emailBox");
-        s.setText("hi");
+        s.setText("test@gmail.com");
         PasswordField p = getChildNode("#passwordBox");
-        p.setText("bye");
+        p.setText("password");
         guiRobot.type(KeyCode.ENTER);
     }
 }

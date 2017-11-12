@@ -36,24 +36,6 @@ public class SendEmailRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\LoginRequestEvent.java
-``` java
-
-/**
- * Indicates a request for Logging
- */
-
-public class LoginRequestEvent extends BaseEvent {
-
-    public LoginRequestEvent() {
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
 ###### \java\seedu\address\commons\events\ui\MassEmailRequestEvent.java
 ``` java
 
@@ -262,6 +244,29 @@ public abstract class ExternalCall {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
+``` java
+        JoinDate date = editAttendancePersonDescriptor.getJoinDate();
+```
+###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
+``` java
+        private JoinDate date;
+```
+###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
+``` java
+            this.date = toCopy.date;
+```
+###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
+``` java
+        public void setJoinDate(JoinDate date) {
+            this.date = date;
+        }
+
+        public JoinDate getJoinDate() {
+            return date;
+        }
+
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         JoinDate date = editPersonDescriptor.getJoinDate();
@@ -285,6 +290,7 @@ public abstract class ExternalCall {
         public JoinDate getJoinDate() {
             return date;
         }
+
 ```
 ###### \java\seedu\address\logic\commands\MassEmailCommand.java
 ``` java
@@ -531,48 +537,6 @@ public class EmailPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\LoginPanel.java
-``` java
-
-/**
- * The Login Panel of the App.
- */
-public class LoginPanel extends UiPart<Region> {
-
-    private static final String FXML = "LoginPanel.fxml";
-    private static final Logger logger = LogsCenter.getLogger(LoginPanel.class);
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private Text loginText;
-
-    @FXML
-    private TextField emailBox;
-
-    @FXML
-    private PasswordField passwordBox;
-
-    public LoginPanel() {
-        super(FXML);
-    }
-
-    /**
-    * Catch Enter button
-    */
-
-    @FXML
-    public void onEnter(ActionEvent ae) {
-        if (!emailBox.getText().equals("") && !passwordBox.getText().equals("")) {
-            EventsCenter.getInstance().post(new LoginRequestEvent());
-        } else {
-            loginText.setText("Please enter email and password");
-            logger.info("nothing entered");
-        }
-    }
-}
-```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
@@ -592,15 +556,6 @@ public class LoginPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
     }
-```
-###### \java\seedu\address\ui\UiManager.java
-``` java
-    @Subscribe
-    private void handleLogin(LoginRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.fillInnerParts();
-    }
-}
 ```
 ###### \resources\view\EmailPanel.fxml
 ``` fxml
@@ -627,37 +582,5 @@ public class LoginPanel extends UiPart<Region> {
       <TextArea fx:id="emailMessage" layoutX="29.0" layoutY="149.0" prefHeight="433.0" prefWidth="930.0" />
       <Button fx:id="sendButton" layoutX="449.0" layoutY="601.0" mnemonicParsing="false" text="Send" />
    </children>
-</Pane>
-```
-###### \resources\view\LoginPanel.fxml
-``` fxml
-
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<Pane fx:id="LoginPanel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="605.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-    <stylesheets>
-        <URL value="@Styles.css" />
-        <URL value="@Extensions.css" />
-    </stylesheets>
-    <children>
-        <PasswordField fx:id="passwordBox" layoutX="246.0" layoutY="406.0" onAction="#onEnter" />
-        <Text layoutX="158.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-        <Text layoutX="172.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-        <Text fx:id="loginText" layoutX="142.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="373.0" />
-        <TextField fx:id="emailBox" layoutX="246.0" layoutY="341.0" onAction="#onEnter" />
-        <Button fx:id="loginButton" layoutX="273.0" layoutY="469.0" mnemonicParsing="false" text="Login" />
-        <Text layoutX="246.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CYNC">
-            <font>
-                <Font size="54.0" />
-            </font>
-        </Text>
-        <Text layoutX="222.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Manager" textAlignment="CENTER" wrappingWidth="186.13476524021826" />
-    </children>
 </Pane>
 ```
