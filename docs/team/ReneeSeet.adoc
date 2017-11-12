@@ -105,10 +105,11 @@ first time users should be prompted to login to their google account first. Then
 We can do so by integrating with Google Authentication API.
 
 
-=== Enhancement Proposed: View email inbox
-This is a possible feature for CYNC in the future.
-A command `inbox` will list out all emails that user have and user can view their emails and reply to them on CYNC.
-This will require them to 
+=== Enhancement Proposed: View user's email inbox
+We should not limit users to only sending out emails. + 
+A possible feature for CYNC in the future would be to view emails from CYNC. +
+A command `inbox` will list out all emails that user have and user can read and reply to them on CYNC.
+This will allow them to reply to customers quickly and efficiently.
 
 === Other contributions
 

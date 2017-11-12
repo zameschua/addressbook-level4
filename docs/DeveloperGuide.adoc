@@ -488,28 +488,24 @@ The `email` command allows the user to send emails to all or certain groups of c
 The emailing service is being facilitated by the Gmail Java API.
 
 There are two types of mass emailing commands: +
-1. `email all` : get everyone in CYNC and store their emails in an array.
+1. `email all` : get everyone's email in CYNC
 
-2.`email KEYWORD [MORE KEYWORDS]`: get all the required persons and store their emails in an array.
+2.`email KEYWORD [MORE KEYWORDS]`: get all the required persons emails
 
-The Mass Emailing mechanism is facilitated by the `EventsCenter`, in which it receives an event from `MassEmail` command,
-and send the update to the UI to display the EmailPanel.Before a 'MassEmail' command is successfully called, it pass the command into 'MassEmailParser'. If the command is valid,
-it will create a predicate and call the 'MassEmail' class.
+The mass emailing mechanism is event driven. When a valid `email` command is entered, it will post a `massEmailRequestEvent` to the `Events Center` 
+which will be handled by the `UI Manager` by displaying the `EmailPanel`.
 
-The `MassEmail` command inherits the abstract `Command` class and requires a `MassEmailPredicate` when constructed. +
-
-
-The email array will then be pass to UI to be displayed in the `To:` textbox. The PersonListPanel will also update to show all required Persons.
-
-On entering an `email` command, the `emailPanel` will appear in the MainDisplayPanel area. 
-with the desired emails of customers extracted from the relavent persons and pre-filled, as demonstrated in the diagram below.
+An email array that consists of desired customers' emails will also be pass to UI to be displayed in the `To:` textbox. 
+The `EmailPanel` will appear in the `MainDisplayPanel` area as seen in the diagram below.
 
 image::email.png[width="800"]
 
-As we can see from the above diagram, the `To:` textbox is filled with the required emails.
-When the user clicks `send`, it will send a signal to the external component to call the Gmail API.
-In the external component,it will authenticate the user's Gmail account before the email are form and send out. Once successful, a signal will be send to indicate its success in the `ResultDisplay`.
+After the user composes an email and clicks on the `send` button, a `SendEmailRequestEvent` is fired to the
+`EmailManager`, which follows the Facade design pattern. It will interact with the
+`GmailApi` which handles the actual sending of the emails. This is demonstrated in the sequence diagram below.
 
+
+Once the emails are send out successfully, the `EmailManager` will fire an event `NewResultAvailableEvent` to indicate success.
 
 ==== Design Considerations
 **Aspect:** Emailing platform to use +
