@@ -582,7 +582,7 @@ Upon receiving the request, `EventsCenter` will then send a signal to the UI, sp
 // end::listalltags[]
 
 
-=======
+
 // tag::personinfo[]
 === PersonInfo mechanism
 
@@ -624,7 +624,8 @@ _Figure 5.5.3.3: Sequence diagram for the execution of `calendar` command_
 
 ==== Command `addEvent`
 Upon entering the `addEvent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
-an update to `CalendarApi` for google calendar to add the event. If the calendar event is added successfully, an `event` is
+an update to `AddEventManager`, which follows the Facade design pattern and interacts with the `CalendarApi` for
+google calendar to add the event. If the calendar event is added successfully, an `event` is
 sent to the `UI` to refresh the calendar. As demonstrated in the diagram below.
 
 image::addEvent.png[width="800"]

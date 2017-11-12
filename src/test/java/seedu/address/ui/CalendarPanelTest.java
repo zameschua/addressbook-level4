@@ -30,11 +30,11 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default calendar page should not be blank
+        // default window should be updated
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertFalse(expectedDefaultPageUrl.equals(calendarPanelHandle.getLoadedUrl()));
 
-        /* unused. Passes AppVeyor but not Travis.
+        /* The section below can be used for local testing. It does not load on Travis-CI.
         postNow(calendarRequestEvent);
 
         URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"

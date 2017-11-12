@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +23,9 @@ public class AddEventCommandTest {
         new AddEventCommand(null);
     }
 
+    /* This test can be used for local testing. Does not work for Travis-CI as it requires user to manually
+    authorize the google service.
+
     @Test
     public void executeCommandSuccessful() {
         CalendarEvent validEvent = new CalendarEventBuilder().build();
@@ -31,6 +33,7 @@ public class AddEventCommandTest {
 
         assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
     }
+    */
 
     @Test
     public void equals() {
