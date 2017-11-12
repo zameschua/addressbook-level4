@@ -8,13 +8,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_TIME;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.external.AddEventRequestEvent;
+import java.io.IOException;
+
 import seedu.address.external.CalendarApi;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
-
-import java.io.IOException;
 
 
 //@@author yilun-zhu
