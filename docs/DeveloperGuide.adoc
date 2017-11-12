@@ -556,19 +556,25 @@ This helps the user to check that he/she is not adding any similar and undesired
 
 ==== Implementation
 
-The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` receives an event from `listalltags` command
-and send the update to the UI so that the tags can be displayed in the panel that was originally `BrowserPanel`.
+The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` posts an event from `listalltags` command
+and send the update to the `MainWindow` so that the tags can be displayed in the `browserPlaceholder`.
 
+The mechanism is illustrated in the diagram below.
+
+image::ListAllTagsSequenceDiagram.png[width="800"]
+_Figure 5.4.1 List All Tags sequence diagram_
 The `listalltags` command inherits the abstract `Command` class.
 
 Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
 
 image::CyncStartUpNew.png[width="800"]
+_Figure 5.4.2: Empty `browserPlaceholder` on startup_
 
-As we can see from the above diagram, the `BrowserPanel` is initially empty.
+As we can see from the above diagram, the `BrowserPanel` is initially empty. +
+Upon calling `listalltags`, `browserPlaceholder` is filled to show the list of tags.
 
-The user decides to call the command `listalltags` so as to view all the tags that are currently in the application.
-Upon receiving the request, `EventsCenter` will then send a signal to the UI, specifically the `BrowserPanel`, to refresh and update with the Tag list.
+image::CyncListAllTags.png[width="800"]
+_Figure 5.4.3 List of tags displayed to the right of person list_
 
 ==== Design Considerations
 **Aspect:** Where the `Tag` list is displayed. +
@@ -586,10 +592,42 @@ Upon receiving the request, `EventsCenter` will then send a signal to the UI, sp
 
 ==== Description
 
+The PersonInfo feature allows the user to see more detailed information regarding a specific customer.
+In future editions, we hope to have more attributes about the customer, such as exact dates of attendance.
+
 ==== Implementation
+
+Upon using the `select` command, `JumpToListRequestEvent` is posted by `EventsCenter`.
+When `MainWindow` receives this event, it will respond by clearing the `browserPlaceholder` and calling `PersonInfo`.
+`PersonInfo` will show the selected person's attributes. +
+
+Figure 5.5.1 below shows the sequence diagram. +
+
+image::PersonInfoMechanism.png[width="800"]
+_Figure 5.5.1: Sequence diagram of PersonInfo implementation_
+
+This is an example of the MVC design pattern,
+whereby the user interacts with the `commandBox`, which then parses and execute the `SelectCommand`.
+It is followed by the `MainWindow` updating the `browserPlaceholder` to show the
+correct view to the user. This decouples the components involved in processing commands and showing the results
+to the user.
 
 ==== Design Considerations
 
+**Aspect:** The presence of the `BrowserPanel` which is used to fill up browserPlaceholder on initialisation of application. +
+**Alternative 1 (current choice):** We keep `BrowserPanel`, and instead clear `browserPlaceholder` and fill with `PersonInfo` when needed. +
+**Pros:** By keeping the BrowserPanel, we do not have to post a `PersonPanelSelectionChangedEvent` stub on the intialisation.
+Hence the BrowserPanel is only responsible for displaying a blank page at startup, and the PersonInfo for displaying a person's detailed information
+ when needed. This follows the Separation of Concern principle. +
+**Cons:** This may be seen as a violation of the YAGNI principle, as the BrowserPanel's other functionalities are not actually used in user execution. +
+**Alternative 2:** Remove the BrowserPanel and instead initialise an empty PersonInfo at start-up. +
+**Pros:** Since `BrowserPanel` essentially only has one function that is seemingly trivial, it may make sense just to totally remove it.
+ This decreases the amount of code that we have and also reduces the possiblity of bugs. +
+**Cons:** As mentioned above, we have to post an artificial stub so that the PersonInfo will be loaded on startup.
+This may violate the single responsibility principle, since PersonInfo may have to change when the start-up conditions or
+the specifics of `PersonPanelSelectionChangedEvent` change.
+
+// end::personinfo[]
 
 == Documentation
 
