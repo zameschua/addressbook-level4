@@ -10,6 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.external.AddEventRequestEvent;
+import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -170,6 +174,17 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
     }
+
+    //// event-level operations
+
+    /**
+     * Adds a event to the calendar.
+     */
+    public void addEvent(ReadOnlyCalendarEvent event) {
+        CalendarEvent newEvent = new CalendarEvent(event);
+        EventsCenter.getInstance().post(new AddEventRequestEvent(newEvent));
+    }
+
 
     //// tag-level operations
 

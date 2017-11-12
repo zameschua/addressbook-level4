@@ -8,9 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START_TIME;
 
-import java.io.IOException;
-
-import seedu.address.external.CalendarApi;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
@@ -51,14 +48,10 @@ public class AddEventCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        requireNonNull(toAdd);
+        requireNonNull(model);
         /*new CalendarApi();
         EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));*/
-        try {
-            CalendarApi.createEvent(toAdd);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        model.addEvent(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
     }

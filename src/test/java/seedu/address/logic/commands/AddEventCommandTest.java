@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -19,6 +20,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendarevent.CalendarEvent;
+import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -46,6 +48,7 @@ public class AddEventCommandTest {
         CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent, modelStub).execute();
 
         assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
     }
 
 
@@ -85,6 +88,11 @@ public class AddEventCommandTest {
     private class ModelStub implements Model {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(ReadOnlyCalendarEvent event) {
             fail("This method should not be called.");
         }
 
@@ -140,6 +148,10 @@ public class AddEventCommandTest {
     private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
         private final ArrayList<CalendarEvent> eventsAdded = new ArrayList<>();
 
+        @Override
+        public void addEvent(ReadOnlyCalendarEvent event) {
+            eventsAdded.add(new CalendarEvent(event));
+        }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
