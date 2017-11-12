@@ -19,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonInfo extends UiPart<Region> {
     private static final String FXML = "PersonInfo.fxml";
+    private static final String JOIN_DATE = "Joined date: ";
     public final ReadOnlyPerson person;
     private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
 
@@ -32,6 +33,10 @@ public class PersonInfo extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    //@@author ReneeSeet
+    @FXML
+    private Label date;
+    //@@author
     @FXML
     private PieChart attendance;
 
@@ -43,6 +48,9 @@ public class PersonInfo extends UiPart<Region> {
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
+        //@@author ReneeSeet
+        date.setText(JOIN_DATE + person.getJoinDate().toString());
+        //@@author
 
         // This is not bound to the person. If we change attendance or missed when the person is
         // shown in browser panel this will not be reflected

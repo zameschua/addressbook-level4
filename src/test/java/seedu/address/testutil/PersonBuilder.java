@@ -37,7 +37,7 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             //@@author ReneeSeet
-            JoinDate defaultDate = new JoinDate(DEFAULT_DATE);
+            JoinDate defaultDate = new JoinDate();
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultDate, defaultTags);
             //@@author
         } catch (IllegalValueException ive) {

@@ -375,7 +375,9 @@ public class CalendarEvent implements ReadOnlyCalendarEvent {
         this.endDate.set(requireNonNull(date));
     }
 
-    public void setEndTime(EventEndTime time) { this.endTime.set(requireNonNull(time)); }
+    public void setEndTime(EventEndTime time) {
+        this.endTime.set(requireNonNull(time));
+    }
 
     @Override
     public ObjectProperty<EventEndDate> endDateProperty() {
