@@ -17,6 +17,7 @@ public class TwilioApiHelper {
     public static final String AUTH_TOKEN = "46abad64b64c0b29c468434ff69e36ca";
 
     private static final String MESSAGE_SMS_SUCCESS = "SMS Successfully sent";
+    private static final String MESSAGE_SMS_FAILURE = "SMS Sending failed, ";
     private static final String COUNTRY_CODE_SINGAPORE = "+65";
     private static final String PHONE_NUMBER_REGEX_SINGAPORE = "\\+65\\d{8}";
     private static final int PHONE_NUMBER_LENGTH_SINGAPORE = 8;
@@ -32,13 +33,30 @@ public class TwilioApiHelper {
      * Helper method that calls the Twilio REST API for sending SMS
      * @param smsReceipient the target phone number. Has to contain the country code like +65
      * @param message The message to send as the content of the SMS
+     * @throws RuntimeException Catches the runtime exception so that we can show an error message to the user
+     * in the {@link seedu.address.logic.commands.CommandResult}
      */
-    public static void sendSms(String message, String smsReceipient) {
-        smsReceipient = checkPhoneNumberFormat(smsReceipient);
-        assert smsReceipient.matches(PHONE_NUMBER_REGEX_SINGAPORE);
-        // TODO: Secure the from phone number properly
-        Message.creator(new PhoneNumber(smsReceipient), new PhoneNumber("+1 954-320-0045"), message).create();
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_SMS_SUCCESS));
+    public static void sendSms(String message, String smsReceipient) throws RuntimeException {
+        try {
+            smsReceipient = checkPhoneNumberFormat(smsReceipient);
+            assert smsReceipient.matches(PHONE_NUMBER_REGEX_SINGAPORE);
+            // TODO: Secure the from phone number properly
+            Message.creator(new PhoneNumber(smsReceipient), new PhoneNumber("+1 954-320-0045"), message).create();
+            showToUser(MESSAGE_SMS_SUCCESS);
+        } catch (RuntimeException rte) {
+            // Show the error in the ResultDisplay so the user knows what's wrong
+            showToUser(MESSAGE_SMS_FAILURE);
+            throw rte;
+        }
+    }
+
+    /**
+     * Helper method which posts a {@link NewResultAvailableEvent} to show a message in
+     * the {@link seedu.address.logic.commands.CommandResult}
+     * @param message The message to show in the {@link seedu.address.logic.commands.CommandResult}
+     */
+    private static void showToUser(String message) {
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(message));
     }
 
     /**
