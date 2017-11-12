@@ -298,11 +298,11 @@ Examples:
 // end::addEvent[]
 
 // tag::massemail[]
-=== Mass Emailing : `mass`
+=== Mass Email : `email`
 This feature allows you to customise and send out emails to all customers or to specific tagged customers in CYNC. +
 In order to do so, you would require a Google account as well.
 
-Format: `mass all` or `mass TAG [MORE_TAG]` +
+Format: `email all` or `email TAG [MORE_TAG]` +
 
 [NOTE]
 ====
@@ -314,7 +314,7 @@ send out emails through CYNC.
 * The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
 * The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
 * Only full words will be matched e.g. `Friends` will not match `Friend`
-* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+* People matching at least one tag will be returned. e.g `email sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
 ****
 
 Examples:
@@ -324,7 +324,7 @@ Email to all customers in CYNC.
 * `email OwesMoney` +
 Email to customers with tag OwesMoney
 
-Upon entering a valid `mass` command, the UI should appear as such. +
+Upon entering a valid `email` command, the UI should appear as such. +
 With the `To:` textbox prefilled with the desired customers' email addresses.
 
 image::email.png[width="790"]
@@ -468,8 +468,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Mass Emailing*: `mass all` / `mass KEYWORD [MORE_KEYWORDS]` +
-e.g `mass friends`
+* *Mass Emailing*: `email all` / `email KEYWORD [MORE_KEYWORDS]` +
+e.g `email friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

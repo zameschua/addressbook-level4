@@ -43,7 +43,6 @@ include::../DeveloperGuide.adoc[tag=massemail]
 ==== Future Improvements
 Here are some possible enhancements for the mass emailing feature: 
 
-* Change command word for mass emailing to `email` instead of `mass` as it is more intuitive.
 * Allow attachments to be send in emails.
 
 
