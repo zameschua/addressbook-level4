@@ -14,6 +14,8 @@ import seedu.address.external.CalendarApi;
 import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
 
+import java.io.IOException;
+
 
 //@@author yilun-zhu
 /**
@@ -52,8 +54,13 @@ public class AddEventCommand extends Command {
     @Override
     public CommandResult execute() {
         requireNonNull(toAdd);
-        new CalendarApi();
-        EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
+        /*new CalendarApi();
+        EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));*/
+        try {
+            CalendarApi.createEvent(toAdd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
     }
