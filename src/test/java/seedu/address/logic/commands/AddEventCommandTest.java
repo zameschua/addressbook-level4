@@ -30,7 +30,6 @@ public class AddEventCommandTest {
         CommandResult commandResult = new AddEventCommand(validEvent).execute();
 
         assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
-        assertEquals("test", "test");
     }
 
     @Test
