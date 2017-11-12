@@ -11,7 +11,7 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
 public class CalendarCommand extends Command {
 
     public static final String COMMAND_WORD = "calendar";
-    public static final String MESSAGE_SUCCESS = "Calendar loaded";
+    public static final String MESSAGE_SUCCESS = "Calendar loaded!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows calendar ";
 
     @Override

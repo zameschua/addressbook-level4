@@ -54,7 +54,7 @@ public class AddEventCommand extends Command {
         requireNonNull(toAdd);
         new CalendarApi();
         EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        return new CommandResult(getMessageForAddEvent(toAdd));
 
     }
 
