@@ -13,7 +13,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.MassEmailPredicate;
+import seedu.address.model.person.TagMatchingPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author ReneeSeet
@@ -94,7 +94,7 @@ public class MassEmailCommandTest {
      */
     private MassEmailCommand prepareCommand(String userInput) {
         MassEmailCommand command =
-                new MassEmailCommand(new MassEmailPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new MassEmailCommand(new TagMatchingPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

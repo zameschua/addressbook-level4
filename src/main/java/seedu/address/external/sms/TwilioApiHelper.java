@@ -53,6 +53,7 @@ public class TwilioApiHelper {
     /**
      * Helper method which posts a {@link NewResultAvailableEvent} to show a message in
      * the {@link seedu.address.logic.commands.CommandResult}
+     * Also handles logging in the form of events
      * @param message The message to show in the {@link seedu.address.logic.commands.CommandResult}
      */
     private static void showToUser(String message) {

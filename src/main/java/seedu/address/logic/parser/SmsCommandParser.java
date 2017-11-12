@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.SmsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.MassEmailPredicate;
+import seedu.address.model.person.TagMatchingPredicate;
 
 //@@author zameschua
 /**
@@ -29,6 +29,6 @@ public class SmsCommandParser {
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
         // TODO: Change to TagPredicate or something
-        return new SmsCommand(new MassEmailPredicate(Arrays.asList(nameKeywords)));
+        return new SmsCommand(new TagMatchingPredicate(Arrays.asList(nameKeywords)));
     }
 }
