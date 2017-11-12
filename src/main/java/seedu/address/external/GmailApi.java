@@ -1,7 +1,5 @@
 package seedu.address.external;
 
-import static seedu.address.commons.core.Messages.MESSAGE_EMAIL_SUCCESS;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +33,7 @@ import com.google.api.services.gmail.model.Message;
 
 /** call gmail API * */
 
-public class CallGmailApi{
+public class GmailApi {
 
     /** Application name. */
     private static final String APPLICATION_NAME =
@@ -76,7 +74,7 @@ public class CallGmailApi{
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                CallGmailApi.class.getResourceAsStream("/client_secret.json");
+                GmailApi.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 

@@ -24,7 +24,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class EmailManager {
 
-    private static final Logger logger = LogsCenter.getLogger(CallGmailApi.class);
+    private static final Logger logger = LogsCenter.getLogger(EmailManager.class);
 
     private static EmailManager instance = null;
 
@@ -39,7 +39,7 @@ public class EmailManager {
     public static EmailManager init() {
         if (instance == null) {
             instance = new EmailManager();
-            new CallGmailApi();
+            new GmailApi();
         }
         return instance;
     }
@@ -57,12 +57,12 @@ public class EmailManager {
         // Build a new authorized API client service.
         try {
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            Gmail service = CallGmailApi.getGmailService();
+            Gmail service = GmailApi.getGmailService();
             String user = "me";
             String[] recipients = event.getRecipients();
             for (String s : recipients) {
-                MimeMessage email = CallGmailApi.createEmail(s, user, event.getSubject(), event.getMessage());
-                CallGmailApi.sendMessage(service, user, email);
+                MimeMessage email = GmailApi.createEmail(s, user, event.getSubject(), event.getMessage());
+                GmailApi.sendMessage(service, user, email);
                 logger.info("EMAIL SENT");
             }
             EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
