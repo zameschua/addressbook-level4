@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 //@@author yilun-zhu
 public class CalendarCommandTest {
