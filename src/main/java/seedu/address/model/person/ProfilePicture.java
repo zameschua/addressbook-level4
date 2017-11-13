@@ -26,7 +26,7 @@ public class ProfilePicture {
      * @param path
      * @throws IllegalValueException
      */
-    public ProfilePicture(String path) throws IllegalValueException {
+    public ProfilePicture(String path) throws NullPointerException {
         requireNonNull(path);
         profilePicPath = path;
     }

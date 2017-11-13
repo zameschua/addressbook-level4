@@ -21,7 +21,9 @@ public interface ReadOnlyPerson {
     ObjectProperty<Address> addressProperty();
     Address getAddress();
     //@@author pohjie
+    ObjectProperty<ProfilePicture> profilePictureProperty();
     ProfilePicture getProfilePic();
+    ObjectProperty<Attendance> attendanceProperty();
     Attendance getAttendance();
     //@@author
     ObjectProperty<UniqueTagList> tagProperty();
