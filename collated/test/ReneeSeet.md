@@ -52,6 +52,16 @@ public class EmailPanelHandle extends NodeHandle<Node>  {
         return f.getText();
     }
 
+    public TextField getSubjectTextBox() {
+        TextField f = (TextField) subjectBox;
+        return f;
+    }
+
+    public TextArea getMessageTextBox() {
+        TextArea f = (TextArea) emailMessage;
+        return f;
+    }
+
     public Button getSendButton() {
         Button f = (Button) sendButton;
         return f;
@@ -67,19 +77,15 @@ public class EmailPanelHandle extends NodeHandle<Node>  {
  */
 
 public class MassEmailCommandTest {
+    public static final String INVALID_TAG = "hello";
+    public static final String SPECIAL_TAG_ALL = "all";
+    public static final String VALID_TAG = "family";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_NOBODY_FOUND);
-        MassEmailCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
 
     @Test
     //test 'all' predicate
     public void execute_massEmail_allsuccess() throws Exception {
-        MassEmailCommand command = prepareCommand("all");
+        MassEmailCommand command = prepareCommand(SPECIAL_TAG_ALL);
         String expectedMessage = buildExpectedMessage(getTypicalAddressBook().getPersonList());
         assertCommandSuccess(command, expectedMessage , getTypicalAddressBook().getPersonList());
     }
@@ -87,7 +93,7 @@ public class MassEmailCommandTest {
     @Test
     // one valid tag
     public void  execute_tagEmail_success() throws  Exception {
-        MassEmailCommand command = prepareCommand("family");
+        MassEmailCommand command = prepareCommand(VALID_TAG);
         String expectedMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedMessage , Arrays.asList(ALICE));
     }
@@ -95,7 +101,7 @@ public class MassEmailCommandTest {
     @Test
     //no vaild tag
     public void  executenoVaildTagEmailsuccess() throws  Exception {
-        MassEmailCommand command = prepareCommand("hello");
+        MassEmailCommand command = prepareCommand(INVALID_TAG);
         String expectedMessage = buildExpectedMessage(Collections.emptyList());
         assertCommandSuccess(command, expectedMessage , Collections.emptyList());
     }
@@ -103,7 +109,7 @@ public class MassEmailCommandTest {
     @Test
     // 1 vaild tag and 1 invalid tag
     public void  executevalidInvalidtagEmailsuccess() throws  Exception {
-        MassEmailCommand command = prepareCommand("family hello");
+        MassEmailCommand command = prepareCommand(VALID_TAG + " " + INVALID_TAG);
         String expectedMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedMessage , Arrays.asList(ALICE));
     }
@@ -140,7 +146,7 @@ public class MassEmailCommandTest {
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
             StringBuilder mess = new StringBuilder(
-                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+                    String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, expectedList.size()));
             mess.append("\n");
             for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());
@@ -168,6 +174,8 @@ public class MassEmailCommandTest {
 
 public class MassEmailCommandParserTest {
 
+    private static final String STUB_TAG_VALID_FIRST = "owesMoney";
+    private static final String STUB_TAG_VALID_SECOND = "friends";
     private MassEmailParser parser = new MassEmailParser();
 
     @Test
@@ -180,11 +188,13 @@ public class MassEmailCommandParserTest {
     public void parse_validArgs_returnsMassEmailCommand() {
         // no leading and trailing whitespaces
         MassEmailCommand expectedMassEmailCommand =
-                new MassEmailCommand(new TagMatchingPredicate((Arrays.asList("friends", "OwesMoney"))));
-        assertParseSuccess(parser, "friends OwesMoney", expectedMassEmailCommand);
+                new MassEmailCommand(new TagMatchingPredicate((
+                        Arrays.asList(STUB_TAG_VALID_FIRST , STUB_TAG_VALID_SECOND))));
+        assertParseSuccess(parser, STUB_TAG_VALID_FIRST + " " + STUB_TAG_VALID_SECOND , expectedMassEmailCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n friends \n \t OwesMoney  \t", expectedMassEmailCommand);
+        assertParseSuccess(parser, " \n " + STUB_TAG_VALID_FIRST
+                + " \n \t " + STUB_TAG_VALID_SECOND + "  \t", expectedMassEmailCommand);
     }
 
     @Test
@@ -304,6 +314,9 @@ public class EmailPanelTest extends GuiUnitTest  {
 
     private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
+    private static final String DELIMITER  = ";";
+    private static final String STUB_MESSAGE = "This is a test email";
+    private static final String STUB_SUBJECT = "test";
     private EmailPanel emailPanel;
     private EmailPanelHandle emailPanelHandle;
     private String expectedEmail;
@@ -315,7 +328,7 @@ public class EmailPanelTest extends GuiUnitTest  {
         emails = new ArrayList<String>();
         for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
             emails.add(TYPICAL_PERSONS.get(i).getEmail().toString());
-            expectedEmailbuilder.append(TYPICAL_PERSONS.get(i).getEmail().toString()).append(";");
+            expectedEmailbuilder.append(TYPICAL_PERSONS.get(i).getEmail().toString()).append(DELIMITER);
         }
         expectedEmail = expectedEmailbuilder.toString();
         guiRobot.interact(() -> emailPanel = new EmailPanel(emails));
@@ -333,6 +346,26 @@ public class EmailPanelTest extends GuiUnitTest  {
         //check that the Message box is
         assertEquals("", emailPanelHandle.getMessageText());
     }
+
+    /**
+     * Note the verification of sending emails are done via exploratory testing
+     * It is difficult for test to authenticate google account and send out an actual email via Gmail's API
+     * In the testCase below sendButton is not clicked but if google account has been pre autheticated,
+     * it can be use.
+     */
+
+    @Test
+    public void send_email() {
+        //fill up subject box
+        TextField sub =  emailPanelHandle.getSubjectTextBox();
+        sub.setText(STUB_SUBJECT);
+        //fill up message box
+        TextArea mess =  emailPanelHandle.getMessageTextBox();
+        mess.setText(STUB_MESSAGE);
+        //click send button
+        Button sendbutton = emailPanelHandle.getSendButton();
+        //sendbutton.fire();
+    }
 }
 ```
 ###### \java\systemtests\MassEmailCommandSystemTest.java
@@ -340,8 +373,12 @@ public class EmailPanelTest extends GuiUnitTest  {
 
 public class MassEmailCommandSystemTest extends AddressBookSystemTest {
 
+    private static final String INVALID_TAG = "hello";
     private static final String MESSAGE_INVALID_EMAIL_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, MassEmailCommand.MESSAGE_USAGE);
+    private static final String SPECIAL_TAG_ALL = "all";
+    private static final String VALID_TAG = "family";
+
     @Test
     public void massEmail() throws Exception {
         Model expectedModel = getModel();
@@ -351,19 +388,19 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         //Case: valid mass email command
-        command = MassEmailCommand.COMMAND_WORD + " " + "all";
+        command = MassEmailCommand.COMMAND_WORD + " " + SPECIAL_TAG_ALL;
         expectedResultMessage = buildExpectedMessage(getModel().getAddressBook().getPersonList());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         //Case: one valid tag
-        command = MassEmailCommand.COMMAND_WORD + " " + "family";
-        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList("family")));
+        command = MassEmailCommand.COMMAND_WORD + " " + VALID_TAG;
+        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList(VALID_TAG)));
         expectedResultMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         //Case: no valid tag
-        command = MassEmailCommand.COMMAND_WORD + " " + "hello";
-        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList("hello")));
+        command = MassEmailCommand.COMMAND_WORD + " " + INVALID_TAG;
+        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList(INVALID_TAG)));
         expectedResultMessage = buildExpectedMessage(Collections.emptyList());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -415,7 +452,7 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest {
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
             StringBuilder mess = new StringBuilder(
-                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+                    String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, expectedList.size()));
             mess.append("\n");
             for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());

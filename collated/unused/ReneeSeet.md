@@ -22,8 +22,39 @@
         }
 
 ```
+###### \GmailApiTest.java
+``` java
+/**
+ * Contains tests for {@link GmailApi}
+ * Note the verification of sending emails are done done via exploratory testing
+ * Because it is diffcult for test to authenticate google account and send out an actual email via Gmail's API
+ * testCase below is not run but this can help test if  google account has been pre autheticated.
+ */
+
+public class GmailApiTest {
+    private GmailApi gmailApi;
+    private static final String STUB_MESSAGE = "This is a stub message";
+    private static final String STUB_EMAIL = "stub@gmail.com";
+    private static final String STUB_SUBJECT = "test";
+
+   @Test
+    public void execute_Sending_email() throws IOException, MessagingException {
+        gmailApi = new GmailApi();
+        Gmail service = GmailApi.getGmailService();
+        String user = "me";
+        MimeMessage email = GmailApi.createEmail(STUB_EMAIL, user, STUB_SUBJECT , STUB_MESSAGE);
+        GmailApi.sendMessage(service, user, email);
+    }
+}
+```
 ###### \LoginHandle.java
 ``` java
+/**
+ * This is LoginHandle for the login page.
+ * It will fill up the email textfield and password textfield and press ENTER.
+ * Reason why this was unused: I dedcided to remove the login page as it was not good
+ * to store passsword and username and it caused coupling with the other features.
+ */
 /**
  * A handle to the {@code LoginPage} in the GUI.
  */
@@ -31,13 +62,15 @@
 public class LoginHandle extends NodeHandle<Node> {
 
     public static final String LOGIN_DISPLAY_ID = "#LoginPanel";
+    private static final String DEFAULT_EMAIL = "test@gmail.com";
+    private static final String DEFAULT_PASSWORD = "password";
 
     public LoginHandle(Node loginPanelNode) {
         super(loginPanelNode);
         TextField s = getChildNode("#emailBox");
-        s.setText("test@gmail.com");
+        s.setText(DEFAULT_EMAIL);
         PasswordField p = getChildNode("#passwordBox");
-        p.setText("password");
+        p.setText(DEFAULT_PASSWORD);
         guiRobot.type(KeyCode.ENTER);
     }
 }
@@ -84,6 +117,12 @@ public class LoginPanel extends UiPart<Region> {
 
     private static final String FXML = "LoginPanel.fxml";
     private static final Logger logger = LogsCenter.getLogger(LoginPanel.class);
+    private static final String DEFAULT_EMAIL = "test@gmail.com";
+    private static final String DEFAULT_PASSWORD = "password";
+    private static final String INVALID_EMAIL_PASSWORD = "Invalid password and email";
+    private static final String LOGGER_SUCCESSFUL_LOGIN = "SUCCESSFUL LOGIN";
+    private static final String EMPTY_FIELDS = "Please enter email and password";
+    private static final string LOGGER_EMPTY_FIELDS = "email textbox and password textbox are empty";
 
     @FXML
     private Button loginButton;
@@ -102,16 +141,23 @@ public class LoginPanel extends UiPart<Region> {
     }
 
     /**
-    * Catch Enter button
+    * Upon ENTER, check the password and email textbox for password and email.
+    * If password and email are valid , post LoginRequestEvent
     */
 
     @FXML
     public void onEnter(ActionEvent ae) {
         if (!emailBox.getText().equals("") && !passwordBox.getText().equals("")) {
-            EventsCenter.getInstance().post(new LoginRequestEvent());
+            if(emailBox.getText().equals(DEFAULT_EMAIL) && passwordBox.getText().equals(DEFAULT_PASSWORD)) {
+                EventsCenter.getInstance().post(new LoginRequestEvent());
+                logger.info(LOGGER_SUCCESSFUL_LOGIN);
+            }else {
+                loginText.setText(INVALID_EMAIL_PASSWORD);
+                logger.info(INVALID_EMAIL_PASSWORD);
+            }
         } else {
-            loginText.setText("Please enter email and password");
-            logger.info("nothing entered");
+            loginText.setText(EMPTY_FIELDS);
+            logger.info(LOGGER_EMPTY_FIELDS);
         }
     }
 }
@@ -120,7 +166,13 @@ public class LoginPanel extends UiPart<Region> {
 ``` java
 
 /**
- * Indicates a request for Logging
+ * LoginRequestEvent will be handled by the UIManager.
+ * Reason why this was unused: I dedcided to remove the login page as it was not good
+ * to store passsword and username and it caused coupling with the other features.
+ */
+
+/**
+ * Indicates a request to Login after entering valid email and password
  */
 
 public class LoginRequestEvent extends BaseEvent {
@@ -173,6 +225,12 @@ public class LoginRequestEvent extends BaseEvent {
 ```
 ###### \MainWindowWithLoginHandle.java
 ``` java
+
+/**
+ * When testing, this will handle the Login Panel before handling the main window.
+ * Reason why this was unused: This is not a good practice as this causes increase in coupling
+ * and cause the testing of other features to be dependent on the Login feature.
+ */
 /**
  * Provides a handle to the main menu of the app.
  */

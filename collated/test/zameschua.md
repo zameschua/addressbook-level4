@@ -1,4 +1,165 @@
 # zameschua
+###### \java\guitests\CommandPredictionPanelGuiTest.java
+``` java
+public class CommandPredictionPanelGuiTest extends AddressBookGuiTest {
+    private CommandPredictionPanelHandle commandPredictionPanelHandle;
+    private String testCaseText = "";
+    private List<String> expectedResults;
+    private List<String> actualResults;
+
+    @Before
+    public void setUp() {
+        CommandPredictionPanel commandPredictionPanel = new CommandPredictionPanel();
+        commandPredictionPanelHandle = new CommandPredictionPanelHandle(commandPredictionPanel.getListView());
+    }
+
+    @Test
+    public void execute_emptyString() {
+        // Test case: String with empty string
+        testCaseText = "";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    @Test
+    public void execute_singleWhitespace() {
+        // Test case: String with 1 whitespace
+        testCaseText = " ";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    @Test
+    public void execute_singleValidLetter() {
+        // Test case: String with 1 valid letter
+        testCaseText = "e";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+    @Test
+    public void execute_twoValidLetters() {
+        // Test case: String with 2 valid letters
+        testCaseText = "ex";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    @Test
+    public void execute_wholeCommand() {
+        // Test case: String with a whole command
+        testCaseText = "exit";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    @Test
+    public void execute_singleInvalidCharacter() {
+        // Test case: String with 1 invalid character
+        testCaseText = "*";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    @Test
+    public void execute_startsWithInvalidCharacter() {
+        // Test case: String starting with invalid character
+        testCaseText = "*exit";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    @Test
+    public void execute_startsWithWhitespace() {
+        // Test case: String starting with whitespace
+        testCaseText = " exit";
+        enterText(testCaseText);
+        expectedResults = (List) commandPredictionPanelHandle.getPredictionResults();
+        actualResults = (List) CommandPredictionPanel.filterPredictionResults(testCaseText);
+        assertEquals(expectedResults, actualResults);
+    }
+
+    /**
+     * Helper method to clear the {@link seedu.address.ui.CommandBox}, then fill it with {@code inputText}
+     * @param inputText the String to fill the {@code CommandBox} with
+     */
+    private void enterText(String inputText) {
+        getCommandBox().enterText("");
+        getCommandBox().enterText(inputText);
+    }
+}
+```
+###### \java\guitests\guihandles\CommandBoxHandle.java
+``` java
+    /**
+     * Sets the text in the {@link CommandBox} to a certain text
+     * Used in {@link CommandPredictionPanelGuiTest}
+     * @param text the text to fill the CommandBox with
+     */
+    public void enterText(String text) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(text));
+    }
+```
+###### \java\guitests\guihandles\SmsPanelHandle.java
+``` java
+/**
+ * A handler for the {@link seedu.address.ui.SmsPanel} of the UI
+ */
+public class SmsPanelHandle extends NodeHandle<Node>  {
+
+    public static final String SMS_PANEL_ID = "#smsPanel";
+    public static final String TO_TEXTBOX_ID = "recipientsBox";
+    public static final String MESSAGE_TEXTBOX_ID = "smsMessage";
+
+    private Node recipientBox;
+    private Node smsMessage;
+
+    public SmsPanelHandle(Node smsPanelNode) {
+        super(smsPanelNode);
+        Pane pane = getChildNode(SMS_PANEL_ID);
+        ObservableList<Node> listNode = pane.getChildren();
+        for (int i = 0; i < listNode.size(); i++) {
+            if (listNode.get(i).getId() == null) {
+                continue;
+            }
+            switch (listNode.get(i).getId()) {
+            case TO_TEXTBOX_ID:
+                recipientBox = listNode.get(i);
+                break;
+            case MESSAGE_TEXTBOX_ID:
+                smsMessage = listNode.get(i);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    public String getRecipientsText() {
+        TextField f = (TextField) recipientBox;
+        return f.getText();
+    }
+
+    public String getMessageText() {
+        TextArea f = (TextArea) smsMessage;
+        return f.getText();
+    }
+}
+```
 ###### \java\seedu\address\externals\TwilioApiHelperTest.java
 ``` java
 /**
@@ -164,6 +325,44 @@ public class SmsCommandParserTest {
         assertParseSuccess(parser,
                 " \n " + STUB_TAG_VALID_FIRST + " \n \t " + STUB_TAG_VALID_SECOND + "  \t",
                 expectedSmsCommand);
+    }
+}
+```
+###### \java\seedu\address\ui\SmsPanelTest.java
+``` java
+/**
+ * GUI Tests for {@link SmsPanel}
+ */
+public class SmsPanelTest extends GuiUnitTest  {
+
+    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
+            FXCollections.observableList(getTypicalPersons());
+    private SmsPanel smsPanel;
+    private SmsPanelHandle smsPanelHandle;
+    private String expectedPhoneNumbers;
+    private ArrayList<String> phoneNumbers;
+
+    @Before
+    public void setUp() {
+        StringBuilder expectedPhoneNumbersBuilder = new StringBuilder();
+        phoneNumbers = new ArrayList<String>();
+        for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
+            phoneNumbers.add(TYPICAL_PERSONS.get(i).getPhone().toString());
+            expectedPhoneNumbersBuilder.append(TYPICAL_PERSONS.get(i).getPhone().toString()).append(";");
+        }
+        expectedPhoneNumbers = expectedPhoneNumbersBuilder.toString();
+        guiRobot.interact(() -> smsPanel = new SmsPanel(phoneNumbers));
+        uiPartRule.setUiPart(smsPanel);
+
+        smsPanelHandle = new SmsPanelHandle(smsPanel.getRoot());
+    }
+
+    @Test
+    public void execute_smsPanelGui_phoneNumbersAddedCorrectly() {
+        //check that the phone numbers get added to "to:" textbox correctly
+        assertEquals(expectedPhoneNumbers, smsPanelHandle.getRecipientsText());
+        //check that the Message box is empty
+        assertEquals("", smsPanelHandle.getMessageText());
     }
 }
 ```

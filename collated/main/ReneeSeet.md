@@ -1,7 +1,7 @@
 # ReneeSeet
 ###### \java\seedu\address\commons\core\Messages.java
 ``` java
-    public static final String MESSAGE_MASS_CONFIRMATION = "Would you like to email all %1$d persons listed?";
+    public static final String MESSAGE_EMAIL_CONFIRMATION = "Would you like to email all %1$d persons listed?";
     public static final String MESSAGE_EMAIL_SUCCESS = "Emails are sent successfully";
     public static final String MESSAGE_NOBODY_FOUND = "0 persons found";
 ```
@@ -91,6 +91,10 @@ public class MassEmailRequestEvent extends BaseEvent {
 public class EmailManager {
 
     private static final Logger logger = LogsCenter.getLogger(EmailManager.class);
+    private static final String DELIMITER = ";";
+    private static final String LOGGER_EMAIL_SENT = "EMAIL SENT SUCCESS";
+    private static final String LOGGER_EMAIL_IO_EXCEPTION = "EMAIL: IO EXCEPTION";
+    private static final String LOGGER_EMAIL_MESSAGE_EXCEPTION = "EMAIL: MESSAGE EXCEPTION";
 
     private static EmailManager instance = null;
 
@@ -129,13 +133,13 @@ public class EmailManager {
             for (String s : recipients) {
                 MimeMessage email = GmailApi.createEmail(s, user, event.getSubject(), event.getMessage());
                 GmailApi.sendMessage(service, user, email);
-                logger.info("EMAIL SENT");
+                logger.info(LOGGER_EMAIL_SENT);
             }
             EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
         } catch (IOException e) {
-            logger.info("IO");
+            logger.info(LOGGER_EMAIL_IO_EXCEPTION);
         } catch (MessagingException d) {
-            logger.info("messageException");
+            logger.info(LOGGER_EMAIL_MESSAGE_EXCEPTION);
         }
     }
 }
@@ -301,7 +305,7 @@ public class GmailApi {
 
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
         if (displaySize != 0) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, displaySize));
             mess.append("\n");
             for (String email : emails) {
                 mess.append(email);
@@ -544,9 +548,10 @@ public class TagMatchingPredicate implements Predicate<ReadOnlyPerson> {
  */
 
 public class EmailPanel extends UiPart<Region> {
-    public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "EmailPanel.fxml";
     private static final Logger logger = LogsCenter.getLogger(EmailPanel.class);
+    private static final String DELIMITER = ";";
+    private static final String LOGGER_SEND_BUTTON_CLICKED = "EMAIL SEND BUTTON CLICKED";
 
     @FXML
     private TextField emailSubjectBox;
@@ -564,7 +569,7 @@ public class EmailPanel extends UiPart<Region> {
             @Override
             public void handle(ActionEvent event) {
                     sendEmail();
-                logger.info("SEND BUTTON CLICKED");
+                logger.info(LOGGER_SEND_BUTTON_CLICKED);
             }
             });
         String recipients = appendEmails(emailList);
@@ -578,7 +583,7 @@ public class EmailPanel extends UiPart<Region> {
     private String appendEmails(ArrayList<String> emails) {
         StringBuilder emailList = new StringBuilder();
         for (String s: emails) {
-            emailList.append(s).append(";");
+            emailList.append(s).append(DELIMITER);
         }
         return emailList.toString();
     }
@@ -588,7 +593,7 @@ public class EmailPanel extends UiPart<Region> {
     private void sendEmail() {
         String subject = emailSubjectBox.getText();
         String message = emailMessage.getText();
-        String[] recipients = recipientsBox.getText().split(";");
+        String[] recipients = recipientsBox.getText().split(DELIMITER);
         EventsCenter.getInstance().post(new SendEmailRequestEvent(subject, message, recipients));
     }
 }
@@ -672,4 +677,12 @@ public class EmailPanel extends UiPart<Region> {
    </children>
  </Pane>
 </HBox>
+```
+###### \resources\view\PersonInfo.fxml
+``` fxml
+                   <Label fx:id="date" alignment="CENTER" text="Date" GridPane.rowIndex="4">
+                       <font>
+                           <Font size="18.0" />
+                       </font>
+                   </Label>
 ```
