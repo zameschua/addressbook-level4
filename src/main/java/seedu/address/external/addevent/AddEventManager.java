@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.external.AddEventRequestEvent;
-import seedu.address.external.ExternalCall;
 import seedu.address.model.calendarevent.CalendarEvent;
 
 //@@author yilun-zhu
@@ -13,12 +13,20 @@ import seedu.address.model.calendarevent.CalendarEvent;
  * Follows Singleton and Facade design pattern,
  * for other parts of the app to interact with the google calendar API service
  */
-public class AddEventManager extends ExternalCall {
+public class AddEventManager {
 
     private static AddEventManager instance = null;
 
     protected AddEventManager() {
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Registers the object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
     }
 
     /**
