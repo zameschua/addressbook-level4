@@ -36,7 +36,7 @@ public class PersonInfo extends UiPart<Region> {
     //@@author ReneeSeet
     @FXML
     private Label date;
-    //@@author
+    //@@author pohjie
     @FXML
     private PieChart attendance;
 
@@ -50,7 +50,7 @@ public class PersonInfo extends UiPart<Region> {
         email.setText(person.getEmail().toString());
         //@@author ReneeSeet
         date.setText(JOIN_DATE + person.getJoinDate().toString());
-        //@@author
+        //@@author pohjie
 
         // This is not bound to the person. If we change attendance or missed when the person is
         // shown in browser panel this will not be reflected

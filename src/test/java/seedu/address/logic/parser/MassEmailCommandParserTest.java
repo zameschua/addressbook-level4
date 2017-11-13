@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.MassEmailCommand;
-import seedu.address.model.person.MassEmailPredicate;
+import seedu.address.model.tag.TagMatchingPredicate;
 
 //@@author ReneeSeet
 
@@ -27,10 +27,15 @@ public class MassEmailCommandParserTest {
     public void parse_validArgs_returnsMassEmailCommand() {
         // no leading and trailing whitespaces
         MassEmailCommand expectedMassEmailCommand =
-                new MassEmailCommand(new MassEmailPredicate((Arrays.asList("friends", "OwesMoney"))));
+                new MassEmailCommand(new TagMatchingPredicate((Arrays.asList("friends", "OwesMoney"))));
         assertParseSuccess(parser, "friends OwesMoney", expectedMassEmailCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n friends \n \t OwesMoney  \t", expectedMassEmailCommand);
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MassEmailCommand.MESSAGE_USAGE));
     }
 }

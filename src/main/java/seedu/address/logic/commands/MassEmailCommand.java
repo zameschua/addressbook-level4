@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.MassEmailRequestEvent;
-import seedu.address.model.person.MassEmailPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.TagMatchingPredicate;
 
 //@@author ReneeSeet
 
@@ -24,9 +24,9 @@ public class MassEmailCommand extends Command {
              + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"
              + "Example: " + COMMAND_WORD + " Sec 2 Sec 3\n";
 
-    private final MassEmailPredicate predicate;
+    private final TagMatchingPredicate predicate;
 
-    public MassEmailCommand(MassEmailPredicate predicate) {
+    public MassEmailCommand(TagMatchingPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -42,7 +42,7 @@ public class MassEmailCommand extends Command {
         return new CommandResult(getMessageForMassEmail(allPerson.size(), emails));
     }
 
-    public MassEmailPredicate getPredicate() {
+    public TagMatchingPredicate getPredicate() {
         return predicate;
     }
 
