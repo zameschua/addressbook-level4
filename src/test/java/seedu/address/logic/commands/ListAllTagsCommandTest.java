@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,6 +23,9 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 */
 public class ListAllTagsCommandTest {
 
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
     private Model model;
     private Model expectedModel;
     private ListAllTagsCommand listAllTagsCommand;
@@ -36,9 +39,6 @@ public class ListAllTagsCommandTest {
         listAllTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-    
     @Test
     public void execute_listAllTags_success() {
         try {
