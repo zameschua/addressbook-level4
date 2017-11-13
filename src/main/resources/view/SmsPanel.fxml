@@ -9,7 +9,7 @@
 
 <?import javafx.scene.layout.HBox?>
 <HBox alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-    <Pane prefHeight="678.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane fx:id="smsPanel" prefHeight="678.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
         <children>
             <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
                 <font>

@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.TagMatchingPredicate;
+import seedu.address.model.tag.TagMatchingPredicate;
+
 
 //@@author ReneeSeet
 

@@ -20,6 +20,14 @@ import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
 /**
+ * This is how the UiManager runs with login page. when the Application runs it will load
+ * the login panel only. Only when UiManager receives the LoginRequestEvent, it will remove the
+ * login panel and load the application.
+ * Reason why this was unused: I decided to remove the login page as it was not good
+ * to store passsword and username and it caused coupling with the other features.
+ */
+
+/**
  * The manager of the UI component.
  */
 public class UiManager extends ComponentManager implements Ui {

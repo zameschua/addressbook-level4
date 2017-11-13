@@ -6,6 +6,12 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoginRequestEvent;
 
 //@@author ReneeSeet
+
+/**
+ * When testing, this will handle the Login Panel before handling the main window.
+ * Reason why this was unused: This is not a good practice as this causes increase in coupling
+ * and cause the testing of other features to be dependent on the Login feature.
+ */
 /**
  * Provides a handle to the main menu of the app.
  */

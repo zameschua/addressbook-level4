@@ -1,4 +1,27 @@
 # ReneeSeet
+###### \AddAttendanceCommand.java
+``` java
+        JoinDate date = editAttendancePersonDescriptor.getJoinDate();
+```
+###### \AddAttendanceCommand.java
+``` java
+        private JoinDate date;
+```
+###### \AddAttendanceCommand.java
+``` java
+            this.date = toCopy.date;
+```
+###### \AddAttendanceCommand.java
+``` java
+        public void setJoinDate(JoinDate date) {
+            this.date = date;
+        }
+
+        public JoinDate getJoinDate() {
+            return date;
+        }
+
+```
 ###### \LoginHandle.java
 ``` java
 /**

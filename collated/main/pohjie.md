@@ -16,114 +16,6 @@ public class JumpToListAllTagsRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-/**
- * Increment attendance count of an existing person in the address book.
- */
-public class AddAttendanceCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "addAttendance";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Increment the attendance person identified"
-            + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) ";
-
-    public static final String MESSAGE_ADD_ATTENDANCE_SUCCESS = "Edited Person's Attendance: %1$s";
-    public static final String MESSAGE_ATTENDANCE_NOT_ADDED =
-            "Either invalid index or the attended sessions is already 8";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-
-    private final Index index;
-    private final EditAttendancePersonDescriptor editAttendancePersonDescriptor;
-
-    /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
-     */
-    public AddAttendanceCommand(Index index, EditAttendancePersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
-
-        this.index = index;
-        this.editAttendancePersonDescriptor = new EditAttendancePersonDescriptor(editPersonDescriptor);
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editAttendancePersonDescriptor);
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (PersonMaxAttendanceException pmae) {
-            throw new CommandException(MESSAGE_ATTENDANCE_NOT_ADDED);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_ADD_ATTENDANCE_SUCCESS, editedPerson));
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
-     */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditAttendancePersonDescriptor editAttendancePersonDescriptor) {
-        assert personToEdit != null;
-
-        Name updatedName = editAttendancePersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editAttendancePersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editAttendancePersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editAttendancePersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editAttendancePersonDescriptor.getTags().orElse(personToEdit.getTags());
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-        Attendance attendance = editAttendancePersonDescriptor.getAttendance();
-        ProfilePicture updatedProfilePicture = editAttendancePersonDescriptor.getProfilePicture();
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, date, updatedTags);
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-        private Attendance attendance;
-        private ProfilePicture profilePicture;
-
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-            this.attendance = toCopy.attendance;
-            this.attendance.addAttendance();
-            this.profilePicture = toCopy.profilePicture;
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-        public void setAttendance(Attendance attendance) {
-            this.attendance = attendance;
-        }
-
-        public Attendance getAttendance() {
-            return attendance;
-        }
-
-        public void setProfilePicture(ProfilePicture profilePicture) {
-            this.profilePicture = profilePicture;
-        }
-
-        public ProfilePicture getProfilePicture() {
-            return profilePicture;
-        }
-```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         private ProfilePicture profilePicture;
@@ -181,67 +73,10 @@ public class ListAllTagsCommand extends Command {
         return model.getFilteredTagList();
     }
 ```
-###### \java\seedu\address\logic\parser\AddAttendanceCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new EditCommand object
- */
-public class AddAttendanceCommandParser implements Parser<AddAttendanceCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the AddAttendanceCommand
-     * and returns an AddAttendanceCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public AddAttendanceCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
-
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAttendanceCommand.MESSAGE_USAGE));
-        }
-
-        EditAttendancePersonDescriptor editPersonDescriptor = new EditAttendancePersonDescriptor();
-        try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        return new AddAttendanceCommand(index, editPersonDescriptor);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-}
-```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case ListAllTagsCommand.COMMAND_WORD:
             return new ListAllTagsCommand();
-        case AddAttendanceCommand.COMMAND_WORD:
-            return new AddAttendanceCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -267,19 +102,6 @@ public class AddAttendanceCommandParser implements Parser<AddAttendanceCommand> 
 ``` java
     }
 
-    //// event-level operations
-
-    /**
-     * Adds a event to the calendar.
-     */
-    public void addEvent(ReadOnlyCalendarEvent event) {
-        CalendarEvent newEvent = new CalendarEvent(event);
-        try {
-            CalendarApi.addEvent(newEvent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Ensures that every tag in this person:
@@ -398,6 +220,7 @@ public class AddAttendanceCommandParser implements Parser<AddAttendanceCommand> 
  */
 public class Attendance {
 
+    public final int minAttendance = 0;
     public final int maxAttendance = 8;
     private int attended;
     private int missed;
@@ -413,13 +236,17 @@ public class Attendance {
 
 
     /**
-     * User can choose to set the number of attended sessions if it is not zero.
+     * User can choose to set the number of attended sessions if it is not zero in future versions.
      * @param attended
      * @throws IllegalValueException
      */
     public Attendance(int attended) throws IllegalValueException { // make sure attendance is valid. Tests here
-        this.attended = attended;
-        missed = maxAttendance - attended;
+        if (attended >= minAttendance && attended <= maxAttendance) {
+            this.attended = attended;
+            missed = maxAttendance - attended;
+        } else {
+            throw new IllegalValueException("attended must be an integer from 0 to 8 inclusive");
+        }
     }
 
     public int getAttended() {
@@ -434,9 +261,13 @@ public class Attendance {
      * Increments attended by one and decrements missed by one
      * to signify that a person has attended a session.
      */
-    public void addAttendance() {
-        attended++;
-        missed--;
+    public void addAttendance() throws PersonMaxAttendanceException {
+        if (attended < maxAttendance) {
+            attended++;
+            missed--;
+        } else {
+            throw new PersonMaxAttendanceException("Person's attendance is already at a maximum!");
+        }
     }
 
     @Override
@@ -457,105 +288,31 @@ public class Attendance {
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
-    private ProfilePicture profilePic;
-    private Attendance attendance;
+    private ObjectProperty<ProfilePicture> profilePicture;
+    private ObjectProperty<Attendance> attendance;
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
-
-    /**
-     * Creates a copy of the given ReadOnlyPerson.
-     */
-    public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getJoinDate(),
-                source.getTags());
-    }
-
-    public void setName(Name name) {
-        this.name.set(requireNonNull(name));
-    }
-
-    @Override
-    public ObjectProperty<Name> nameProperty() {
-        return name;
-    }
-
-    @Override
-    public Name getName() {
-        return name.get();
-    }
-
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
-    }
-
-    @Override
-    public ObjectProperty<Phone> phoneProperty() {
-        return phone;
-    }
-
-    @Override
-    public Phone getPhone() {
-        return phone.get();
-    }
-
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
-    }
-
-    @Override
-    public ObjectProperty<Email> emailProperty() {
-        return email;
-    }
-
-    @Override
-    public Email getEmail() {
-        return email.get();
-    }
-
-    public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
-    }
-
-    @Override
-    public ObjectProperty<Address> addressProperty() {
-        return address;
-    }
-
-    @Override
-    public Address getAddress() {
-        return address.get();
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    @Override
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.get().toSet());
-    }
-
-    public ObjectProperty<UniqueTagList> tagProperty() {
-        return tags;
-    }
-
-    /**
-     * Replaces this person's tags with the tags in the argument tag set.
-     */
-    public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
-
+        this.profilePicture = new SimpleObjectProperty<>(new ProfilePicture());
+        this.attendance = new SimpleObjectProperty<>(new Attendance());
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java
-    @Override
     public ProfilePicture getProfilePic() {
-        return profilePic;
+        return profilePicture.get();
+    }
+
+    @Override
+    public ObjectProperty<ProfilePicture> profilePictureProperty() {
+        return profilePicture;
     }
 
     public Attendance getAttendance() {
+        return attendance.get();
+    }
+
+    @Override
+    public ObjectProperty<Attendance> attendanceProperty() {
         return attendance;
     }
 
@@ -583,7 +340,7 @@ public class ProfilePicture {
      * @param path
      * @throws IllegalValueException
      */
-    public ProfilePicture(String path) throws IllegalValueException {
+    public ProfilePicture(String path) throws NullPointerException {
         requireNonNull(path);
         profilePicPath = path;
     }
@@ -608,7 +365,9 @@ public class ProfilePicture {
 ```
 ###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
+    ObjectProperty<ProfilePicture> profilePictureProperty();
     ProfilePicture getProfilePic();
+    ObjectProperty<Attendance> attendanceProperty();
     Attendance getAttendance();
 ```
 ###### \java\seedu\address\model\ReadOnlyAddressBook.java
@@ -664,6 +423,7 @@ public class ProfilePicture {
  */
 public class PersonInfo extends UiPart<Region> {
     private static final String FXML = "PersonInfo.fxml";
+    private static final String JOIN_DATE = "Joined date: ";
     public final ReadOnlyPerson person;
     private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
 
@@ -677,6 +437,9 @@ public class PersonInfo extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+```
+###### \java\seedu\address\ui\PersonInfo.java
+``` java
     @FXML
     private PieChart attendance;
 
@@ -688,6 +451,9 @@ public class PersonInfo extends UiPart<Region> {
         address.setText(person.getAddress().toString());
         phone.setText(person.getPhone().toString());
         email.setText(person.getEmail().toString());
+```
+###### \java\seedu\address\ui\PersonInfo.java
+``` java
 
         // This is not bound to the person. If we change attendance or missed when the person is
         // shown in browser panel this will not be reflected
@@ -731,6 +497,10 @@ public class TagCard extends UiPart<Region> {
         this.tag = tag;
         id.setText(displayedIndex + ". ");
         tagString.setText(tag.tagName);
+    }
+
+    public String getIdxText() {
+        return id.getText();
     }
 
     @Override
@@ -867,17 +637,6 @@ public class TagListPanel extends UiPart<Region> {
                         <Font size="18.0" />
                      </font>
                   </Label>
-               </children>
-            </GridPane>
-            <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></ImageView>
-            <PieChart fx:id="attendance" GridPane.rowIndex="2" />
-         </children>
-      </GridPane>
-   </children>
-</VBox>
 ```
 ###### \resources\view\TagListCard.fxml
 ``` fxml

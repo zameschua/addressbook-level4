@@ -22,9 +22,10 @@ import seedu.address.external.EmailManager;
  */
 
 public class EmailPanel extends UiPart<Region> {
-    public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "EmailPanel.fxml";
     private static final Logger logger = LogsCenter.getLogger(EmailPanel.class);
+    private static final String DELIMITER = ";";
+    private static final String LOGGER_SEND_BUTTON_CLICKED = "EMAIL SEND BUTTON CLICKED";
 
     @FXML
     private TextField emailSubjectBox;
@@ -42,7 +43,7 @@ public class EmailPanel extends UiPart<Region> {
             @Override
             public void handle(ActionEvent event) {
                     sendEmail();
-                logger.info("SEND BUTTON CLICKED");
+                logger.info(LOGGER_SEND_BUTTON_CLICKED);
             }
             });
         String recipients = appendEmails(emailList);
@@ -56,7 +57,7 @@ public class EmailPanel extends UiPart<Region> {
     private String appendEmails(ArrayList<String> emails) {
         StringBuilder emailList = new StringBuilder();
         for (String s: emails) {
-            emailList.append(s).append(";");
+            emailList.append(s).append(DELIMITER);
         }
         return emailList.toString();
     }
@@ -66,7 +67,7 @@ public class EmailPanel extends UiPart<Region> {
     private void sendEmail() {
         String subject = emailSubjectBox.getText();
         String message = emailMessage.getText();
-        String[] recipients = recipientsBox.getText().split(";");
+        String[] recipients = recipientsBox.getText().split(DELIMITER);
         EventsCenter.getInstance().post(new SendEmailRequestEvent(subject, message, recipients));
     }
 }

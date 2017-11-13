@@ -16,8 +16,8 @@ By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Welcome, fellow software developer! We are extremely delighted to see you. The CYNC community
-prides itself on being a friendly and helpful community for new developers.
+Welcome, fellow software developer! Thank you for taking interest in supporting our open-source software CYNC.
+The CYNC community prides itself on being a friendly and helpful community for new developers.
 If you ever face any issue or uncertainty in the instructions, feel free to send an email
 to pohjie@cync.com so that we can sort out the issues for you and following contributors.
 
@@ -454,13 +454,12 @@ _Figure 4.4.1 : Screenshot of the Command Prediction Panel_
 The Command Prediction Mechanism's implementation is purely on the front-end,
 ie. it only interfaces with the UI component.
 
-Whenever the application detects a change in the contents of the `CommandBox`,
+Whenever the application detects a change in the contents of the `CommandBox` UI Component,
 it fires a `CommandBoxContentsChangedEvent` to the `EventsCenter`.
-This event is handled in the `CommandPredictionPanel`, which calls `updatePredictionPanel` internally
+This event is handled in the `CommandPredictionPanel` UI Component, which calls `updatePredictionPanel` internally
 and updates itself to show the new command predictions (if there are any command predictions).
 This is illustrated in the diagram below.
 
-// TODO: Check with tutor if diagram is acceptable
 image::command-prediction-panel-sequence-diagram.png[width="800"]
 _Figure 4.4.2 : Sequence Diagram of the Command Prediction Panel_
 
@@ -534,7 +533,7 @@ There are two types of SMS commands: +
 2.`sms <TAG> [MORE TAGS]`: Send an SMS to all persons containing the tags as specified in the command
 
 On entering an `sms` command, the `SmsPanel` will appear in the `MainDisplayPanel` area,
-with the phone numbers of the SMS targets extracted from the relavent persons and
+with the phone numbers of the SMS targets extracted from the relevant persons and
 pre-filled, as demonstrated in the diagram below.
 
 image::SmsCommandScreenshot1.png[width="800"]
@@ -542,10 +541,16 @@ _Figure 5.3.1: Screenshot of CYNC upon entering the SMS Command_
 
 After the user composes an SMS and clicks on the `send` button, an event is fired to the
 `SmsManager`, which follows the Facade design pattern and in turn interacts with the
-`TwilioApiHelper` which handles the actual sending of the SMS. This is demonstrated in the sequence diagram below.
+`TwilioApiHelper` which handles the actual sending of the SMS.
+
+Upon sending or failure to send the SMS, a `NewResultAvailableEvent` is fired
+to update the `ResultDisplay` and let the user know if the SMS has been successfully sent or not.
+
+This is demonstrated in the sequence diagram below.
 
 image::SmsCommandSequenceDiagram.png[width="800"]
-_Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel_
+_Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel.
+Note that the `NewResultAvailableEvent` fired by the `TwilioApiHelper` has been omitted for clarity._
 
 
 //end::smscommand[]
@@ -565,7 +570,7 @@ and send the update to the `MainWindow` so that the tags can be displayed in the
 
 The mechanism is illustrated in the diagram below.
 
-image::ListAllTagsSequenceDiagram.png[width="800"]
+image::ListAllTagsUpdatedSD.png[width="800"]
 _Figure 5.4.1 List All Tags sequence diagram_
 The `listalltags` command inherits the abstract `Command` class.
 
@@ -591,6 +596,8 @@ _Figure 5.4.3 List of tags displayed to the right of person list_
 
 // end::listalltags[]
 
+
+
 // tag::personinfo[]
 === PersonInfo mechanism
 
@@ -607,7 +614,7 @@ When `MainWindow` receives this event, it will respond by clearing the `browserP
 
 Figure 5.5.1 below shows the sequence diagram. +
 
-image::PersonInfoMechanism.png[width="800"]
+image::PersonInfoUpdatedSD.png[width="800"]
 _Figure 5.5.1: Sequence diagram of PersonInfo implementation_
 
 This is an example of the MVC design pattern,
@@ -632,6 +639,82 @@ This may violate the single responsibility principle, since PersonInfo may have 
 the specifics of `PersonPanelSelectionChangedEvent` change.
 
 // end::personinfo[]
+
+
+// tag::calendar[]
+=== Calendar mechanism
+==== Description
+The calendar mechanism integrates with Google Calendar, and allows the user to view / add upcoming events.
+The calendar service is facilitated by the Google Calendar API.
+
+==== Implementation
+There are two types of calendar commands: +
+1. `calendar` : Displays the google calendar in the browser window +
+2. `addevent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
+
+==== Command `calendar`
+Upon entering the `calendar` command, the `CalendarPanel` will appear in the `MainDisplayPanel` area,
+showing the user's google calendar, or a google login page if it is first time the command is used after
+the app is restarted. As demonstrated in the two diagrams below.
+
+image::CalendarLogin.png[width="800"]
+_Figure 5.5.3.1: Upon first use of the command after every restart_
+
+image::Calendar.png[width="800"]
+_Figure 5.5.3.2: Subsequent usages of the command after logging in_
+
+After the `calendar` command is entered, an `event` is sent to the `EventsCenter`, which sends an update to the `UI`
+such that the google calendar can be displayed in the `MainDisplayPanel`. As demonstrated in the diagram below.
+
+image::calendarCommand.png[width="800"]
+_Figure 5.5.3.3: Sequence diagram for the execution of `calendar` command_
+
+==== Command `addevent`
+Upon entering the `addevent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
+an update to `AddEventManager`, which follows the Facade design pattern and interacts with the `CalendarApi` for
+google calendar to add the event. If the calendar event is added successfully, an `event` is
+sent to the `UI` to refresh the calendar. As demonstrated in the diagram below.
+
+image::addEvent.png[width="800"]
+_Figure 5.5.4.1: Sequence diagram for the execution of `addevent` command_
+
+==== Design Considerations
+**Aspect:** Placement of the `calendarDisplayPanel` +
+**Alternative 1 (current choice):** Replaces the `mainDisplayPanel` +
+**Pros:** Users can see the `PersonListPanel` side by side with the calendar.
+Users can use other functions involving the `PersonListPanel`, such as `add` and `find`, with the calendar open. +
+**Cons:** Calendar is open all the time unless a command changes the `mainDisplayPanel`, this results in more resources consumed as it is
+left running when not needed. +
+**Alternative 2:** An overlay that covers both the `mainDisplayPanel` and the `PersonListPanel` +
+**Pros:** Calendar is switched out when another command is entered, this saves resources when the calendar is not needed. +
+**Cons:** Users are not able to refer to the data on the `PersonListPanel` when using the calendar.
+
+// end::calendar[]
+
+// tag::findfunction[]
+=== Find Mechanism
+==== Description
+The `find` command is the filter function for this application. It will filter through all fields of the user data
+based on the given keywords.
+
+==== Implementation
+The `find` command works as such: `find KEYWORD [MORE KEYWORDS]` +
+
+After the command is entered, the keywords will be sent to the `parser` which then creates a `predicate` to filter
+the stored data. +
+The `predicate` is used by the `model`, which returns a list of filtered people based on the given `predicate`.
+
+==== Design Considerations
+**Aspect:** How to provide the user with functions to search through different fields of customer data +
+**Alternative 1 (current choice):** All-in-one search function. +
+**Pros:** Intuitive and easy to remember. Users can search through any fields of customer data with a single function. +
+**Cons:** User is unable to restrict the search to only one field in the customers' data. E.g. If the user is searching
+for people with addresses in `East Coast`, if there is someone whose name contains `East Coast`, it will show up as well. +
+**Alternative 2:** Multiple search functions. +
+**Pros:** The user can specify exactly which field he wants to search in, avoids the kind of situation described above. +
+**Cons:** Not very intuitive. It is a hassle for the users to remember many different search functions.
+
+// end::findfunction[]
 
 == Documentation
 
@@ -717,6 +800,21 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
+
+// tag::testingTips[]
+
+**Problem: Tests fail with a `GuiRobot$EventTimeoutException`. **
+
+* Reason: The tests are taking a longer time to load than the given `waitForEvent` timeout limit.
+* Solution: To give it more time, increase the `DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS` in `src\test\java\guitests\GuiRobot.java`.
+
+**Problem: GUI tests fail randomly using JUnit test runner.**
+
+* Reason: Shifting of mouse / switching tabs during the test may have interrupted with the tests.
+* Solution: Recommended to run tests in headless mode. You can do so by opening the console and running the command
+`gradlew clean headless allTests`.
+
+// end::testingTips[]
 
 == Dev Ops
 
