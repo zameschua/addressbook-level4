@@ -154,7 +154,11 @@ public class AddAttendanceCommand extends UndoableCommand {
             this.tags = toCopy.tags;
             //@@author pohjie
             this.attendance = toCopy.attendance;
-            this.attendance.addAttendance();
+            try {
+                this.attendance.addAttendance();
+            } catch (personMaxAttendanceException e) {
+                System.out.println("Max attendance already!");
+            }
             this.profilePicture = toCopy.profilePicture;
             //@@author ReneeSeet
             this.date = toCopy.date;

@@ -20,8 +20,12 @@ import seedu.address.model.tag.TagMatchingPredicate;
 
 public class MassEmailCommandSystemTest extends AddressBookSystemTest {
 
+    private static final String INVALID_TAG = "hello";
     private static final String MESSAGE_INVALID_EMAIL_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, MassEmailCommand.MESSAGE_USAGE);
+    private static final String SPECIAL_TAG_ALL = "all";
+    private static final String VALID_TAG = "family";
+
     @Test
     public void massEmail() throws Exception {
         Model expectedModel = getModel();
@@ -31,19 +35,19 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         //Case: valid mass email command
-        command = MassEmailCommand.COMMAND_WORD + " " + "all";
+        command = MassEmailCommand.COMMAND_WORD + " " + SPECIAL_TAG_ALL;
         expectedResultMessage = buildExpectedMessage(getModel().getAddressBook().getPersonList());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         //Case: one valid tag
-        command = MassEmailCommand.COMMAND_WORD + " " + "family";
-        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList("family")));
+        command = MassEmailCommand.COMMAND_WORD + " " + VALID_TAG;
+        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList(VALID_TAG)));
         expectedResultMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         //Case: no valid tag
-        command = MassEmailCommand.COMMAND_WORD + " " + "hello";
-        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList("hello")));
+        command = MassEmailCommand.COMMAND_WORD + " " + INVALID_TAG;
+        expectedModel.updateFilteredPersonList(new TagMatchingPredicate(Arrays.asList(INVALID_TAG)));
         expectedResultMessage = buildExpectedMessage(Collections.emptyList());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -95,7 +99,7 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest {
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
             StringBuilder mess = new StringBuilder(
-                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+                    String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, expectedList.size()));
             mess.append("\n");
             for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());

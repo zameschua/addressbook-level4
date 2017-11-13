@@ -38,6 +38,10 @@ public class TagCard extends UiPart<Region> {
         tagString.setText(tag.tagName);
     }
 
+    public String getIdxText() {
+        return id.getText();
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
