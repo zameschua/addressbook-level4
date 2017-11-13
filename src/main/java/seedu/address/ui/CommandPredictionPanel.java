@@ -16,10 +16,12 @@ import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CommandBoxContentsChangedEvent;
+import seedu.address.commons.events.ui.CommandBoxReplaceTextEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelShowEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
@@ -74,7 +76,8 @@ public class CommandPredictionPanel extends UiPart<Region> {
                     addEventCommandWord, massEmailCommandWord, smsCommandWord, undoCommandWord, redoCommandWord,
                     clearCommandWord, exitCommandWord));
 
-    private static ObservableList<String> commandPredictionResults;
+    private ObservableList<String> commandPredictionResults;
+
     // tempPredictionResults used to store the results from filtering through COMMAND_PREDICTION_RESULTS_INITIAL
     private ArrayList<String> tempPredictionResults;
 
@@ -104,6 +107,31 @@ public class CommandPredictionPanel extends UiPart<Region> {
     private void initListView() {
         // Attach ObservableList to ListView
         commandPredictionListView.setItems(commandPredictionResults);
+    }
+
+    /**
+     * Helper method for the constructor
+     * Attaches an event handler to the CommandPredictionPanel to track when
+     * the user changes the CommandPrediction
+     *
+     * The method fires another event to the {@link seedu.address.commons.core.EventsCenter},
+     * which is handled by {@link CommandBox} and in turns changes its state
+     */
+    private void setEventHandlerForSelectionChangeEvent() {
+        commandPredictionListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in command prediction panel changed to : '" + newValue + "'");
+                        raise(new CommandPredictionPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    /**
+     * Helper method to retrieve the currently selected Command Prediction
+     */
+    public String getSelection() {
+        return commandPredictionListView.getSelectionModel().getSelectedItem();
     }
 
     /**
@@ -145,39 +173,55 @@ public class CommandPredictionPanel extends UiPart<Region> {
     }
 
     /**
-     * Helper method for the constructor
-     * Attaches an event handler to the CommandPredictionPanel to track when
-     * the user changes the CommandPrediction
-     *
-     * The method fires another event to the {@link seedu.address.commons.core.EventsCenter},
-     * which is handled by {@link CommandBox} and in turns changes its state
+     * Helper method to handle the event where the user clicks on a Command Prediction
+     * in the {@code CommandPredictionPanel}
      */
-    private void setEventHandlerForSelectionChangeEvent() {
-        commandPredictionListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in command prediction panel changed to : '" + newValue + "'");
-                        raise(new CommandPredictionPanelSelectionChangedEvent(newValue));
-                    }
-                });
+    @FXML
+    private void handleMouseClick() {
+        String currentSelection = getSelection();
+        raise(new CommandBoxReplaceTextEvent(currentSelection));
+        raise(new CommandPredictionPanelHideEvent());
     }
 
+    /**
+     * Detects changes in the {@link CommandBox} and updates the contents of the Command Predictions
+     * @param event the event fired by the {@code CommandBox} to indicate a change in content
+     */
     @Subscribe
     private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updatePredictionResults(event.getCommandText());
     }
 
+    /**
+     * Shifts the currently selected Command Prediction down by one when the down arrow key is pressed
+     * while the user is focused on the {@code CommandBox}
+     * @param event the event fired by the {@code CommandBox} to
+     * indicate the request to select the next Command Prediction
+     */
     @Subscribe
     private void handleCommandPredictionPanelNextSelectionEvent(CommandPredictionPanelNextSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.getSelectionModel().selectNext();
     }
 
+    /**
+     * Shifts the currently selected Command Prediction up by one when the up arrow key is pressed
+     * while the user is focused on the {@code CommandBox}
+     * @param event the event fired by the {@code CommandBox} to
+     * indicate the request to select the previous Command Prediction
+     */
     @Subscribe
     private void handleCommandPredictionPanelPreviousSelectionEvent(
             CommandPredictionPanelPreviousSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.getSelectionModel().selectPrevious();
+    }
+
+    @Subscribe
+    private void handleCommandPredictionPanelSelectionEvent(CommandPredictionPanelSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String currentSelection = getSelection();
+        raise(new CommandBoxReplaceTextEvent(currentSelection));
     }
 }

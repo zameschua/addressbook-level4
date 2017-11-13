@@ -4,18 +4,11 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author zameschua
 /**
- * Indicates a change in selection of the CommandPredictionPanel
+ * Indicates the selecting of a Command Prediction in the {@link seedu.address.ui.CommandPredictionPanel}
  */
 public class CommandPredictionPanelSelectionEvent extends BaseEvent {
 
-    private String currentSelection;
-
-    public CommandPredictionPanelSelectionEvent(String currentSelection) {
-        this.currentSelection = currentSelection;
-    }
-
-    public String getCurrentSelection() {
-        return currentSelection;
+    public CommandPredictionPanelSelectionEvent() {
     }
 
     @Override
