@@ -1,14 +1,13 @@
 package seedu.address.ui.testutil;
 
-import guitests.guihandles.TagCardHandle;
 import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TagCardHandle;
+import java.util.List;
+import java.util.stream.Collectors;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
