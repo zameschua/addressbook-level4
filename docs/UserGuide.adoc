@@ -222,7 +222,7 @@ image::findResult.png[width="790"]
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+If you wish to delete a person, you can do so by using this command. +
 Format: `delete INDEX`
 
 ****
@@ -267,8 +267,13 @@ image::PersonInfoPieChart.png[width="790"]
 
 [NOTE]
 ====
-If you made any changes to a person's information and the person's detailed information was showing in the panel before you made the changes,
-you have to refresh by entering the command `select (person's index)` again once you are done with editing the information.
+If you made any changes to a person's attendance and the person's detailed information was showing in the panel before you made the changes,
+you have to refresh by entering the command `select (person's index)` again once you are done with changing the attendance.
+====
+
+[NOTE]
+====
+If you are on V1.5 or earlier, then the option to change attendance is not supported yet.
 ====
 // end::select[]
 
