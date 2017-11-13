@@ -47,11 +47,6 @@ public class ListAllTagsCommandTest {
     }
 
     @Test
-    public void execute_personListUnfiltered_showsEverything() throws Exception {
-        assertCommandSuccess(listAllTagsCommand, model, ListAllTagsCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-    @Test
     public void execute_listAllTags_success() {
         try {
             CommandResult result = listAllTagsCommand.execute();
@@ -60,6 +55,11 @@ public class ListAllTagsCommandTest {
         }
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof JumpToListAllTagsRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+
+    @Test
+    public void execute_personListUnfiltered_showsEverything() throws Exception {
+        assertCommandSuccess(listAllTagsCommand, model, ListAllTagsCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
 }
