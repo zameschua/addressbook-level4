@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-//@@author ReneeSeet
-
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 

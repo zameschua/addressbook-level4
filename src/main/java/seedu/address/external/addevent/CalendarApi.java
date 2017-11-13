@@ -1,4 +1,6 @@
-package seedu.address.external;
+package seedu.address.external.addevent;
+
+import static seedu.address.commons.core.Messages.MESSAGE_ADD_EVENT_SUCCESS;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +24,10 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CalendarRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.model.calendarevent.CalendarEvent;
 
 //@@author yilun-zhu
@@ -109,17 +114,18 @@ public class CalendarApi {
      * Build and return an authorized Calendar client service.
      * @throws IOException
      */
-    public static void addEvent(CalendarEvent eventSent) throws IOException {
+    public static void createEvent(CalendarEvent eventSent) throws IOException {
         com.google.api.services.calendar.Calendar service =
                 getCalendarService();
+
         String nameSent = eventSent.getEventName().toString();
         String startDate = eventSent.getStartDate().toString();
         String startTime = eventSent.getStartTime().toString() + ":00+08:00";
         String endDate = eventSent.getEndDate().toString();
         String endTime = eventSent.getEndTime().toString() + ":00+08:00";
+
         Event event = new Event()
                 .setSummary(nameSent);
-
 
         DateTime startDateTime = new DateTime(startDate + "T" + startTime);
         EventDateTime start = new EventDateTime()
@@ -133,8 +139,12 @@ public class CalendarApi {
                 .setTimeZone("Singapore");
         event.setEnd(end);
         String calendarId = "primary";
-        event = service.events().insert(calendarId, event).execute();
-        logger.info("Event created");
+
+        service.events().insert(calendarId, event).execute();
+
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_ADD_EVENT_SUCCESS));
+        EventsCenter.getInstance().post(new CalendarRequestEvent());
+        logger.info("Event created: " + eventSent.toString());
     }
 
 }
