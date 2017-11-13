@@ -364,9 +364,10 @@ public class MainWindow extends UiPart<Region> {
      */
     @Subscribe
     private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
-        assert resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot());
-        resultDisplayPlaceholder.getChildren().remove(commandPredictionPanel.getRoot());
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot())) {
+            resultDisplayPlaceholder.getChildren().remove(commandPredictionPanel.getRoot());
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        }
     }
 
     /**

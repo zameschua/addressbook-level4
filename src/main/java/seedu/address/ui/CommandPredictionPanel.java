@@ -140,10 +140,7 @@ public class CommandPredictionPanel extends UiPart<Region> {
      */
     private void updatePredictionResults(String newText) {
         commandPredictionResults.clear();
-        tempPredictionResults = COMMAND_PREDICTION_RESULTS_INITIAL
-                .stream()
-                .filter(p -> p.startsWith(newText))
-                .collect(toCollection(ArrayList::new));
+        tempPredictionResults = filterPredictionResults(newText);
 
         commandPredictionResults.addAll(tempPredictionResults);
         commandPredictionListView.setItems(commandPredictionResults);
@@ -156,6 +153,21 @@ public class CommandPredictionPanel extends UiPart<Region> {
         } else {
             showCommandPredictionPanel();
         }
+    }
+
+    /**
+     * Helper method to filter the prediction results that starts with {@code inputText}
+     * @param inputText the text input by the user into the {@link CommandBox}
+     * @return an ArrayList containing all the filtered results
+     */
+    public static ArrayList<String> filterPredictionResults(String inputText) {
+        if (inputText.equals("")) {
+            return new ArrayList<String>();
+        }
+        return COMMAND_PREDICTION_RESULTS_INITIAL
+                .stream()
+                .filter(p -> p.startsWith(inputText))
+                .collect(toCollection(ArrayList::new));
     }
 
     /**
@@ -181,6 +193,14 @@ public class CommandPredictionPanel extends UiPart<Region> {
         String currentSelection = getSelection();
         raise(new CommandBoxReplaceTextEvent(currentSelection));
         raise(new CommandPredictionPanelHideEvent());
+    }
+
+    /**
+     * Getter method for testing the contents of the CommandPredictionPanel
+     * @return the ListView fx component
+     */
+    public ListView<String> getListView() {
+        return commandPredictionListView;
     }
 
     /**
