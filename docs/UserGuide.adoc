@@ -111,10 +111,12 @@ Format: `help`
 
 === Adding a new customer: `add`
 
-This is your most important feature of Cync as it allows you to add a customer's information into Cync. +
+This is your most important feature of CYNC as it allows you to add a customer's information into Cync. +
 Every customer will require a name[n/], email[e/], address[a/].
 
 If you wish to group the customers together, you can use our tags[t/] feature.
+
+CYNC would also auto generate a joined date based on the current day and assigned it to your new customer.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 ====
@@ -125,7 +127,6 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -168,6 +169,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * When editing tags, we replace the existing tags with the updated ones.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[NOTE]
+ CYNC currently does not allow you to modify customers' joined date.
 
 Examples:
 
@@ -306,37 +310,41 @@ Examples:
 // end::addevent[]
 
 // tag::massemail[]
-=== Mass Emailing : `mass`
-Allows user to customise and send out emails to all customers or to specific tagged customers. +
-Format: `mass all` or `mass TAG [MORE_TAG]` +
+=== Mass Email : `email`
+This feature allows you to customise and send out emails to all customers or to specific tagged customers in CYNC. +
+In order to do so, you would require a Google account as well.
+
+Format: `email all` or `email TAG [MORE_TAG]` +
+
+[NOTE]
+====
+First time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
+====
 
 ****
 * The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
 * The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
-* Only full words will be matched e.g. `Friends` will not match `Friends`
-* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+* Only full words will be matched e.g. `Friends` will not match `Friend`
+* People matching at least one tag will be returned. e.g `email sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
 ****
-
-[NOTE]
-====
-First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC.
-====
 
 Examples:
 
-* `mass all` +
+* `email all` +
 Email to all customers in CYNC.
-* `mass OwesMoney` +
+* `email OwesMoney` +
 Email to customers with tag OwesMoney
 
-The UI should appear as such:
+Upon entering a valid `email` command, the UI should appear as such. +
+With the `To:` textbox prefilled with the desired customers' email addresses.
 
 image::email.png[width="790"]
 
 [TIP]
 ====
-It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+It is possible to add additional email addresses in `To:` textbox by typing the email addresses followed by `;`. +
+ e.g `<emailAddress1>;<emailAddress2>`
 ====
 
 After composing your email, click send. +
@@ -474,8 +482,8 @@ If so, you can refer to this list.
 | *Help* | `help` |
 | *Select* | `select INDEX` +
 | `select 2`
-| *Mass Emailing* | `mass all` / `mass KEYWORD [MORE_KEYWORDS]`
-| `mass friends`
+| *Mass Emailing* | `email all` / `email KEYWORD [MORE_KEYWORDS]`
+| `email friends`
 | *History* | `history` |
 | *Undo* | `undo` |
 | *Redo* | `redo` |

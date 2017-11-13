@@ -29,6 +29,7 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    //@@author ReneeSeet
     /**
      * Constructs a feedback message to summarise an operation for mass emailing
      *
@@ -38,7 +39,7 @@ public abstract class Command {
 
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
         if (displaySize != 0) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
             mess.append("\n");
             for (String email : emails) {
                 mess.append(email);
@@ -46,9 +47,10 @@ public abstract class Command {
             }
             return mess.toString();
         } else {
-            return "0 persons found";
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
+    //@@author
 
     //@@author yilun-zhu
     public static String getMessageForCalendar() {
@@ -80,7 +82,7 @@ public abstract class Command {
             }
             return mess.toString();
         } else {
-            return "0 persons found";
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
     //@@author
