@@ -1,4 +1,29 @@
 # yilun-zhu
+###### \java\seedu\address\commons\events\external\AddEventRequestEvent.java
+``` java
+
+/**
+ * Indicates a request for adding an calendar event
+ */
+
+public class AddEventRequestEvent extends BaseEvent {
+
+    private CalendarEvent calendarEvent;
+
+    public AddEventRequestEvent(CalendarEvent calendarEvent) {
+        this.calendarEvent = calendarEvent;
+    }
+
+    public CalendarEvent getCalendarEvent() {
+        return calendarEvent;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\CalendarRequestEvent.java
 ``` java
 /**
@@ -8,7 +33,6 @@
 public class CalendarRequestEvent extends BaseEvent {
 
     public CalendarRequestEvent() {
-    ;
     }
 
     @Override
@@ -17,7 +41,49 @@ public class CalendarRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\external\CalendarApi.java
+###### \java\seedu\address\external\addevent\AddEventManager.java
+``` java
+/**
+ * Follows Singleton and Facade design pattern,
+ * for other parts of the app to interact with the google calendar API service
+ */
+public class AddEventManager {
+
+    private static AddEventManager instance = null;
+
+    protected AddEventManager() {
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Registers the object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
+    }
+
+    /**
+     * Creates an instance of the CalendarApi and registers it as an event handler
+     * @return The Singleton instance of the CalendarApi
+     */
+    public static AddEventManager init() {
+        if (instance == null) {
+            instance = new AddEventManager();
+        }
+        return instance;
+    }
+
+    @Subscribe
+    public static void handleAddEventRequestEvent(AddEventRequestEvent addEventRequestEvent) throws IOException {
+        CalendarEvent eventSent = addEventRequestEvent.getCalendarEvent();
+        CalendarApi.createEvent(eventSent);
+    }
+
+
+}
+```
+###### \java\seedu\address\external\addevent\CalendarApi.java
 ``` java
 /** Calls Calendar API **/
 
@@ -102,17 +168,18 @@ public class CalendarApi {
      * Build and return an authorized Calendar client service.
      * @throws IOException
      */
-    public static void addEvent(CalendarEvent eventSent) throws IOException {
+    public static void createEvent(CalendarEvent eventSent) throws IOException {
         com.google.api.services.calendar.Calendar service =
                 getCalendarService();
+
         String nameSent = eventSent.getEventName().toString();
         String startDate = eventSent.getStartDate().toString();
         String startTime = eventSent.getStartTime().toString() + ":00+08:00";
         String endDate = eventSent.getEndDate().toString();
         String endTime = eventSent.getEndTime().toString() + ":00+08:00";
+
         Event event = new Event()
                 .setSummary(nameSent);
-
 
         DateTime startDateTime = new DateTime(startDate + "T" + startTime);
         EventDateTime start = new EventDateTime()
@@ -126,8 +193,12 @@ public class CalendarApi {
                 .setTimeZone("Singapore");
         event.setEnd(end);
         String calendarId = "primary";
-        event = service.events().insert(calendarId, event).execute();
-        logger.info("Event created");
+
+        service.events().insert(calendarId, event).execute();
+
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_ADD_EVENT_SUCCESS));
+        EventsCenter.getInstance().post(new CalendarRequestEvent());
+        logger.info("Event created: " + eventSent.toString());
     }
 
 }
@@ -139,7 +210,7 @@ public class CalendarApi {
  */
 public class AddEventCommand extends Command {
 
-    public static final String COMMAND_WORD = "addEvent";
+    public static final String COMMAND_WORD = "addevent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the google calendar. "
             + "Parameters: "
@@ -161,7 +232,7 @@ public class AddEventCommand extends Command {
     private final CalendarEvent toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an AddEventCommand to add the specified {@code ReadOnlyCalendarEvent}
      */
     public AddEventCommand(ReadOnlyCalendarEvent event) {
         toAdd = new CalendarEvent(event);
@@ -169,10 +240,10 @@ public class AddEventCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        requireNonNull(model);
-        model.addEvent(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-
+        requireNonNull(toAdd);
+        AddEventManager.init();
+        EventsCenter.getInstance().post(new AddEventRequestEvent(toAdd));
+        return new CommandResult(getMessageForAddEvent(toAdd));
     }
 
     @Override
@@ -186,13 +257,13 @@ public class AddEventCommand extends Command {
 ###### \java\seedu\address\logic\commands\CalendarCommand.java
 ``` java
 /**
- * List all emails in address book.
+ * Opens the calendar panel.
  */
 
 public class CalendarCommand extends Command {
 
     public static final String COMMAND_WORD = "calendar";
-    public static final String MESSAGE_SUCCESS = "Calendar loaded";
+    public static final String MESSAGE_SUCCESS = "Calendar loaded!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows calendar ";
 
     @Override
@@ -201,6 +272,18 @@ public class CalendarCommand extends Command {
         return new CommandResult(getMessageForCalendar());
     }
 }
+```
+###### \java\seedu\address\logic\commands\Command.java
+``` java
+    public static String getMessageForCalendar() {
+        StringBuilder mess = new StringBuilder(String.format(Messages.CALENDAR_MESSAGE));
+        return mess.toString();
+    }
+
+    public static String getMessageForAddEvent(CalendarEvent toAdd) {
+        StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_ADD_EVENT_SUCCESS, toAdd));
+        return mess.toString();
+    }
 ```
 ###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
@@ -808,7 +891,7 @@ public interface ReadOnlyCalendarEvent {
 ###### \java\seedu\address\ui\CalendarPanel.java
 ``` java
 /**
- * The Browser Panel of the App.
+ * The Calendar Panel of the App.
  */
 public class CalendarPanel extends UiPart<Region> {
 
@@ -841,19 +924,27 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     /**
-     * Frees resources allocated to the browser.
+     * Frees resources allocated to the calendarPanel.
      */
     public void freeResources() {
         calendar = null;
     }
 
     @Subscribe
-    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+    private void handleCalendarUpdateEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadCalendarPage(DEFAULT_CALENDAR_URL);
     }
 
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
+    }
 ```
 ###### \resources\view\CalendarPanel.fxml
 ``` fxml
