@@ -83,4 +83,25 @@ public class PersonInfo extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         date.textProperty().bind(Bindings.convert(person.joinDateProperty()));
     }
+
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof PersonInfo)) {
+            return false;
+        }
+
+        // state check
+        PersonInfo info = (PersonInfo) other;
+        return profilePic.equals(info.profilePic)
+                && name.equals(info.name)
+                && phone.equals(info.phone)
+                && address.equals(info.address)
+                && email.equals(info.email)
+                && date.equals(info.date)
+                && attendance.equals(info.attendance);
+    }
 }
