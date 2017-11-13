@@ -10,7 +10,7 @@ track and nurture relationships with customers.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 It is written in Java, and has about 8 kLoC.
 
-*Code contributed*: [https://github.com/zameschua/addressbook-level4/blob/master/collated/main/zameschua.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/tree/master/collated/test[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/zameschua.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/zameschua.md[Test code]]
 
 === Purpose of Portfolio
 This portfolio serves as a documentation of my contributions towards CYNC, also other contributions to this module.
