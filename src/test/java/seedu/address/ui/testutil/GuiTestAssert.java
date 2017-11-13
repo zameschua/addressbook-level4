@@ -1,5 +1,6 @@
 package seedu.address.ui.testutil;
 
+import guitests.guihandles.TagCardHandle;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -25,6 +26,16 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
+
+    //@@author pohjie
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEquals(TagCardHandle expectedCard, TagCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getTagString(), actualCard.getTagString());
+    }
+    //@@author
 
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
