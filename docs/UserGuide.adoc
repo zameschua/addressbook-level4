@@ -91,7 +91,7 @@ Users can input commands into CYNC via the `Comamnd Box`.
 ==== Navigating the `Command Box`
 
 ====
-*Basic Usage*
+*Quick Usage*
 
 * To enter a command, type a `command` into the `Command Box`, then press the kbd:[Enter] key to submit it
 * Use the kbd:[Page Up] key to view previously entered commands, and the kbd:[Page Down] key to return to a more
@@ -547,6 +547,7 @@ Here's a mockup of what our login page will look like when it's ready!
 image::login-page-mockup.png[width="790"]
 _Image 5.1.1: Mockup of `Login Page`_
 
+// tag::notifications[]
 === Notifications and Reminders
 We want to help you keep updated on your customers' activities.
 
@@ -555,6 +556,7 @@ By implementing a notification system, we can alert you when your customers
 * Are supposed to make their payments for the month
 * Have birthdays coming up, so that you can send them well wishes
 * Opts out of your newsletters, so that you can reach out to them for feedback to improve your business processes
+// end::notifications[]
 
 === Track Attendance of Customers
 We want CYNC to help keep track of your customer's attendance for you,
