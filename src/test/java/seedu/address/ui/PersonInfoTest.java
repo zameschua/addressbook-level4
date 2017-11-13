@@ -50,7 +50,7 @@ public class PersonInfoTest extends GuiUnitTest {
         assertTrue(personInfo.equals(personInfo));
 
         // null -> returns false
-        assertFalse(personInfo.equals(null));
+        assertFalse(personInfo==null);
 
         // different types -> returns false
         assertFalse(personInfo.equals(0));
