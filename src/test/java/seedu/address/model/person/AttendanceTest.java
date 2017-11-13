@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.exceptions.PersonMaxAttendanceException;
 
@@ -140,7 +141,7 @@ public class AttendanceTest {
     @Test
     public void addAttendance_withMaxAttended() throws Exception {
         Attendance attendance = new Attendance();
-        for (int i = 0; i < 8; i ++) {
+        for (int i = 0; i < 8; i++) {
             try {
                 attendance.addAttendance();
             } catch (PersonMaxAttendanceException e) {
@@ -169,5 +170,4 @@ public class AttendanceTest {
 
         assertFalse(attendance0.equals(attendance1));
     }
-    
 }
