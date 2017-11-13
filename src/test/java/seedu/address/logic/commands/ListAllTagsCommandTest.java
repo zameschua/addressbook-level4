@@ -42,7 +42,7 @@ public class ListAllTagsCommandTest {
     @Test
     public void execute_listAllTags_success() {
         try {
-            CommandResult result = listAllTagsCommand.execute();
+            listAllTagsCommand.execute();
         } catch (CommandException e) {
             System.out.println("CommandException");
         }
