@@ -19,7 +19,6 @@ import seedu.address.logic.commands.AddAttendanceCommand;
 import seedu.address.logic.commands.AddAttendanceCommand.EditAttendancePersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
-
 /**
  * Bulk of code was copied from EditCommandParser as my intention was to implement the AddAttendanceCommand
  * in a manner very similar to EditCommand. Hence grader may deem this code to be unsuitable for grading my coding
@@ -27,6 +26,7 @@ import seedu.address.model.tag.Tag;
  * Reason why this was unused: (Similar to AddAttendanceCommand) Tried implementing this feature too late,
  * decided to take it out and focus on working components' quality and come up with rigorous test cases instead.
  */
+
 
 /**
  * Parses input arguments and creates a new EditCommand object
