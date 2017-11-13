@@ -71,6 +71,11 @@ public class PersonInfo extends UiPart<Region> {
         attendance.setData(attendanceData);
     }
 
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     * @param person
+     */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
