@@ -25,6 +25,10 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 public class EmailManager {
 
     private static final Logger logger = LogsCenter.getLogger(EmailManager.class);
+    private static final String DELIMITER = ";";
+    private static final String LOGGER_EMAIL_SENT = "EMAIL SENT SUCCESS";
+    private static final String LOGGER_EMAIL_IO_EXCEPTION = "EMAIL: IO EXCEPTION";
+    private static final String LOGGER_EMAIL_MESSAGE_EXCEPTION = "EMAIL: MESSAGE EXCEPTION";
 
     private static EmailManager instance = null;
 
@@ -63,13 +67,13 @@ public class EmailManager {
             for (String s : recipients) {
                 MimeMessage email = GmailApi.createEmail(s, user, event.getSubject(), event.getMessage());
                 GmailApi.sendMessage(service, user, email);
-                logger.info("EMAIL SENT");
+                logger.info(LOGGER_EMAIL_SENT);
             }
             EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
         } catch (IOException e) {
-            logger.info("IO");
+            logger.info(LOGGER_EMAIL_IO_EXCEPTION);
         } catch (MessagingException d) {
-            logger.info("messageException");
+            logger.info(LOGGER_EMAIL_MESSAGE_EXCEPTION);
         }
     }
 }

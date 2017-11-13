@@ -299,7 +299,6 @@ public class MainWindow extends UiPart<Region> {
 
     void releaseResources() {
         browserPanel.freeResources();
-        calendarPanel.freeResources();
     }
 
     @Subscribe

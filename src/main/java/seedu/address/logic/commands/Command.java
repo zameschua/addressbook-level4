@@ -39,7 +39,7 @@ public abstract class Command {
 
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
         if (displaySize != 0) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, displaySize));
             mess.append("\n");
             for (String email : emails) {
                 mess.append(email);
