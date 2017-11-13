@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/yilun-zhu.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/yilun-zhu.md[Test code]]
 
 === Enhancement Added: Find function improvements
 
@@ -26,8 +26,8 @@ include::../UserGuide.adoc[tag=findfunction]
 This improvement is inspired by the search function in Gmail. I felt that Gmail's search function is very intuitive
 for the user as it searches through all the fields in a single search bar. +
 The original find function can only search by `Name`. As a user, I felt that the function is rather limited
-and I wanted to filter people by other fields, such as people living in a
-certain district. However, having separate search functions to search for the respective fields may be confusing for the
+and I wanted to filter people by other fields, such as finding people with in a
+certain district by filtering their address. However, having separate search functions to search for the respective fields may be confusing for the
 users. Therefore, I improved upon the current `find` function such that the users can use a single intuitive
 search function that filters through all the fields.
 
@@ -61,10 +61,10 @@ include::../UserGuide.adoc[tag=addevent]
 
 ==== Justification
 
-To help the business owners' to manage their business schedule, for example a schedule of the upcoming tuition classes. Since
+These functions are implemented with the aim of helping the business owners' to manage their business schedule, for example a schedule of the upcoming tuition classes. Since
 CYNC is developed as an application to help small business owners to manage their growing business, a scheduler function
-such as the `calendar` function can help them manage their upcoming business events. +
-As a user of the calendar function, I felt that it is troublesome to interact with the calendar just by clicking, as I would have
+such as the `calendar` function can aid them in managing their upcoming business events. +
+As a user of the `calendar` function, I felt that it is troublesome to interact with the calendar just by clicking, as I would have
 to scroll multiple times if I want to add an event few months in advance, and then scroll all the way back for my current schedule.
 Therefore, I implemented the `addevent` function. This allows the user to directly add an event to the google calendar without any
 clicking or scrolling.

@@ -288,8 +288,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 
 To help you plan your schedule, we have integrated google calendar service into the software. +
-To use this service, you will need a google account. +
+If you wish to use this service, a google account is required. +
 To open up google calendar in the browser panel, type `calendar` in the command box. +
+
 Format: `calendar`
 
 [TIP]
@@ -316,7 +317,7 @@ This command can help you add events to the calendar more efficiently, directly 
 
 To use the `addevent` command, type the command `addevent` in the command box, followed by the details of the event. +
 The calendar shown will be updated automatically. +
-Please note that the event time has to be in 24hrs format, and the date format is Year-Month-Day. e.g. `16:00` for 4pm +
+Please note that the event time has to be in 24hrs format, and the date format is Year-Month-Day. e.g. `16:00` for 4pm and `2017-12-30` for 30th December 2017. +
 
 Format: `addevent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
 
