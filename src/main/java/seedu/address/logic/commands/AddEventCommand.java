@@ -21,7 +21,7 @@ import seedu.address.model.calendarevent.ReadOnlyCalendarEvent;
  */
 public class AddEventCommand extends Command {
 
-    public static final String COMMAND_WORD = "addEvent";
+    public static final String COMMAND_WORD = "addevent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the google calendar. "
             + "Parameters: "

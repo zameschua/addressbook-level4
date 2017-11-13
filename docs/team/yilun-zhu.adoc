@@ -52,7 +52,7 @@ include::../DeveloperGuide.adoc[tag=findfunction]
 
 include::../UserGuide.adoc[tag=calendar]
 
-include::../UserGuide.adoc[tag=addEvent]
+include::../UserGuide.adoc[tag=addevent]
 
 
 #End of Extract#
@@ -66,7 +66,7 @@ CYNC is developed as an application to help small business owners to manage thei
 such as the `calendar` function can help them manage their upcoming business events. +
 As a user of the calendar function, I felt that it is troublesome to interact with the calendar just by clicking, as I would have
 to scroll multiple times if I want to add an event few months in advance, and then scroll all the way back for my current schedule.
-Therefore, I implemented the `addEvent` function. This allows the user to directly add an event to the google calendar without any
+Therefore, I implemented the `addevent` function. This allows the user to directly add an event to the google calendar without any
 clicking or scrolling.
 
 ==== Implementation
@@ -80,10 +80,43 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Command to clear credentials for google API related commands. E.g. `addevent`, `email`.
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behaviour
+A command to clear the currently stored credentials for google API. This will allow users to reset the API
+and connect the application with another google account.
+
+==== Justification
+Currently, the user has to delete the credentials manually in order to reset the APIs to connect it with another google account.
+This is rather troublesome and may be confusing for the average user.
+
+=== Enhancement Proposed: Remembering user account for `Calendar`
+
+==== External behaviour
+Similar to a "remember me" function. By storing cookies permanently, users only have to log in to their google account once in the `calendar` browser, and this account will be used subsequently.
+
+==== Justification
+Currently, the cookies only last for the session. The user have to log in to the google account every time the application is restarted in the `calendar` browser.
+This may be troublesome for users, and remembering the account for them can provide a smoother experience.
+
+=== Enhancement Proposed: Delete calendar event command
+
+==== External behaviour
+Similar to the `addevent` command, a delete event command can be implemented to help user delete google calendar events from the command line.
+
+==== Justification
+Similar to the reason `addevent` is implemented. A command line operation can be more efficient than interacting with the google calendar by clicking.
 
 === Other contributions
 
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Wrote additional tests to increase coverage from 72% to 76% (Pull requests https://github.com/CS2103AUG2017-W15-B2/main/pull/56[#56])
+* Wrote additional troubleshooting tips for Testing in the Developer Guide.
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=testingTips]
+
+#End of Extract#
+
+---

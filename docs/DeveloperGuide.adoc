@@ -603,7 +603,7 @@ The calendar service is facilitated by the Google Calendar API.
 ==== Implementation
 There are two types of calendar commands: +
 1. `calendar` : Displays the google calendar in the browser window +
-2. `addEvent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
+2. `addevent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
 
 ==== Command `calendar`
 Upon entering the `calendar` command, the `CalendarPanel` will appear in the `MainDisplayPanel` area,
@@ -622,14 +622,14 @@ such that the google calendar can be displayed in the `MainDisplayPanel`. As dem
 image::calendarCommand.png[width="800"]
 _Figure 5.5.3.3: Sequence diagram for the execution of `calendar` command_
 
-==== Command `addEvent`
-Upon entering the `addEvent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
+==== Command `addevent`
+Upon entering the `addevent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
 an update to `AddEventManager`, which follows the Facade design pattern and interacts with the `CalendarApi` for
 google calendar to add the event. If the calendar event is added successfully, an `event` is
 sent to the `UI` to refresh the calendar. As demonstrated in the diagram below.
 
 image::addEvent.png[width="800"]
-_Figure 5.5.4.1: Sequence diagram for the execution of `addEvent` command_
+_Figure 5.5.4.1: Sequence diagram for the execution of `addevent` command_
 
 ==== Design Considerations
 **Aspect:** Placement of the `calendarDisplayPanel` +
@@ -753,6 +753,21 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
+
+// tag::testingTips[]
+
+**Problem: Tests fail with a `GuiRobot$EventTimeoutException`. **
+
+* Reason: The tests are taking a longer time to load than the given `waitForEvent` timeout limit.
+* Solution: To give it more time, increase the `DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS` in `src\test\java\guitests\GuiRobot.java`.
+
+**Problem: GUI tests fail randomly using JUnit test runner.**
+
+* Reason: Shifting of mouse / switching tabs during the test may have interrupted with the tests.
+* Solution: Recommended to run tests in headless mode. You can do so by opening the console and running the command
+`gradlew clean headless allTests`.
+
+// end::testingTips[]
 
 == Dev Ops
 
