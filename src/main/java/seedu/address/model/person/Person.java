@@ -24,8 +24,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<UniqueTagList> tags;
     //@@author pohjie
-    private ProfilePicture profilePic;
-    private Attendance attendance;
+    private ObjectProperty<ProfilePicture> profilePicture;
+    private ObjectProperty<Attendance> attendance;
     //@@author ReneeSeet
     private ObjectProperty<JoinDate> joinDate;
     //@@author
@@ -41,11 +41,13 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        //@@author ReneeSeet
         this.joinDate = new SimpleObjectProperty<>(joinDate);
-        this.profilePic = new ProfilePicture();
-        this.attendance = new Attendance();
+        //@@author pohjie
+        this.profilePicture = new SimpleObjectProperty<>(new ProfilePicture());
+        this.attendance = new SimpleObjectProperty<>(new Attendance());
+        //@@author
     }
-    //@@author pohjie
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -132,12 +134,21 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author pohjie
-    @Override
     public ProfilePicture getProfilePic() {
-        return profilePic;
+        return profilePicture.get();
+    }
+
+    @Override
+    public ObjectProperty<ProfilePicture> profilePictureProperty() {
+        return profilePicture;
     }
 
     public Attendance getAttendance() {
+        return attendance.get();
+    }
+
+    @Override
+    public ObjectProperty<Attendance> attendanceProperty() {
         return attendance;
     }
 
