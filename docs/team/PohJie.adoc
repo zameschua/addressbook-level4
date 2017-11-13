@@ -53,5 +53,15 @@ include::../UserGuide.adoc[tag=select]
 A small business owner is highly likely to want to view more information about his/her customers. With this feature, the business owner can do so
 by looking at the attendance and profile picture of his/her customers. In further features, we can have more features of each person to be displayed in this panel.
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=personinfo]
+
+#End of Extract#
+
+---
 === Other contributions
 

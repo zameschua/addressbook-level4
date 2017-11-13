@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.external.SendEmailRequestEvent;
-import seedu.address.external.CallGmailApi;
+import seedu.address.external.EmailManager;
 
 //@@author ReneeSeet
 
@@ -37,6 +37,7 @@ public class EmailPanel extends UiPart<Region> {
 
     public  EmailPanel(ArrayList<String> emailList) {
         super(FXML);
+        EmailManager.init();
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -66,7 +67,6 @@ public class EmailPanel extends UiPart<Region> {
         String subject = emailSubjectBox.getText();
         String message = emailMessage.getText();
         String[] recipients = recipientsBox.getText().split(";");
-        new CallGmailApi();
         EventsCenter.getInstance().post(new SendEmailRequestEvent(subject, message, recipients));
     }
 }

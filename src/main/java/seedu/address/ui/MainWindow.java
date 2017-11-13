@@ -309,12 +309,19 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author ReneeSeet
+    /**
+     * handle the MassEmailRequestEvent to display email panel
+     * @param event
+     */
     @Subscribe
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
     }
-
+    /**
+     * handle the ClearRequestEvent to clear browser placeholder
+     * @param event
+     */
     @Subscribe
     private void handleClearEvent(ClearRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
