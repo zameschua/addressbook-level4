@@ -565,7 +565,7 @@ and send the update to the `MainWindow` so that the tags can be displayed in the
 
 The mechanism is illustrated in the diagram below.
 
-image::ListAllTagsSequenceDiagram.png[width="800"]
+image::ListAllTagsUpdatedSD.png[width="800"]
 _Figure 5.4.1 List All Tags sequence diagram_
 The `listalltags` command inherits the abstract `Command` class.
 
@@ -609,7 +609,7 @@ When `MainWindow` receives this event, it will respond by clearing the `browserP
 
 Figure 5.5.1 below shows the sequence diagram. +
 
-image::PersonInfoMechanism.png[width="800"]
+image::PersonInfoUpdatedSD.png[width="800"]
 _Figure 5.5.1: Sequence diagram of PersonInfo implementation_
 
 This is an example of the MVC design pattern,
