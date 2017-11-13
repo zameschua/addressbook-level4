@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
  */
 public class TagCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
-    private static final String TAGSTRING_FIELD_ID = "tagString";
+    private static final String TAGSTRING_FIELD_ID = "#tagString";
 
     private final Label idLabel;
     private final Label tagStringLabel;

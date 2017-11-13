@@ -8,7 +8,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.ui.TagCard;
 
 //@@author pohjie
-
 /**
  * Provides a handle for {@code TagListPanel} containing list of unique tags
  */
@@ -42,7 +41,25 @@ public class TagListPanelHandle extends NodeHandle<ListView<TagCard>> {
     }
 
     /**
-     * Returns hte tag card handle of a tag associated with the {@code index} in the list
+     * Navigates the listview to display and select the tag.
+     */
+    public void navigateToCard(Tag tag) {
+        List<TagCard> cards = getRootNode().getItems();
+        Optional<TagCard> matchingCard = cards.stream().filter(card -> card.tag.equals(tag)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("Tag does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the tag card handle of a tag associated with the {@code index} in the list
      */
     public TagCardHandle getTagCardHandle(int index)  {
         return getTagCardHandle(getRootNode().getItems().get(index).tag);
