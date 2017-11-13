@@ -25,6 +25,7 @@ include::../UserGuide.adoc[tag=findfunction]
 
 This improvement is inspired by the search function in Gmail. I felt that Gmail's search function is very intuitive
 for the user as it searches through all the fields in a single search bar. +
+
 The original find function can only search by `Name`. As a user, I felt that the function is rather limited
 and I wanted to filter people by other fields, such as finding people with in a
 certain district by filtering their address. However, having separate search functions to search for the respective fields may be confusing for the
@@ -64,6 +65,7 @@ include::../UserGuide.adoc[tag=addevent]
 These functions are implemented with the aim of helping the business owners' to manage their business schedule, for example a schedule of the upcoming tuition classes. Since
 CYNC is developed as an application to help small business owners to manage their growing business, a scheduler function
 such as the `calendar` function can aid them in managing their upcoming business events. +
+
 As a user of the `calendar` function, I felt that it is troublesome to interact with the calendar just by clicking, as I would have
 to scroll multiple times if I want to add an event few months in advance, and then scroll all the way back for my current schedule.
 Therefore, I implemented the `addevent` function. This allows the user to directly add an event to the google calendar without any
@@ -90,6 +92,7 @@ and connect the application with another google account.
 Currently, the user has to delete the credentials manually in order to reset the APIs to connect it with another google account.
 This is rather troublesome and may be confusing for the average user.
 
+---
 === Enhancement Proposed: Remembering user account for `Calendar`
 
 ==== External behaviour
@@ -99,6 +102,7 @@ Similar to a "remember me" function. By storing cookies permanently, users only 
 Currently, the cookies only last for the session. The user have to log in to the google account every time the application is restarted in the `calendar` browser.
 This may be troublesome for users, and remembering the account for them can provide a smoother experience.
 
+---
 === Enhancement Proposed: Delete calendar event command
 
 ==== External behaviour
@@ -107,6 +111,7 @@ Similar to the `addevent` command, a delete event command can be implemented to 
 ==== Justification
 Similar to the reason `addevent` is implemented. A command line operation can be more efficient than interacting with the google calendar by clicking.
 
+---
 === Other contributions
 
 * Wrote additional tests to increase coverage from 72% to 76% (Pull requests https://github.com/CS2103AUG2017-W15-B2/main/pull/56[#56])
