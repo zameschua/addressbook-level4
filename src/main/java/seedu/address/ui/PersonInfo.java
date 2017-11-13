@@ -84,6 +84,11 @@ public class PersonInfo extends UiPart<Region> {
         date.textProperty().bind(Bindings.convert(person.joinDateProperty()));
     }
 
+    /**
+     * Checks if an Object other is the same object as PersonInfo
+     * @param other
+     * @return
+     */
     public boolean equals(Object other) {
         // short circuit if same object
         if (other == this) {
