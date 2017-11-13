@@ -20,7 +20,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonInfo extends UiPart<Region> {
     private static final String FXML = "PersonInfo.fxml";
     private static final String JOIN_DATE = "Joined date: ";
+
     public final ReadOnlyPerson person;
+
     private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
 
     @FXML
@@ -40,6 +42,12 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private PieChart attendance;
 
+    /**
+     * This method is not bound to the person. In other words, if we make an edit to the person's info
+     * while he/she is showing in PersonInfo, then we have to do manual refresh by re-selecting the person to
+     * show the updated data.
+     * @param person
+     */
     public PersonInfo (ReadOnlyPerson person) {
         super(FXML);
         this.person = person;
@@ -52,8 +60,6 @@ public class PersonInfo extends UiPart<Region> {
         date.setText(JOIN_DATE + person.getJoinDate().toString());
         //@@author pohjie
 
-        // This is not bound to the person. If we change attendance or missed when the person is
-        // shown in browser panel this will not be reflected
         ObservableList<PieChart.Data> attendanceData = FXCollections.observableArrayList(
                 new PieChart.Data("Present", person.getAttendance().getAttended()),
                 new PieChart.Data("Absent", person.getAttendance().getMissed()));
