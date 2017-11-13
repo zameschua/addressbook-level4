@@ -34,8 +34,6 @@ public class LoginPanel extends UiPart<Region> {
     private static final String LOGGER_SUCCESSFUL_LOGIN = "SUCCESSFUL LOGIN";
     private static final String EMPTY_FIELDS = "Please enter email and password";
     private static final string LOGGER_EMPTY_FIELDS = "email textbox and password textbox are empty";
-   
-    
 
     @FXML
     private Button loginButton;
