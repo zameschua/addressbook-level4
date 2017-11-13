@@ -16,8 +16,8 @@ By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Welcome, fellow software developer! We are extremely delighted to see you. The CYNC community
-prides itself on being a friendly and helpful community for new developers.
+Welcome, fellow software developer! Thank you for taking interest in supporting our open-source software CYNC.
+The CYNC community prides itself on being a friendly and helpful community for new developers.
 If you ever face any issue or uncertainty in the instructions, feel free to send an email
 to pohjie@cync.com so that we can sort out the issues for you and following contributors.
 
@@ -454,13 +454,12 @@ _Figure 4.4.1 : Screenshot of the Command Prediction Panel_
 The Command Prediction Mechanism's implementation is purely on the front-end,
 ie. it only interfaces with the UI component.
 
-Whenever the application detects a change in the contents of the `CommandBox`,
+Whenever the application detects a change in the contents of the `CommandBox` UI Component,
 it fires a `CommandBoxContentsChangedEvent` to the `EventsCenter`.
-This event is handled in the `CommandPredictionPanel`, which calls `updatePredictionPanel` internally
+This event is handled in the `CommandPredictionPanel` UI Component, which calls `updatePredictionPanel` internally
 and updates itself to show the new command predictions (if there are any command predictions).
 This is illustrated in the diagram below.
 
-// TODO: Check with tutor if diagram is acceptable
 image::command-prediction-panel-sequence-diagram.png[width="800"]
 _Figure 4.4.2 : Sequence Diagram of the Command Prediction Panel_
 
@@ -534,7 +533,7 @@ There are two types of SMS commands: +
 2.`sms <TAG> [MORE TAGS]`: Send an SMS to all persons containing the tags as specified in the command
 
 On entering an `sms` command, the `SmsPanel` will appear in the `MainDisplayPanel` area,
-with the phone numbers of the SMS targets extracted from the relavent persons and
+with the phone numbers of the SMS targets extracted from the relevant persons and
 pre-filled, as demonstrated in the diagram below.
 
 image::SmsCommandScreenshot1.png[width="800"]
@@ -542,10 +541,16 @@ _Figure 5.3.1: Screenshot of CYNC upon entering the SMS Command_
 
 After the user composes an SMS and clicks on the `send` button, an event is fired to the
 `SmsManager`, which follows the Facade design pattern and in turn interacts with the
-`TwilioApiHelper` which handles the actual sending of the SMS. This is demonstrated in the sequence diagram below.
+`TwilioApiHelper` which handles the actual sending of the SMS.
+
+Upon sending or failure to send the SMS, a `NewResultAvailableEvent` is fired
+to update the `ResultDisplay` and let the user know if the SMS has been successfully sent or not.
+
+This is demonstrated in the sequence diagram below.
 
 image::SmsCommandSequenceDiagram.png[width="800"]
-_Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel_
+_Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel.
+Note that the `NewResultAvailableEvent` fired by the `TwilioApiHelper` has been omitted for clarity._
 
 
 //end::smscommand[]

@@ -12,10 +12,11 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.CommandBoxContentsChangedEvent;
+import seedu.address.commons.events.ui.CommandBoxReplaceTextEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelNextSelectionEvent;
 import seedu.address.commons.events.ui.CommandPredictionPanelPreviousSelectionEvent;
-import seedu.address.commons.events.ui.CommandPredictionPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelSelectionEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -34,7 +35,6 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private String commandPredictionSelectionText = "";
 
     @FXML
     private TextField commandTextField;
@@ -65,11 +65,12 @@ public class CommandBox extends UiPart<Region> {
         case PAGE_DOWN:
             navigateToNextInput();
             break;
+        //@@author zameschua
         case TAB:
             // As up, down, and tab buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-            replaceText(commandPredictionSelectionText);
+            raise(new CommandPredictionPanelSelectionEvent());
             raise(new CommandPredictionPanelHideEvent());
             break;
         case UP:
@@ -83,6 +84,7 @@ public class CommandBox extends UiPart<Region> {
         case ENTER:
             raise(new CommandPredictionPanelHideEvent());
             break;
+        //@@author
         default:
             // let JavaFx handle the keypress
         }
@@ -178,27 +180,14 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author zameschua
     /**
-     * Changes the state of the {@link CommandBox} in commandPredictionSelectionText
-     * which stores the current selection of the {@link CommandPredictionPanel}
-     * @param event The event fired from the {@link CommandPredictionPanel}
+     * Event handler to change the contents of the {@code CommandBox}
+     * @param event the event fired by CommandPredictionPanel which contains the text of the
+     * currently selected Command Prediction
      */
     @Subscribe
-    private void handleCommandPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
+    private void handleCommandBoxReplaceTextEvent (CommandBoxReplaceTextEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandPredictionSelectionText = event.getCurrentSelection();
-    }
-
-    /**
-     * Updates the state of the {@link CommandBox} in commandPredictionSelectionText
-     * whenever the user changes its text. This is to produce the expected behaviour where
-     * the user's command should not disappear upon pressing tab, when the user was not
-     * expecting a command prediction
-     * @param event The event fired from the constructor in {@link CommandBox}
-     */
-    @Subscribe
-    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandPredictionSelectionText = event.getCommandText();
+        replaceText(event.getText());
     }
     //@@author
 }

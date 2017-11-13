@@ -214,7 +214,7 @@
  */
 .button {
     -fx-padding: 5 22 5 22;
-    -fx-border-color: transparent;
+    -fx-border-color: white;
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
