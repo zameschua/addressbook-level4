@@ -13,13 +13,19 @@ _Result_ +
 Success Message Shown : "New person added: Jess Phone:912346 Email:Jess@gmail.com Address: serangoon Road Join Date: <dd/mm/yy> Tags:[sec1]". +
 Jess should appear as in Person list as well.
 
-=== Testing : Find feature 
+=== Testing : Find feature
+_Test:_ +
+Enter in to the command box `add n/Jess p/912346 e/Jess@gmail.com a/serangoon Road t/sec1`
 
-=== Testing : listallTags feature 
+_Result_ +
+Success Message Shown : "New person added: Jess Phone:912346 Email:Jess@gmail.com Address: serangoon Road Join Date: <dd/mm/yy> Tags:[sec1]". +
+Jess should appear as in Person list as well.
 
-=== Testing : Mass Email feature 
+=== Testing : listallTags feature
 
-=== Testing: calendar feature 
+=== Testing : Mass Email feature
+
+=== Testing: calendar feature
 
 
 === Testing: Info
@@ -30,7 +36,6 @@ Jess should appear as in Person list as well.
 
 === Testing redo
 
-==== Testing clear 
- 
+==== Testing clear
  
 
