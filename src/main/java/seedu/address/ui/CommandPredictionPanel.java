@@ -161,7 +161,7 @@ public class CommandPredictionPanel extends UiPart<Region> {
      * @return an ArrayList containing all the filtered results
      */
     public static ArrayList<String> filterPredictionResults(String inputText) {
-        if (inputText.equals("")) {
+        if ("".equals(inputText)) {
             return new ArrayList<String>();
         }
         return COMMAND_PREDICTION_RESULTS_INITIAL

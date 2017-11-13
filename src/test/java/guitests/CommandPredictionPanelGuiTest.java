@@ -12,7 +12,6 @@ import seedu.address.ui.CommandPredictionPanel;
 
 //@@author zameschua
 public class CommandPredictionPanelGuiTest extends AddressBookGuiTest {
-    private CommandPredictionPanel commandPredictionPanel;
     private CommandPredictionPanelHandle commandPredictionPanelHandle;
     private String testCaseText = "";
     private List<String> expectedResults;
@@ -20,7 +19,7 @@ public class CommandPredictionPanelGuiTest extends AddressBookGuiTest {
 
     @Before
     public void setUp() {
-        commandPredictionPanel = new CommandPredictionPanel();
+        CommandPredictionPanel commandPredictionPanel = new CommandPredictionPanel();
         commandPredictionPanelHandle = new CommandPredictionPanelHandle(commandPredictionPanel.getListView());
     }
 
