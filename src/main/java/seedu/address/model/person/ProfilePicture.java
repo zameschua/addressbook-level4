@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author pohjie
@@ -26,9 +28,18 @@ public class ProfilePicture {
      * @param path
      * @throws IllegalValueException
      */
-    public ProfilePicture(String path) throws IllegalValueException {
+    public ProfilePicture(String path) throws NullPointerException {
         requireNonNull(path);
         profilePicPath = path;
+    }
+
+    public boolean isValidPath(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
