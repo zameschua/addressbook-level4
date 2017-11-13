@@ -262,7 +262,7 @@ you have to refresh by entering the command `select (person's index)` again once
 
 [NOTE]
 ====
-If you are on V1.5, then the option to change attendance is not supported yet.
+If you are on V1.5 or earlier, then the option to change attendance is not supported yet.
 ====
 // end::select[]
 
