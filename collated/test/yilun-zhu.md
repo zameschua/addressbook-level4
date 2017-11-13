@@ -10,8 +10,6 @@ public class CalendarPanelHandle extends NodeHandle<Node> {
 
     private boolean isWebViewLoaded = true;
 
-    private URL lastRememberedUrl;
-
     public CalendarPanelHandle(Node calendarPanelNode) {
         super(calendarPanelNode);
 
@@ -31,21 +29,6 @@ public class CalendarPanelHandle extends NodeHandle<Node> {
      */
     public URL getLoadedUrl() {
         return WebViewUtil.getLoadedUrl(getChildNode(CALENDAR_ID));
-    }
-
-    /**
-     * Remembers the {@code URL} of the currently loaded page.
-     */
-    public void rememberUrl() {
-        lastRememberedUrl = getLoadedUrl();
-    }
-
-    /**
-     * Returns true if the current {@code URL} is different from the value remembered by the most recent
-     * {@code rememberUrl()} call.
-     */
-    public boolean isUrlChanged() {
-        return !lastRememberedUrl.equals(getLoadedUrl());
     }
 
     /**
@@ -81,17 +64,17 @@ public class AddEventCommandTest {
         new AddEventCommand(null);
     }
 
-    @Test
-    public void executeEventAcceptedByModelAddSuccessful() throws Exception {
-        ModelStubAcceptingCalendarEventAdded modelStub = new ModelStubAcceptingCalendarEventAdded();
-        CalendarEvent validEvent = new CalendarEventBuilder().build();
+    /* This test can be used for local testing. Does not work for Travis-CI as it requires user to manually
+    authorize the google service.
 
-        CommandResult commandResult = getAddEventCommandForCalendarEvent(validEvent, modelStub).execute();
+    @Test
+    public void executeCommandSuccessful() {
+        CalendarEvent validEvent = new CalendarEventBuilder().build();
+        CommandResult commandResult = new AddEventCommand(validEvent).execute();
 
         assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
     }
-
+    */
 
     @Test
     public void equals() {
@@ -114,92 +97,18 @@ public class AddEventCommandTest {
         assertFalse(addHalloweenCommand.equals(addDanceClassCommand));
     }
 
-    /**
-     * Generates a new AddEventCommand with the details of the given event.
-     */
-    private AddEventCommand getAddEventCommandForCalendarEvent(CalendarEvent event, Model model) {
-        AddEventCommand command = new AddEventCommand(event);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
+}
+```
+###### \java\seedu\address\logic\commands\CalendarCommandTest.java
+``` java
+public class CalendarCommandTest {
+    @Test
+    public void executeCommandSuccessful() {
+
+        CommandResult commandResult = new CalendarCommand().execute();
+
+        assertEquals(String.format(CalendarCommand.MESSAGE_SUCCESS), commandResult.feedbackToUser);
     }
-
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addEvent(ReadOnlyCalendarEvent event) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Tag> getFilteredTagList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredTagList(Predicate<Tag> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-
-    /**
-     * A Model stub that always accept the event being added.
-     */
-    private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
-        private final ArrayList<CalendarEvent> eventsAdded = new ArrayList<>();
-
-        @Override
-        public void addEvent(ReadOnlyCalendarEvent event) {
-            eventsAdded.add(new CalendarEvent(event));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
 }
 ```
 ###### \java\seedu\address\model\calendarevent\EventEndDateTest.java
@@ -513,6 +422,34 @@ public class CalendarEventBuilder {
 
 }
 ```
+###### \java\seedu\address\testutil\CalendarEventsUtil.java
+``` java
+/**
+ * A utility class for CalendarEvent.
+ */
+public class CalendarEventsUtil {
+
+    /**
+     * Returns an addEvent command string for adding the {@code event}.
+     */
+    public static String getAddEventCommand(ReadOnlyCalendarEvent event) {
+        return AddEventCommand.COMMAND_WORD + " " + getEventDetails(event);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code event}'s details.
+     */
+    public static String getEventDetails(ReadOnlyCalendarEvent event) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_NAME + event.getEventName().toString() + " ");
+        sb.append(PREFIX_EVENT_START_DATE + event.getStartDate().value + " ");
+        sb.append(PREFIX_EVENT_START_TIME + event.getStartTime().value + " ");
+        sb.append(PREFIX_EVENT_END_DATE + event.getEndDate().value + " ");
+        sb.append(PREFIX_EVENT_END_TIME + event.getEndTime().value + " ");
+        return sb.toString();
+    }
+}
+```
 ###### \java\seedu\address\ui\CalendarPanelTest.java
 ``` java
 
@@ -532,14 +469,13 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default calendar page should not be the same as browser panel
+        // default window should be updated
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertFalse(expectedDefaultPageUrl.equals(calendarPanelHandle.getLoadedUrl()));
 
-        /*
+        /* The section below can be used for local testing. It does not load on Travis-CI.
         postNow(calendarRequestEvent);
 
-        //expected google login page, does not pass Travis for some reason
         URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"
                 + "passive=1209600&osid=1&continue=https://calendar.google.com/calendar/render&followup="
                 + "https://calendar.google.com/calendar/render&scc=1");
@@ -549,4 +485,31 @@ public class CalendarPanelTest extends GuiUnitTest {
         */
     }
 }
+```
+###### \java\systemtests\FindCommandSystemTest.java
+``` java
+        /* Case: find phone number of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book -> 3 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL, CARL, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tags of person in address book -> 1 persons found */
+        List<Tag> tags = new ArrayList<>(ALICE.getTags());
+        command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
 ```

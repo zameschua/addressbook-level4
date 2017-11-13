@@ -1,4 +1,10 @@
 # ReneeSeet
+###### \java\seedu\address\commons\core\Messages.java
+``` java
+    public static final String MESSAGE_MASS_CONFIRMATION = "Would you like to email all %1$d persons listed?";
+    public static final String MESSAGE_EMAIL_SUCCESS = "Emails are sent successfully";
+    public static final String MESSAGE_NOBODY_FOUND = "0 persons found";
+```
 ###### \java\seedu\address\commons\events\external\SendEmailRequestEvent.java
 ``` java
 
@@ -36,6 +42,20 @@ public class SendEmailRequestEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\ClearRequestEvent.java
+``` java
+/**
+ * Indicates a request for Clear of CYNC
+ */
+
+public class ClearRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\MassEmailRequestEvent.java
 ``` java
 
@@ -61,14 +81,72 @@ public class MassEmailRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\external\CallGmailApi.java
+###### \java\seedu\address\external\EmailManager.java
+``` java
+/**
+ * Follows Singleton and Facade design pattern,
+ * For Application to interact with the Google Gmail service
+ */
+
+public class EmailManager {
+
+    private static final Logger logger = LogsCenter.getLogger(EmailManager.class);
+
+    private static EmailManager instance = null;
+
+    protected EmailManager() {
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Creates an instance of the EmailManager and registers it as an event handler
+     * @return The Singleton instance of the EmailManager
+     */
+    public static EmailManager init() {
+        if (instance == null) {
+            instance = new EmailManager();
+            new GmailApi();
+        }
+        return instance;
+    }
+
+    /**
+     * Registers the object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
+    }
+
+    @Subscribe
+    public void handleSendEmailRequestEvent(SendEmailRequestEvent event) throws IOException, MessagingException {
+        // Build a new authorized API client service.
+        try {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            Gmail service = GmailApi.getGmailService();
+            String user = "me";
+            String[] recipients = event.getRecipients();
+            for (String s : recipients) {
+                MimeMessage email = GmailApi.createEmail(s, user, event.getSubject(), event.getMessage());
+                GmailApi.sendMessage(service, user, email);
+                logger.info("EMAIL SENT");
+            }
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
+        } catch (IOException e) {
+            logger.info("IO");
+        } catch (MessagingException d) {
+            logger.info("messageException");
+        }
+    }
+}
+```
+###### \java\seedu\address\external\GmailApi.java
 ``` java
 
 /** call gmail API * */
 
-public class CallGmailApi extends ExternalCall {
+public class GmailApi {
 
-    private static final Logger logger = LogsCenter.getLogger(CallGmailApi.class);
     /** Application name. */
     private static final String APPLICATION_NAME =
             "Gmail API Java Quickstart";
@@ -99,9 +177,6 @@ public class CallGmailApi extends ExternalCall {
             System.exit(1);
         }
     }
-    public CallGmailApi() {
-        registerAsAnEventHandler(this);
-    }
 
     /**
      * Creates an authorized Credential object.
@@ -111,7 +186,7 @@ public class CallGmailApi extends ExternalCall {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                CallGmailApi.class.getResourceAsStream("/client_secret.json");
+                GmailApi.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -208,68 +283,39 @@ public class CallGmailApi extends ExternalCall {
         message.setRaw(encodedEmail);
         return message;
     }
-    @Subscribe
-    public void handleSendEmailRequestEvent(SendEmailRequestEvent event) throws IOException, MessagingException {
-        // Build a new authorized API client service.
-        try {
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            Gmail service = getGmailService();
-            String user = "me";
-            String[] recipients = event.getRecipients();
-            for (String s : recipients) {
-                MimeMessage email = createEmail(s, user, event.getSubject(), event.getMessage());
-                sendMessage(service, user, email);
-                logger.info("EMAIL SENT");
+
+}
+```
+###### \java\seedu\address\logic\commands\ClearCommand.java
+``` java
+        EventsCenter.getInstance().post(new ClearRequestEvent());
+```
+###### \java\seedu\address\logic\commands\Command.java
+``` java
+    /**
+     * Constructs a feedback message to summarise an operation for mass emailing
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for persons displayed
+     */
+
+    public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
+        if (displaySize != 0) {
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
+            mess.append("\n");
+            for (String email : emails) {
+                mess.append(email);
+                mess.append("\n");
             }
-            EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_EMAIL_SUCCESS));
-        } catch (IOException e) {
-            logger.info("IO");
-        } catch (MessagingException d) {
-            logger.info("messageException");
+            return mess.toString();
+        } else {
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
-}
-```
-###### \java\seedu\address\external\ExternalCall.java
-``` java
-
-/**
- * Represents External Calls for external API
- * Allow external class to handle events
- */
-
-public abstract class ExternalCall {
-    protected void registerAsAnEventHandler(Object handler) {
-        EventsCenter.getInstance().registerHandler(handler);
-    }
-}
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-        JoinDate date = editAttendancePersonDescriptor.getJoinDate();
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-        private JoinDate date;
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-            this.date = toCopy.date;
-```
-###### \java\seedu\address\logic\commands\AddAttendanceCommand.java
-``` java
-        public void setJoinDate(JoinDate date) {
-            this.date = date;
-        }
-
-        public JoinDate getJoinDate() {
-            return date;
-        }
-
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
-        JoinDate date = editPersonDescriptor.getJoinDate();
+        JoinDate date = personToEdit.getJoinDate();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, date, updatedTags);
 ```
@@ -302,16 +348,16 @@ public abstract class ExternalCall {
 
 public class MassEmailCommand extends Command {
 
-    public static final String COMMAND_WORD = "mass";
+    public static final String COMMAND_WORD = "email";
     public static final String MESSAGE_SUCCESS = "Listed all required emails";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": To email all persons with tag\n"
              + COMMAND_WORD + " all : To email everyone in CYNC\n"
              + "Parameters: KEYWORD [MORE_KEYWORDS]... \n"
              + "Example: " + COMMAND_WORD + " Sec 2 Sec 3\n";
 
-    private final MassEmailPredicate predicate;
+    private final TagMatchingPredicate predicate;
 
-    public MassEmailCommand(MassEmailPredicate predicate) {
+    public MassEmailCommand(TagMatchingPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -327,7 +373,7 @@ public class MassEmailCommand extends Command {
         return new CommandResult(getMessageForMassEmail(allPerson.size(), emails));
     }
 
-    public MassEmailPredicate getPredicate() {
+    public TagMatchingPredicate getPredicate() {
         return predicate;
     }
 
@@ -368,7 +414,7 @@ public class MassEmailParser implements Parser<MassEmailCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new MassEmailCommand(new MassEmailPredicate(Arrays.asList(nameKeywords)));
+        return new MassEmailCommand(new TagMatchingPredicate(Arrays.asList(nameKeywords)));
     }
 }
 ```
@@ -377,6 +423,8 @@ public class MassEmailParser implements Parser<MassEmailCommand> {
 
 public class JoinDate {
 
+    public static final String JOINDATE_VALIDATION_REGEX =
+            "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
     private String joinDate;
 
     /**
@@ -393,6 +441,13 @@ public class JoinDate {
         joinDate = dtf.format(localDate);
     }
 
+    /**
+     * Returns true if a given string is a valid Join Date.
+     */
+    public static boolean isValidDate(String test) {
+        return test.matches(JOINDATE_VALIDATION_REGEX);
+    }
+
     @Override
     public String toString() {
         return joinDate;
@@ -400,20 +455,46 @@ public class JoinDate {
 
 }
 ```
-###### \java\seedu\address\model\person\MassEmailPredicate.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
+    private ObjectProperty<JoinDate> joinDate;
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+        this.joinDate = new SimpleObjectProperty<>(joinDate);
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public JoinDate getJoinDate() {
+        return joinDate.get();
+    }
 
+    @Override
+    public ObjectProperty<JoinDate> joinDateProperty() {
+        return joinDate;
+    }
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    ObjectProperty<JoinDate> joinDateProperty();
+    JoinDate getJoinDate();
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+                .append(" Join Date: ")
+                .append(getJoinDate())
+```
+###### \java\seedu\address\model\tag\TagMatchingPredicate.java
+``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the Tag keywords given.
  * if Tag Keywords is "all", returns true for everyone
  */
-
-
-public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
+public class TagMatchingPredicate implements Predicate<ReadOnlyPerson> {
 
     private final List<String> keytags;
 
-    public MassEmailPredicate(List<String> keytags) {
+    public TagMatchingPredicate(List<String> keytags) {
         this.keytags = keytags;
     }
 
@@ -436,36 +517,11 @@ public class MassEmailPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof MassEmailPredicate // instanceof handles nulls
-                && this.keytags.equals(((MassEmailPredicate) other).keytags)); // state check
+                || (other instanceof TagMatchingPredicate // instanceof handles nulls
+                && this.keytags.equals(((TagMatchingPredicate) other).keytags)); // state check
     }
 
 }
-```
-###### \java\seedu\address\model\person\Person.java
-``` java
-    private ObjectProperty<JoinDate> joinDate;
-```
-###### \java\seedu\address\model\person\Person.java
-``` java
-    public JoinDate getJoinDate() {
-        return joinDate.get();
-    }
-
-    @Override
-    public ObjectProperty<JoinDate> joinDateProperty() {
-        return joinDate;
-    }
-```
-###### \java\seedu\address\model\person\ReadOnlyPerson.java
-``` java
-    ObjectProperty<JoinDate> joinDateProperty();
-    JoinDate getJoinDate();
-```
-###### \java\seedu\address\model\person\ReadOnlyPerson.java
-``` java
-                .append(" Join Date: ")
-                .append(getJoinDate())
 ```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
@@ -503,6 +559,7 @@ public class EmailPanel extends UiPart<Region> {
 
     public  EmailPanel(ArrayList<String> emailList) {
         super(FXML);
+        EmailManager.init();
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -532,7 +589,6 @@ public class EmailPanel extends UiPart<Region> {
         String subject = emailSubjectBox.getText();
         String message = emailMessage.getText();
         String[] recipients = recipientsBox.getText().split(";");
-        new CallGmailApi();
         EventsCenter.getInstance().post(new SendEmailRequestEvent(subject, message, recipients));
     }
 }
@@ -548,14 +604,44 @@ public class EmailPanel extends UiPart<Region> {
         browserPlaceholder.getChildren().add(emailPanel.getRoot());
         browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
     }
+
+    /**
+     * Clear the browser when clear command called
+     */
+    @FXML
+    public void handleClear() {
+        browserPlaceholder.getChildren().clear();
+    }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    /**
+     * handle the MassEmailRequestEvent to display email panel
+     * @param event
+     */
     @Subscribe
     private void handleMassEmailEvent(MassEmailRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getEmailList());
     }
+    /**
+     * handle the ClearRequestEvent to clear browser placeholder
+     * @param event
+     */
+    @Subscribe
+    private void handleClearEvent(ClearRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleClear();
+    }
+```
+###### \java\seedu\address\ui\PersonInfo.java
+``` java
+    @FXML
+    private Label date;
+```
+###### \java\seedu\address\ui\PersonInfo.java
+``` java
+        date.setText(JOIN_DATE + person.getJoinDate().toString());
 ```
 ###### \resources\view\EmailPanel.fxml
 ``` fxml
@@ -563,11 +649,13 @@ public class EmailPanel extends UiPart<Region> {
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="emailpanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="678.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+ <Pane fx:id="emailpanel" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
          <font>
@@ -580,7 +668,8 @@ public class EmailPanel extends UiPart<Region> {
          </font></Text>
       <TextField fx:id="emailSubjectBox" layoutX="108.0" layoutY="82.0" prefHeight="45.0" prefWidth="839.0" />
       <TextArea fx:id="emailMessage" layoutX="29.0" layoutY="149.0" prefHeight="433.0" prefWidth="930.0" />
-      <Button fx:id="sendButton" layoutX="449.0" layoutY="601.0" mnemonicParsing="false" text="Send" />
+      <Button fx:id="sendButton" layoutX="474.0" layoutY="582.0" mnemonicParsing="false" text="Send" />
    </children>
-</Pane>
+ </Pane>
+</HBox>
 ```

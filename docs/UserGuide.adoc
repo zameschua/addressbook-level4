@@ -266,39 +266,46 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::findfunction[]
 === Search people by details: `find`
 
-To help you filter out customers by their details, type `find` in the command box, followed by the keywords you want to search by. +
+If you wish to filter out customers by their details, type `find` in the command box, followed by the keywords you want to search by. +
 This command can help you find people whose names, address, tags, email, or phone contain any of the given keywords. +
+
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
+**Please take note of the following:**
+
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched for names, adresses and tags e.g. `Han` will not match `Hans`, `Ser` will not match `Serangoon`
-* The full email address does not have to be keyed in e.g. `find johndo` will match with `johndoe@gmail.com` and return `John Doe`
+* The full email address does not have to be keyed in e.g. `find johndo` will match with `johndoe@gmail.com`
 * The full phone number does not have to be keyed in e.g. `9987` will match with `99876261`.
-* Can search multiple categories at the same time e.g. `find hans(name) friends(tag) serangoon(address)` will return people matching any keywords.
-* People matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* You can search multiple categories at the same time e.g. `find hans(name) friends(tag) serangoon(address)` will display people matching any keywords.
+* People matching at least one keyword will be displayed (i.e. `OR` search). e.g. `Hans Bo` will display `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+Matches `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Matches any person having names `Betsy`, `Tim`, or `John`
 * `find friends` +
-Returns any person with the tag `friends`
+Matches any person with the tag `friends`
 * `find serangoon` +
-Returns any person whose address contains `serangoon`
+Matches any person whose address contains `serangoon`
 * `find serangoon 99876261` +
-Returns any person either whose address contains `serangoon` or whose phone number is `99876261`
+Matches any person either whose address contains `serangoon` or whose phone number is `99876261`
 * `find gmail` +
-Returns any person whose email address contains `gmail` e.g. `johndoe@gmail.com`
+Matches any person whose email address contains `gmail` e.g. `johndoe@gmail.com`
+
+The result of the search will be displayed at the sidebar, as shown below:
+
+image::findResult.png[width="790"]
 // end::findfunction[]
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+If you wish to delete a person, you can do so by using this command. +
 Format: `delete INDEX`
 
 ****
@@ -338,11 +345,21 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
+When you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
 image::PersonInfoPieChart.png[width="790"]
 _Image 4.7.1: Illustration of the `select` command_
 
+[NOTE]
+====
+If you made any changes to a person's attendance and the person's detailed information was showing in the panel before you made the changes,
+you have to refresh by entering the command `select (person's index)` again once you are done with changing the attendance.
+====
+
+[NOTE]
+====
+If you are on V1.5 or earlier, then the option to change attendance is not supported yet.
+====
 // end::select[]
 
 === Listing entered commands : `history`
@@ -368,25 +385,40 @@ Format: `calendar`
 [TIP]
 Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
 
+The UI should appear as such before you log in:
+
+image::CalendarLogin.png[width="790"]
+
 The UI should appear as such after you have logged in:
 
 image::Calendar.png[width="790"]
 _Image 4.9.1: Illustration of the `calendar` command_
+
+You can interact with the google calendar by clicking.
 // end::calendar[]
 
-// tag::addEvent[]
-=== Adding a event to the calendar: `addEvent`
+// tag::addevent[]
+=== Adding a event to the calendar: `addevent`
 
-To add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addEvent` +
-To use the `addEvent` command, type the command `addEvent` in the command box, followed by the details of the event. +
-The calendar shown should be updated automatically. +
-Time has to be in 24hrs format. e.g. `16:00` for 4pm +
-Format: `addEvent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
+If you wish to add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addevent`. +
+
+[TIP]
+This command can help you add events to the calendar more efficiently, directly through the command line such that you do not have to scroll through multiple pages.
+
+To use the `addevent` command, type the command `addevent` in the command box, followed by the details of the event. +
+The calendar shown will be updated automatically. +
+Please note that the event time has to be in 24hrs format, and the date format is Year-Month-Day. e.g. `16:00` for 4pm +
+
+Format: `addevent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
+
+If the event is added successfully, a message similar to below will be shown:
+
+image::addEventSuccessMessage.png[width="790"]
 
 Examples:
 
-* `addEvent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
-// end::addEvent[]
+* `addevent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
+// end::addevent[]
 
 // tag::massemail[]
 === Mass Email : `email`
@@ -399,6 +431,8 @@ Format: `email all` or `email TAG [MORE_TAG]` +
 ====
 First time users will have to autheticate their Gmail Account and grant permission to
 send out emails through CYNC.
+
+Do also ensure that your account allows less secure app, you can do so through this https://myaccount.google.com/lesssecureapps[link]
 ====
 
 ****
