@@ -8,6 +8,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.calendarevent.CalendarEvent;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,6 +29,7 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    //@@author ReneeSeet
     /**
      * Constructs a feedback message to summarise an operation for mass emailing
      *
@@ -37,7 +39,7 @@ public abstract class Command {
 
     public static String getMessageForMassEmail(int displaySize, ArrayList<String> emails) {
         if (displaySize != 0) {
-            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_MASS_MESSAGING, displaySize));
+            StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_SMS_CONFIRMATION, displaySize));
             mess.append("\n");
             for (String email : emails) {
                 mess.append(email);
@@ -45,15 +47,22 @@ public abstract class Command {
             }
             return mess.toString();
         } else {
-            return "0 persons found";
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
+    //@@author
 
+    //@@author yilun-zhu
     public static String getMessageForCalendar() {
         StringBuilder mess = new StringBuilder(String.format(Messages.CALENDAR_MESSAGE));
-        mess.append("\n");
         return mess.toString();
     }
+
+    public static String getMessageForAddEvent(CalendarEvent toAdd) {
+        StringBuilder mess = new StringBuilder(String.format(Messages.MESSAGE_ADD_EVENT_SUCCESS, toAdd));
+        return mess.toString();
+    }
+    //@@author
 
     //@@author zameschua
     /**
@@ -73,7 +82,7 @@ public abstract class Command {
             }
             return mess.toString();
         } else {
-            return "0 persons found";
+            return Messages.MESSAGE_NOBODY_FOUND;
         }
     }
     //@@author

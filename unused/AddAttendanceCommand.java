@@ -26,6 +26,11 @@ import seedu.address.model.tag.Tag;
 
 //@@author pohjie
 /**
+ * Reason why this was unused: Tried implementing this feature too late into the iterative cycle,
+ * couldn't get it to work. Decided to take it out to ensure quality of code for working parts
+ * and leave enough time for writing sufficient and rigorous test cases.
+  */
+/**
  * Increment attendance count of an existing person in the address book.
  */
 public class AddAttendanceCommand extends UndoableCommand {
@@ -149,7 +154,11 @@ public class AddAttendanceCommand extends UndoableCommand {
             this.tags = toCopy.tags;
             //@@author pohjie
             this.attendance = toCopy.attendance;
-            this.attendance.addAttendance();
+            try {
+                this.attendance.addAttendance();
+            } catch (personMaxAttendanceException e) {
+                System.out.println("Max attendance already!");
+            }
             this.profilePicture = toCopy.profilePicture;
             //@@author ReneeSeet
             this.date = toCopy.date;

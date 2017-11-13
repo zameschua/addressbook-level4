@@ -16,7 +16,7 @@ By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Welcome to CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. +
-'CYNC' was derived from the word " Sync ", and aims to keep customers and businesses in sync.
+'CYNC' was derived from the word "Sync", and aims to keep customers and businesses in sync.
 
 The first 'C' in CYNC stands for the customer. This shows how much we value your customers and understand that it's
 a businesses' main priority. Hence, we store the customers' information safely and allow you to
@@ -111,10 +111,12 @@ Format: `help`
 
 === Adding a new customer: `add`
 
-This is your most important feature of Cync as it allows you to add a customer's information into Cync. +
+This is your most important feature of CYNC as it allows you to add a customer's information into Cync. +
 Every customer will require a name[n/], email[e/], address[a/].
 
 If you wish to group the customers together, you can use our tags[t/] feature.
+
+CYNC would also auto generate a joined date based on the current day and assigned it to your new customer.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 ====
@@ -125,7 +127,6 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -168,6 +169,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * When editing tags, we replace the existing tags with the updated ones.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[NOTE]
+ CYNC currently does not allow you to modify customers' joined date.
 
 Examples:
 
@@ -250,9 +254,15 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
+When you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
 image::PersonInfoPieChart.png[width="790"]
+
+[NOTE]
+====
+If you made any changes to a person's information and the person's detailed information was showing in the panel before you made the changes,
+you have to refresh by entering the command `select (person's index)` again once you are done with editing the information.
+====
 // end::select[]
 
 === Listing entered commands : `history`
@@ -278,57 +288,69 @@ Format: `calendar`
 [TIP]
 Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
 
+The UI should appear as such before you log in:
+
+image::CalendarLogin.png[width="790"]
+
 The UI should appear as such after you have logged in:
 
 image::Calendar.png[width="790"]
 // end::calendar[]
 
-// tag::addEvent[]
-=== Adding a event to the calendar: `addEvent`
+// tag::addevent[]
+=== Adding a event to the calendar: `addevent`
 
-To add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addEvent` +
-To use the `addEvent` command, type the command `addEvent` in the command box, followed by the details of the event. +
-The calendar shown should be updated automatically. +
+To add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addevent` +
+To use the `addevent` command, type the command `addevent` in the command box, followed by the details of the event. +
+The calendar shown will be updated automatically. +
 Time has to be in 24hrs format. e.g. `16:00` for 4pm +
-Format: `addEvent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
+Format: `addevent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
+
+If the event is added successfully, a message similar to below will be shown:
+
+image::addEventSuccessMessage.png[width="790"]
 
 Examples:
 
-* `addEvent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
-// end::addEvent[]
+* `addevent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
+// end::addevent[]
 
 // tag::massemail[]
-=== Mass Emailing : `mass`
-Allows user to customise and send out emails to all customers or to specific tagged customers. +
-Format: `mass all` or `mass TAG [MORE_TAG]` +
+=== Mass Email : `email`
+This feature allows you to customise and send out emails to all customers or to specific tagged customers in CYNC. +
+In order to do so, you would require a Google account as well.
+
+Format: `email all` or `email TAG [MORE_TAG]` +
+
+[NOTE]
+====
+First time users will have to autheticate their Gmail Account and grant permission to
+send out emails through CYNC.
+====
 
 ****
 * The search of tag is case sensitive. e.g `Sec1` will not match `sec1`
 * The order of the keywords does not matter. e.g.`sec1 sec2` will match `sec2 sec1`
-* Only full words will be matched e.g. `Friends` will not match `Friends`
-* People matching at least one tag will be returned. e.g `mass sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
+* Only full words will be matched e.g. `Friends` will not match `Friend`
+* People matching at least one tag will be returned. e.g `email sec1 sec2` will return anyone with either tag `sec1`,`sec2` or both.
 ****
-
-[NOTE]
-====
-First Time users will have to autheticate their Gmail Account and grant permission to
-send out emails through CYNC.
-====
 
 Examples:
 
-* `mass all` +
+* `email all` +
 Email to all customers in CYNC.
-* `mass OwesMoney` +
+* `email OwesMoney` +
 Email to customers with tag OwesMoney
 
-The UI should appear as such:
+Upon entering a valid `email` command, the UI should appear as such. +
+With the `To:` textbox prefilled with the desired customers' email addresses.
 
 image::email.png[width="790"]
 
 [TIP]
 ====
-It is possible to add additional email addresses in `To:` textbox by typing the email address followed by `;`. e.g reneeseet@cync.com;
+It is possible to add additional email addresses in `To:` textbox by typing the email addresses followed by `;`. +
+ e.g `<emailAddress1>;<emailAddress2>`
 ====
 
 After composing your email, click send. +
@@ -449,26 +471,29 @@ There is no need to save manually.
 We understand that there is a ton of information in this User Guide and you may just need a quick reference on how to use a certain command.
 If so, you can refer to this list.
 
-// Put in a table
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *List All Tags* : `listalltags`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Mass Emailing*: `mass all` / `mass KEYWORD [MORE_KEYWORDS]` +
-e.g `mass friends`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="100%",cols="20%, <40%, <40%",options="header",]
+|=======================================================================
+| Command | Format | Example
+| *Add* |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |
+`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+| *Clear* | `clear`|
+| *Delete* | `delete INDEX` |
+`delete 3`
+| *Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+| `edit 2 n/James Lee e/jameslee@example.com`
+|*Find* | `find KEYWORD [MORE_KEYWORDS]`
+| `find James Jake`
+| *List* | `list` |
+|*List All Tags* | `listalltags` |
+| *Help* | `help` |
+| *Select* | `select INDEX` +
+| `select 2`
+| *Mass Emailing* | `email all` / `email KEYWORD [MORE_KEYWORDS]`
+| `email friends`
+| *History* | `history` |
+| *Undo* | `undo` |
+| *Redo* | `redo` |
+|=======================================================================
 
 == Glossary
 
