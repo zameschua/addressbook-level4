@@ -312,6 +312,8 @@ Format: `email all` or `email TAG [MORE_TAG]` +
 ====
 First time users will have to autheticate their Gmail Account and grant permission to
 send out emails through CYNC.
+
+Do also ensure that your account allows less secure app, you can do so through this https://myaccount.google.com/lesssecureapps[link]
 ====
 
 ****

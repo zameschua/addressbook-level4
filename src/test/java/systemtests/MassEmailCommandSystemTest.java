@@ -99,7 +99,7 @@ public class MassEmailCommandSystemTest extends AddressBookSystemTest {
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
             StringBuilder mess = new StringBuilder(
-                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+                    String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, expectedList.size()));
             mess.append("\n");
             for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());
