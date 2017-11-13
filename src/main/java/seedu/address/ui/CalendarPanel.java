@@ -14,7 +14,7 @@ import seedu.address.commons.events.ui.CalendarRequestEvent;
 
 //@@author yilun-zhu
 /**
- * The Browser Panel of the App.
+ * The Calendar Panel of the App.
  */
 public class CalendarPanel extends UiPart<Region> {
 
@@ -47,14 +47,14 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     /**
-     * Frees resources allocated to the browser.
+     * Frees resources allocated to the calendarPanel.
      */
     public void freeResources() {
         calendar = null;
     }
 
     @Subscribe
-    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+    private void handleCalendarUpdateEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadCalendarPage(DEFAULT_CALENDAR_URL);
     }

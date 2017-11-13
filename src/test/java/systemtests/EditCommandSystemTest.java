@@ -223,7 +223,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             throw new IllegalArgumentException(
                     "editedPerson's attendance is already maximum!");
         }
-        //@@author pohjie
+        //@@author
         assertCommandSuccess(command, expectedModel,
                 String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), expectedSelectedCardIndex);
     }

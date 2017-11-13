@@ -59,6 +59,16 @@ public class EmailPanelHandle extends NodeHandle<Node>  {
         return f.getText();
     }
 
+    public TextField getSubjectTextBox() {
+        TextField f = (TextField) subjectBox;
+        return f;
+    }
+
+    public TextArea getMessageTextBox() {
+        TextArea f = (TextArea) emailMessage;
+        return f;
+    }
+
     public Button getSendButton() {
         Button f = (Button) sendButton;
         return f;

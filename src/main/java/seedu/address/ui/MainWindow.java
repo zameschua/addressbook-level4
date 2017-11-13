@@ -301,7 +301,6 @@ public class MainWindow extends UiPart<Region> {
 
     void releaseResources() {
         browserPanel.freeResources();
-        calendarPanel.freeResources();
     }
 
     @Subscribe
@@ -331,17 +330,21 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    //@@author zameschua
     @Subscribe
     private void handleSmsCommandEvent(SmsCommandRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleSms(event.getPhoneNumbers());
     }
+    //@@author
 
+    //@@author yilun-zhu
     @Subscribe
     private void handleCalendarRequestEvent(CalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleCalendar();
     }
+    //@@author
 
     //@@author pohjie
     @Subscribe

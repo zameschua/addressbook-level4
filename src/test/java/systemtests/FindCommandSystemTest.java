@@ -113,6 +113,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //@@author yilun-zhu
         /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);
@@ -121,7 +122,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find address of person in address book -> 3 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
-        ModelHelper.setFilteredList(expectedModel, DANIEL, BENSON, CARL, GEORGE);
+        ModelHelper.setFilteredList(expectedModel, DANIEL, CARL, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -137,6 +138,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, ALICE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+        //@@author
 
         /* Case: find while a person is selected -> selected card deselected */
         showAllPersons();
