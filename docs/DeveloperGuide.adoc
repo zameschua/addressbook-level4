@@ -678,10 +678,10 @@ _Figure 5.5.4.1: Sequence diagram for the execution of `addevent` command_
 **Alternative 1 (current choice):** Replaces the `mainDisplayPanel` +
 **Pros:** Users can see the `PersonListPanel` side by side with the calendar.
 Users can use other functions involving the `PersonListPanel`, such as `add` and `find`, with the calendar open. +
-**Cons:** Calendar is open all the time unless a command changes the `mainDisplayPanel`, more resources consumed as it is
+**Cons:** Calendar is open all the time unless a command changes the `mainDisplayPanel`, this results in more resources consumed as it is
 left running when not needed. +
 **Alternative 2:** An overlay that covers both the `mainDisplayPanel` and the `PersonListPanel` +
-**Pros:** Calendar is switched out when another command is entered, saves resources when not needed. +
+**Pros:** Calendar is switched out when another command is entered, this saves resources when the calendar is not needed. +
 **Cons:** Users are not able to refer to the data on the `PersonListPanel` when using the calendar.
 
 // end::calendar[]
