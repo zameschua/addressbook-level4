@@ -39,14 +39,6 @@ public class ProfilePictureTest {
     }
 
     @Test
-    public void isValidPath() {
-        ProfilePicture profilePicture = new ProfilePicture();
-        if (profilePicture.isValidPath(defaultPicPath))
-            System.out.println("Valid!");
-        assertTrue(profilePicture.isValidPath(defaultPicPath));
-    }
-
-    @Test
     public void testEquals() {
         ProfilePicture profilePicture0 = new ProfilePicture();
         ProfilePicture profilePicture1 = new ProfilePicture();

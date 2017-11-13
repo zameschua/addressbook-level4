@@ -33,15 +33,6 @@ public class ProfilePicture {
         profilePicPath = path;
     }
 
-    public boolean isValidPath(String path) {
-        File file = new File(path);
-        if (file.exists()) {
-            return true;
-        }
-
-        return false;
-    }
-
     @Override
     public String toString() {
         return profilePicPath;
