@@ -36,7 +36,6 @@ and focus on growing your business.
 
 == Getting Started
 
-// Preface here
 Thank you for selecting CYNC as your preferred customer manager!
 Here are some steps to get you started:
 
@@ -87,20 +86,22 @@ _Image 3.0.1: Main UI components, labelled_
 // tag::commandprediction[]
 === Command Box
 The `Command Box` is the main point of interaction with the app.
-
-Users can use the `Command Box` as a CLI to input commands into CYNC.
+Users can input commands into CYNC via the `Comamnd Box`.
 
 ==== Navigating the `Command Box`
 
 ====
-*Quick Shortcuts*
+*Basic Usage*
 
-* To enter a command, type a `command` into the `Command Box` and press the `Enter` key
-* Use the `Page Up` key to view previously entered commands, and the `Page Down` key to return to a more
+* To enter a command, type a `command` into the `Command Box`, then press the kbd:[Enter] key to submit it
+* Use the kbd:[Page Up] key to view previously entered commands, and the kbd:[Page Down] key to return to a more
 recently entered command
-* Use the `Up Arrow` key and `Down Arrow` key to navigate the `Command Predictions` (explained below) , and the `Tab` key to
-select a prediction
+* Use the kbd:[Up Arrow] key and kbd:[Down Arrow] key to navigate the
+link:#commandPredictions[Command Predictions] (explained below),
+folowed by the kbd:[Tab] key to select a prediction
 ====
+
+[commandPredictions]
 
 CYNC has a command prediction feature, which tries to predict the commands that you will type
 before you even finish typing it. This allows the user to save time on typing and focus on
@@ -131,6 +132,11 @@ The `Result Display` is the component which CYNC uses to let you know the app's 
 * Your link:#sms[SMS] has been sent successfully
 * An invalid command has been entered
 
+Below is an example of the result display confirming if the user wants to send SMSes to the persons listed.
+
+image::result-display-1.png[width="790"]
+_Image 3.2.1: Illustration of the `Result Display` in action_
+
 === Person List Panel
 The `Person List Panel` summarises the details of a customer and displays it in a logical manner.
 
@@ -138,9 +144,27 @@ To view more detailed information about the customer,
 you can kbd:[click] on the customer's summarised details
 which brings you to their link:#personInfo[profile page].
 
+Below is a close-up of the `Person List Panel`
+
+image::person-list-panel-1.png[width="790"]
+_Image 3.3.1: Illustration of the 'Person List Panel` in action_
+
 === Main Display Panel
-The `Main Display Panel` 's contents change according to the commands that you type,
+The `Main Display Panel` 's contents change according to the commands that are typed,
 for example, typing the link:#sms[sms] command will bring up an interface which you can use to send SMSes.
+
+Some of the commands which affect the `Main Display Panel` are
+
+1. `sms`
+2. `email`
+3. `calendar`
+4. `listalltags`
+5. `select`
+
+Below is an example of the `Main Display Panel` being replaced to show the sms interface.
+
+image::sms-interface-1.png[width="790"]
+_Image 3.4.1: Illustration of the 'Main Display Panel` showing the sms interface upon typing the `sms all` command_
 
 === Status Bar Footer
 The `Status Bar Footer` displays important metadata about CYNC, such as
@@ -148,6 +172,11 @@ The `Status Bar Footer` displays important metadata about CYNC, such as
 1. The date and time which CYNC's database was last updated
 2. The total number of persons in CYNC's database
 3. The address on your computer which your customers data is being stored
+
+Below is a close-up screenshot to illustrate the different parts of the `Status Bar Footer`.
+
+image::status-bar-footer-1.png[width="790"]
+_Image 3.4.1: Close-up of the 'Status Bar Footer`_
 
 == Features
 

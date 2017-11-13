@@ -16,8 +16,8 @@ By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Welcome, fellow software developer! We are extremely delighted to see you. The CYNC community
-prides itself on being a friendly and helpful community for new developers.
+Welcome, fellow software developer! Thank you for taking interest in supporting our open-source software CYNC.
+The CYNC community prides itself on being a friendly and helpful community for new developers.
 If you ever face any issue or uncertainty in the instructions, feel free to send an email
 to pohjie@cync.com so that we can sort out the issues for you and following contributors.
 
@@ -534,7 +534,7 @@ There are two types of SMS commands: +
 2.`sms <TAG> [MORE TAGS]`: Send an SMS to all persons containing the tags as specified in the command
 
 On entering an `sms` command, the `SmsPanel` will appear in the `MainDisplayPanel` area,
-with the phone numbers of the SMS targets extracted from the relavent persons and
+with the phone numbers of the SMS targets extracted from the relevant persons and
 pre-filled, as demonstrated in the diagram below.
 
 image::SmsCommandScreenshot1.png[width="800"]
