@@ -10,20 +10,29 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-W15-B2
+:repoURL: https://github.com/CS2103AUG2017-W15-B2/main
 
 By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
-== Welcome to CYNC
-CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. +
-'CYNC' was derived from the word " Sync ", and aims to keep customers and businesses in sync.
+== Hello CYNC user!
+CYNC is an open-source, Command Line Interface (CLI) based software that
+helps small businesses to track and nurture relationships with their customers.
 
-The first 'C' in CYNC stands for the customer. This shows how much we value your customers and understand that it's
-a businesses' main priority. Hence, we store the customers' information safely and allow you to
-effectively monitor their activities.
+If you're the owner of a small yoga studio, tuition centre, spa outlet, or even a dance studio,
+then CYNC is for you!
 
-CYNC also places a large focuses on efficiency.
-It's Command Line Interface (CLI) allows users to add or retrieve customer's data quickly.
+=== How did you get your name CYNC?
+Our name, 'CYNC', was derived from the word "Sync".
+This represents our goal to keep customers and businesses in sync.
+
+Also, the first 'C' in CYNC represents the customer.
+This shows how much we value your customers and understand that it's a businesses' main priority.
+Hence, we do everything in our ability to help you please your customers.
+
+=== Why CLI?
+We also know how much small businesses value their resources, hence we implemented CYNC as a
+CLI-based software to allow you to manage your customers efficiently,
+and focus on growing your business.
 
 == Getting Started
 
@@ -43,21 +52,23 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `CYNC.jar` link:https://github.com/CS2103AUG2017-W15-B2/main/releases[here].
-.  Copy the file to the folder you want to use as the home folder for CYNC.
-// What is GUI?
-.  Double-click the file to start the app. The link:#GUI[GUI] should appear in a few seconds.
+.  Copy the `CYNC.jar` file to the folder you want to use as the home folder for CYNC.
+[TIP]
+It is recommended that you copy the `CYNC.jar` to your computer's Desktop for easy access.
+.  Double-click the file to start the app. The link:#GUI[Graphical User Interface (GUI)] should appear within seconds.
 +
 image::updatedUi.png[width="790"]
+_Image 2.0.1: Image of CYNC's GUI when you first start the app_
+
 +
-// Where is the command box?
 
 .  Type the command in the link:#UI[command box] and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
+* *`list`* : lists all contacts that have
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`3` : deletes the 3rd contact shown in the link:#UI[Person List Panel]
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command. Before you do so, you may
@@ -65,26 +76,24 @@ wish to familiarise yourself with the layout of CYNC. This will help you to bett
 feature later on.
 
 == UI Segments
-We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 different components.
+We wanted to keep the UI of CYNC easy and simple to navigate. CYNC's UI is split into 5 main components,
+as visualised below.
 
 [#UI]
 
 image::UiExplain.png[width="790"]
-
-== Features
-
-The features in CYNC are designed to assist businesses in storing their customers' information.
-We understand that small business owners are often strapped for time, so we have kept the commands short and intuitive.
-
-Feel free to jump to the relevant command that you think will be useful to you. If you have no idea where to start,
-we recommend you to read the `add` command instruction as you will definitely need this command to get started.
+_Image 3.0.1: Main UI components, labelled_
 
 // tag::commandprediction[]
-=== Navigating the `Command Box`
+=== Command Box
+The `Command Box` is the main point of interaction with the app.
 
-The `Command Box` is where you input commands into CYNC.
+Users can use the `Command Box` as a CLI to input commands into CYNC.
+
+==== Navigating the `Command Box`
+
 ====
-*Basic Shortcuts*
+*Quick Shortcuts*
 
 * To enter a command, type a `command` into the `Command Box` and press the `Enter` key
 * Use the `Page Up` key to view previously entered commands, and the `Page Down` key to return to a more
@@ -101,19 +110,52 @@ While entering a command, if a command prediction is available, it will appear a
 below the input field, as shown in the image below.
 
 image::command-prediction-1.png[width="790"]
-_Figure 3.1 : The Command Prediction Panel_
+_Figure 3.1.1 : The Command Prediction Panel_
 
-Use the `up` and `down` arrow keys to navigate up or down the list.
+Use the kbd:[up] and kbd:[down] arrow keys to navigate up or down the list.
 
 image::command-prediction-2.png[width="790"]
-_Figure 3.2 : Pressing the `down` arrow key will navigate to the next command prediction_
+_Figure 3.1.2 : Pressing the kbd:[down] arrow key will navigate to the next command prediction_
 
-Use the `tab` key to select a prediction.
+Use the kbd:[tab] key to select a prediction.
 The input field will immediately be updated to contain the text prediction!
 
 image::command-prediction-3.png[width="790"]
-_Figure 3.3 : Pressing the `tab` button will select the highlighted command prediction_
+_Figure 3.1.3 : Pressing the kbd:[tab] button will select the highlighted command prediction_
 //end::commandprediction[]
+
+=== Result Display
+The `Result Display` is the component which CYNC uses to let you know the app's status, such as whether
+
+* A person has been successfully added to the AddressBook
+* Your link:#sms[SMS] has been sent successfully
+* An invalid command has been entered
+
+=== Person List Panel
+The `Person List Panel` summarises the details of a customer and displays it in a logical manner.
+
+To view more detailed information about the customer,
+you can kbd:[click] on the customer's summarised details
+which brings you to their link:#personInfo[profile page].
+
+=== Main Display Panel
+The `Main Display Panel` 's contents change according to the commands that you type,
+for example, typing the link:#sms[sms] command will bring up an interface which you can use to send SMSes.
+
+=== Status Bar Footer
+The `Status Bar Footer` displays important metadata about CYNC, such as
+
+1. The date and time which CYNC's database was last updated
+2. The total number of persons in CYNC's database
+3. The address on your computer which your customers data is being stored
+
+== Features
+
+The features in CYNC are designed to assist businesses in storing their customers' information.
+We understand that small business owners are often strapped for time, so we have kept the commands short and intuitive.
+
+Feel free to jump to the relevant command that you think will be useful to you. If you have no idea where to start,
+we recommend you to read the `add` command instruction as you will definitely need this command to get started.
 
 === Viewing help : `help`
 
@@ -163,6 +205,7 @@ Upon entering this command, you should see the list of tags shown beside the Per
 This is illustrated by the diagram below.
 
 image::ListAllTagsFeature.png[width="790"]
+_Image 4.4.1: Illustration of the `listalltags` command_
 
 //end::listalltags[]
 
@@ -245,6 +288,7 @@ Deletes the 2nd person in the address book.
 Deletes the 1st person in the results of the `find` command.
 
 // tag::select[]
+[personInfo]
 === Selecting a person : `select`
 
 If you wish to view more detailed information about a particular person (such as attendance and picture), you can use this command to do so. +
@@ -268,6 +312,8 @@ Selects the 1st person in the results of the `find` command.
 Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
 image::PersonInfoPieChart.png[width="790"]
+_Image 4.7.1: Illustration of the `select` command_
+
 // end::select[]
 
 === Listing entered commands : `history`
@@ -296,6 +342,7 @@ Instead of a calendar, a google login page will be shown every time the applicat
 The UI should appear as such after you have logged in:
 
 image::Calendar.png[width="790"]
+_Image 4.9.1: Illustration of the `calendar` command_
 // end::calendar[]
 
 // tag::addEvent[]
@@ -343,6 +390,7 @@ Upon entering a valid `email` command, the UI should appear as such. +
 With the `To:` textbox prefilled with the desired customers' email addresses.
 
 image::email.png[width="790"]
+_Image 4.11.1: Illustration of the `email` command_
 
 [TIP]
 ====
@@ -354,7 +402,8 @@ After composing your email, click send. +
 CYNC will indicate if the emails are successfully sent.
 // end::massemail[]
 
-//tag::smscommand
+// tag::smscommand
+[#sms]
 === Mass SMS : `sms`
 Allows user to customise and send out SMSses to all customers or to specific tagged customers. +
 Format: `sms all` or `sms TAG [MORE_TAGS]` +
@@ -376,12 +425,13 @@ Examples:
 
 * `sms all` +
 SMS to all customers in CYNC.
-* `sms OwesMoney` +
-SMS to customers with tag OwesMoney
+* `sms owesMoney` +
+SMS to customers with tag owesMoney
 
 The UI should appear as such, with the `To` field already filled up:
 
 image::SmsCommandScreenshot1.png[width="790"]
+_Image 4.12.1: Illustration of the `sms` command_
 
 [TIP]
 ====
@@ -390,7 +440,7 @@ eg. `<phoneNumber1>;<phoneNumber2>`
 ====
 
 After composing your SMS, click send. +
-//end::smscommand[]
+// end::smscommand[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -458,6 +508,32 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Features Coming in V2.0
+=== Login Page
+We know how much you value your customers' data.
+A login page will allow CYNC to keep unwanted visitors from reaching your data.
+
+Here's a mockup of what our login page will look like when it's ready!
+
+image::login-page-mockup.png[width="790"]
+_Image 5.1.1: Mockup of `Login Page`_
+
+=== Notifications and Reminders
+We want to help you keep updated on your customers' activities.
+
+By implementing a notification system, we can alert you when your customers
+
+* Are supposed to make their payments for the month
+* Have birthdays coming up, so that you can send them well wishes
+* Opts out of your newsletters, so that you can reach out to them for feedback to improve your business processes
+
+=== Track Attendance of Customers
+We want CYNC to help keep track of your customer's attendance for you,
+so that you can focus on growing your business.
+
+By knowing your customers' attendance patterns, you can even detect when your customers are defaulting on
+their sessions, or know exactly which sessions your customers are attending.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -487,6 +563,8 @@ If so, you can refer to this list.
 | `select 2`
 | *Mass Emailing* | `email all` / `email KEYWORD [MORE_KEYWORDS]`
 | `email friends`
+| *Mass SMSing* | `sms all` / `sms KEYWORD [MORE_KEYWORDS]`
+| `sms classA`
 | *History* | `history` |
 | *Undo* | `undo` |
 | *Redo* | `redo` |

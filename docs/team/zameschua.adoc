@@ -83,6 +83,7 @@ include::../DeveloperGuide.adoc[tag=smscommand]
 
 === Other contributions
 
-* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/29[#29])
+* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/29[#29]) +
+reducing the use of 'magic number' color codes, and overall making the CSS more reusable
 * Made additional effort to ensure that the features being implemented by the team do not have
 conflicting functions or implementations.
