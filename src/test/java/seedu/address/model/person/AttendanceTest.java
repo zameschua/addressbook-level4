@@ -156,7 +156,7 @@ public class AttendanceTest {
     }
 
     @Test
-    public void attendance_EqualsWorking() {
+    public void attendance_equalsWorking() {
         Attendance attendance0 = new Attendance();
         Attendance attendance1 = new Attendance();
 
