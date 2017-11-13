@@ -6,7 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 
 /**
  * LoginRequestEvent will be handled by the UIManager.
- * Reason why this was unused: I dedcided to remove the login page as it was not good 
+ * Reason why this was unused: I dedcided to remove the login page as it was not good
  * to store passsword and username and it caused coupling with the other features.
  */
 

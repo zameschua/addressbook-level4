@@ -15,7 +15,7 @@ import seedu.address.commons.events.ui.LoginRequestEvent;
 
 /**
  * This code checks if the email and password is valid before posting LoginRequestEvent
- * Reason why this was unused: I dedcided to remove the login page as it was not good 
+ * Reason why this was unused: I dedcided to remove the login page as it was not good
  * to store passsword and username and it caused coupling with the other features.
  */
 
@@ -28,12 +28,12 @@ public class LoginPanel extends UiPart<Region> {
 
     private static final String FXML = "LoginPanel.fxml";
     private static final Logger logger = LogsCenter.getLogger(LoginPanel.class);
-    private static final String DEFAULT_EMAIL = "test@gmail.com"; 
-    private static final String DEFAULT_PASSWORD = "password"; 
+    private static final String DEFAULT_EMAIL = "test@gmail.com";
+    private static final String DEFAULT_PASSWORD = "password";
     private static final String INVALID_EMAIL_PASSWORD = "Invalid password and email";
     private static final String LOGGER_SUCCESSFUL_LOGIN = "SUCCESSFUL LOGIN";
     private static final String EMPTY_FIELDS = "Please enter email and password";
-    private static final string LOGGER_EMPTY_FIELDS = "email textbox and password textbox are empty"
+    private static final string LOGGER_EMPTY_FIELDS = "email textbox and password textbox are empty";
    
     
 
