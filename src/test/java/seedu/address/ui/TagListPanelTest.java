@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTag;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,15 +46,20 @@ public class TagListPanelTest extends GuiUnitTest {
         }
     }
 
-    /*
+
     @Test
     public void handleJumpToListAllTagsRequestEvent() {
         postNow(JUMP_TO_LIST_ALL_TAGS_EVENT);
         guiRobot.pauseForHuman();
 
-        TagCardHandle expectedCard = tagListPanelHandle.getTagCardHandle(0);
-        TagCardHandle actualCard = tagListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedCard, actualCard);
+        for (int i = 0; i < TYPICAL_TAGS.size(); i++) {
+            tagListPanelHandle.navigateToCard(TYPICAL_TAGS.get(i));
+            Tag expectedTag = TYPICAL_TAGS.get(i);
+            TagCardHandle actualCard = tagListPanelHandle.getTagCardHandle(i);
+
+            assertCardDisplaysTag(expectedTag, actualCard);
+            assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
+        }
     }
-    */
+
 }
