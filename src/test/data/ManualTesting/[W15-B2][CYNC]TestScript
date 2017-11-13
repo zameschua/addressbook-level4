@@ -1,0 +1,41 @@
+= Manual Testing Script
+
+ == Testing textprediction
+
+
+== Testing : Add feature
+
+=== Adding a new person
+_Test:_ +
+Enter in to the command box `add n/Jess p/912346 e/Jess@gmail.com a/serangoon Road t/sec1`
+
+_Result_ +
+Success Message Shown : "New person added: Jess Phone:912346 Email:Jess@gmail.com Address: serangoon Road Join Date: <dd/mm/yy> Tags:[sec1]". +
+Jess should appear as in Person list as well.
+
+=== Testing : Find feature
+_Test:_ +
+Enter in to the command box `add n/Jess p/912346 e/Jess@gmail.com a/serangoon Road t/sec1`
+
+_Result_ +
+Success Message Shown : "New person added: Jess Phone:912346 Email:Jess@gmail.com Address: serangoon Road Join Date: <dd/mm/yy> Tags:[sec1]". +
+Jess should appear as in Person list as well.
+
+=== Testing : listallTags feature
+
+=== Testing : Mass Email feature
+
+=== Testing: calendar feature
+
+
+=== Testing: Info
+
+
+=== Testing undo
+
+
+=== Testing redo
+
+==== Testing clear
+
+
