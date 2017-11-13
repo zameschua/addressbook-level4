@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,9 +44,7 @@ public class PersonInfo extends UiPart<Region> {
     private PieChart attendance;
 
     /**
-     * This method is not bound to the person. In other words, if we make an edit to the person's info
-     * while he/she is showing in PersonInfo, then we have to do manual refresh by re-selecting the person to
-     * show the updated data.
+     * Upon the PersonPanelSelectionChangedEvent, the selected person will be loaded in this panel.
      * @param person
      */
     public PersonInfo (ReadOnlyPerson person) {
@@ -59,7 +58,12 @@ public class PersonInfo extends UiPart<Region> {
         //@@author ReneeSeet
         date.setText(JOIN_DATE + person.getJoinDate().toString());
         //@@author pohjie
+        bindListeners(person);
 
+        /**
+         * Note that in this version, attendanceData is not bound to the person.
+         * This will be implemented in future versions when we implement the addAttendance feature.
+         */
         ObservableList<PieChart.Data> attendanceData = FXCollections.observableArrayList(
                 new PieChart.Data("Present", person.getAttendance().getAttended()),
                 new PieChart.Data("Absent", person.getAttendance().getMissed()));
@@ -67,4 +71,11 @@ public class PersonInfo extends UiPart<Region> {
         attendance.setData(attendanceData);
     }
 
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        date.textProperty().bind(Bindings.convert(person.joinDateProperty()));
+    }
 }
