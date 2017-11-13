@@ -16,7 +16,7 @@ By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Welcome to CYNC
 CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. +
-'CYNC' was derived from the word " Sync ", and aims to keep customers and businesses in sync.
+'CYNC' was derived from the word "Sync", and aims to keep customers and businesses in sync.
 
 The first 'C' in CYNC stands for the customer. This shows how much we value your customers and understand that it's
 a businesses' main priority. Hence, we store the customers' information safely and allow you to
@@ -250,9 +250,15 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-Do note that when you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
+When you select a person, the person's detailed information will appear to the right of the Person List. You may see an example below.
 
 image::PersonInfoPieChart.png[width="790"]
+
+[NOTE]
+====
+If you made any changes to a person's information and the person's detailed information was showing in the panel before you made the changes,
+you have to refresh by entering the command `select (person's index)` again once you are done with editing the information.
+====
 // end::select[]
 
 === Listing entered commands : `history`
