@@ -55,7 +55,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                   <!-- @@author renee -->
+                   <!-- @@author ReneeSeet -->
                    <Label fx:id="date" alignment="CENTER" text="Date" GridPane.rowIndex="4">
                        <font>
                            <Font size="18.0" />

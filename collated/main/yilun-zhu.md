@@ -907,12 +907,10 @@ public class CalendarPanel extends UiPart<Region> {
     public CalendarPanel() {
 
         super(FXML);
-
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
         loadDefaultCalendarPage();
         registerAsAnEventHandler(this);
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 
     private void loadDefaultCalendarPage() {

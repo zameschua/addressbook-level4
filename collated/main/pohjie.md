@@ -414,7 +414,6 @@ public class ProfilePicture {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleTagListPanel();
     }
-}
 ```
 ###### \java\seedu\address\ui\PersonInfo.java
 ``` java
@@ -424,7 +423,9 @@ public class ProfilePicture {
 public class PersonInfo extends UiPart<Region> {
     private static final String FXML = "PersonInfo.fxml";
     private static final String JOIN_DATE = "Joined date: ";
+
     public final ReadOnlyPerson person;
+
     private final Logger logger = LogsCenter.getLogger(PersonInfo.class);
 
     @FXML
@@ -443,6 +444,10 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private PieChart attendance;
 
+    /**
+     * Upon the PersonPanelSelectionChangedEvent, the selected person will be loaded in this panel.
+     * @param person
+     */
     public PersonInfo (ReadOnlyPerson person) {
         super(FXML);
         this.person = person;
@@ -454,9 +459,12 @@ public class PersonInfo extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\PersonInfo.java
 ``` java
+        bindListeners(person);
 
-        // This is not bound to the person. If we change attendance or missed when the person is
-        // shown in browser panel this will not be reflected
+        /**
+         * Note that in this version, attendanceData is not bound to the person.
+         * This will be implemented in future versions when we implement the addAttendance feature.
+         */
         ObservableList<PieChart.Data> attendanceData = FXCollections.observableArrayList(
                 new PieChart.Data("Present", person.getAttendance().getAttended()),
                 new PieChart.Data("Absent", person.getAttendance().getMissed()));
@@ -464,6 +472,44 @@ public class PersonInfo extends UiPart<Region> {
         attendance.setData(attendanceData);
     }
 
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     * @param person
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        date.textProperty().bind(Bindings.convert(person.joinDateProperty()));
+    }
+
+    /**
+     * Checks if an Object other is the same object as PersonInfo
+     * @param other
+     * @return
+     */
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof PersonInfo)) {
+            return false;
+        }
+
+        // state check
+        PersonInfo info = (PersonInfo) other;
+        return profilePic.equals(info.profilePic)
+                && name.equals(info.name)
+                && phone.equals(info.phone)
+                && address.equals(info.address)
+                && email.equals(info.email)
+                && date.equals(info.date)
+                && attendance.equals(info.attendance);
+    }
 }
 ```
 ###### \java\seedu\address\ui\TagCard.java

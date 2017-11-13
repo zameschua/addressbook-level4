@@ -51,6 +51,29 @@ public class CommandBoxContentsChangedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\CommandBoxReplaceTextEvent.java
+``` java
+/**
+ * Indicates a request to change the text in the {@link seedu.address.ui.CommandBox}
+ */
+public class CommandBoxReplaceTextEvent extends BaseEvent {
+
+    private String text;
+
+    public CommandBoxReplaceTextEvent(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\CommandPredictionPanelHideEvent.java
 ``` java
 /**
@@ -116,19 +139,25 @@ public class CommandPredictionPanelSelectionChangedEvent extends BaseEvent {
 ###### \java\seedu\address\commons\events\ui\CommandPredictionPanelSelectionEvent.java
 ``` java
 /**
- * Indicates a change in selection of the CommandPredictionPanel
+ * Indicates the selecting of a Command Prediction in the {@link seedu.address.ui.CommandPredictionPanel}
  */
 public class CommandPredictionPanelSelectionEvent extends BaseEvent {
 
-    private String currentSelection;
-
-    public CommandPredictionPanelSelectionEvent(String currentSelection) {
-        this.currentSelection = currentSelection;
+    public CommandPredictionPanelSelectionEvent() {
     }
 
-    public String getCurrentSelection() {
-        return currentSelection;
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
+}
+```
+###### \java\seedu\address\commons\events\ui\CommandPredictionPanelShowEvent.java
+``` java
+/**
+ * Indicates a request to show the CommandPredictionPanel
+ */
+public class CommandPredictionPanelShowEvent extends BaseEvent {
 
     @Override
     public String toString() {
@@ -379,28 +408,36 @@ public class SmsCommandParser implements Parser<SmsCommand> {
 ```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
+        case TAB:
+            // As up, down, and tab buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
+            raise(new CommandPredictionPanelSelectionEvent());
+            raise(new CommandPredictionPanelHideEvent());
+            break;
+        case UP:
+            keyEvent.consume();
+            raise(new CommandPredictionPanelPreviousSelectionEvent());
+            break;
+        case DOWN:
+            keyEvent.consume();
+            raise(new CommandPredictionPanelNextSelectionEvent());
+            break;
+        case ENTER:
+            raise(new CommandPredictionPanelHideEvent());
+            break;
+```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
     /**
-     * Changes the state of the {@link CommandBox} in commandPredictionSelectionText
-     * which stores the current selection of the {@link CommandPredictionPanel}
-     * @param event The event fired from the {@link CommandPredictionPanel}
+     * Event handler to change the contents of the {@code CommandBox}
+     * @param event the event fired by CommandPredictionPanel which contains the text of the
+     * currently selected Command Prediction
      */
     @Subscribe
-    private void handleCommandPredictionPanelSelectionChangedEvent(CommandPredictionPanelSelectionChangedEvent event) {
+    private void handleCommandBoxReplaceTextEvent (CommandBoxReplaceTextEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandPredictionSelectionText = event.getCurrentSelection();
-    }
-
-    /**
-     * Updates the state of the {@link CommandBox} in commandPredictionSelectionText
-     * whenever the user changes its text. This is to produce the expected behaviour where
-     * the user's command should not disappear upon pressing tab, when the user was not
-     * expecting a command prediction
-     * @param event The event fired from the constructor in {@link CommandBox}
-     */
-    @Subscribe
-    private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandPredictionSelectionText = event.getCommandText();
+        replaceText(event.getText());
     }
 ```
 ###### \java\seedu\address\ui\CommandPredictionPanel.java
@@ -414,12 +451,33 @@ public class SmsCommandParser implements Parser<SmsCommand> {
 public class CommandPredictionPanel extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(CommandPredictionPanel.class);
     private static final String FXML = "CommandPredictionPanel.fxml";
+    private static final String helpCommandWord = HelpCommand.COMMAND_WORD;
+    private static final String addCommandWord = AddCommand.COMMAND_WORD;
+    private static final String listCommandWord = ListCommand.COMMAND_WORD;
+    private static final String listAllTagsCommandWord = ListAllTagsCommand.COMMAND_WORD;
+    private static final String editCommandWord = EditCommand.COMMAND_WORD;
+    private static final String findCommandWord = FindCommand.COMMAND_WORD;
+    private static final String deleteCommandWord = DeleteCommand.COMMAND_WORD;
+    private static final String selectCommandWord = SelectCommand.COMMAND_WORD;
+    private static final String historyCommandWord = HistoryCommand.COMMAND_WORD;
+    private static final String calendarCommandWord = CalendarCommand.COMMAND_WORD;
+    private static final String addEventCommandWord = AddEventCommand.COMMAND_WORD;
+    private static final String massEmailCommandWord = MassEmailCommand.COMMAND_WORD;
+    private static final String smsCommandWord = SmsCommand.COMMAND_WORD;
+    private static final String undoCommandWord = UndoCommand.COMMAND_WORD;
+    private static final String redoCommandWord = RedoCommand.COMMAND_WORD;
+    private static final String clearCommandWord = ClearCommand.COMMAND_WORD;
+    private static final String exitCommandWord = ExitCommand.COMMAND_WORD;
+
     private static final ArrayList<String> COMMAND_PREDICTION_RESULTS_INITIAL =
             new ArrayList<String>(Arrays.asList(
-                    "help", "add", "list", "listalltags", "edit", "find", "delete", "select",
-                    "history", "calendar", "addEvent", "mass", "sms", "undo", "redo", "clear", "exit"));
+                    helpCommandWord, addCommandWord, listCommandWord, listAllTagsCommandWord, editCommandWord,
+                    findCommandWord, deleteCommandWord, selectCommandWord, historyCommandWord, calendarCommandWord,
+                    addEventCommandWord, massEmailCommandWord, smsCommandWord, undoCommandWord, redoCommandWord,
+                    clearCommandWord, exitCommandWord));
 
-    private static ObservableList<String> commandPredictionResults;
+    private ObservableList<String> commandPredictionResults;
+
     // tempPredictionResults used to store the results from filtering through COMMAND_PREDICTION_RESULTS_INITIAL
     private ArrayList<String> tempPredictionResults;
 
@@ -447,33 +505,8 @@ public class CommandPredictionPanel extends UiPart<Region> {
      * Helper method for the constructor to initialise the ListView UI
      */
     private void initListView() {
-        commandPredictionListView.setVisible(false);
         // Attach ObservableList to ListView
         commandPredictionListView.setItems(commandPredictionResults);
-    }
-
-    /**
-     * This method refreshes the CommandPredictionPanel with results that start with `newText`
-     * @param newText
-     */
-    private void updatePredictionResults(String newText) {
-        commandPredictionResults.clear();
-        tempPredictionResults = COMMAND_PREDICTION_RESULTS_INITIAL
-                .stream()
-                .filter(p -> p.startsWith(newText))
-                .collect(toCollection(ArrayList::new));
-
-        commandPredictionResults.addAll(tempPredictionResults);
-        commandPredictionListView.setItems(commandPredictionResults);
-        commandPredictionListView.getSelectionModel().selectFirst();
-
-        // Set the prediction to be invisible if there is nothing typed in the Command Box
-        // Or if there is no prediction to show
-        if (newText.equals("") || commandPredictionResults.isEmpty()) {
-            commandPredictionListView.setVisible(false);
-        } else {
-            commandPredictionListView.setVisible(true);
-        }
     }
 
     /**
@@ -494,18 +527,110 @@ public class CommandPredictionPanel extends UiPart<Region> {
                 });
     }
 
+    /**
+     * Helper method to retrieve the currently selected Command Prediction
+     */
+    public String getSelection() {
+        return commandPredictionListView.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * This method refreshes the CommandPredictionPanel with results that start with `newText`
+     * @param newText
+     */
+    private void updatePredictionResults(String newText) {
+        commandPredictionResults.clear();
+        tempPredictionResults = filterPredictionResults(newText);
+
+        commandPredictionResults.addAll(tempPredictionResults);
+        commandPredictionListView.setItems(commandPredictionResults);
+        commandPredictionListView.getSelectionModel().selectFirst();
+
+        // Set the prediction to be invisible if there is nothing typed in the Command Box
+        // Or if there is no prediction to show
+        if (newText.equals("") || commandPredictionResults.isEmpty()) {
+            hideCommandPredictionPanel();
+        } else {
+            showCommandPredictionPanel();
+        }
+    }
+
+    /**
+     * Helper method to filter the prediction results that starts with {@code inputText}
+     * @param inputText the text input by the user into the {@link CommandBox}
+     * @return an ArrayList containing all the filtered results
+     */
+    public static ArrayList<String> filterPredictionResults(String inputText) {
+        if ("".equals(inputText)) {
+            return new ArrayList<String>();
+        }
+        return COMMAND_PREDICTION_RESULTS_INITIAL
+                .stream()
+                .filter(p -> p.startsWith(inputText))
+                .collect(toCollection(ArrayList::new));
+    }
+
+    /**
+     * Helper method to raise an event to hide the {@link CommandPredictionPanel}
+     */
+    private void hideCommandPredictionPanel() {
+        raise(new CommandPredictionPanelHideEvent());
+    }
+
+    /**
+     * Helper method to raise an event to show the {@link CommandPredictionPanel}
+     */
+    private void showCommandPredictionPanel() {
+        raise(new CommandPredictionPanelShowEvent());
+    }
+
+    /**
+     * Helper method to handle the event where the user clicks on a Command Prediction
+     * in the {@code CommandPredictionPanel}
+     */
+    @FXML
+    private void handleMouseClick() {
+        String currentSelection = getSelection();
+        raise(new CommandBoxReplaceTextEvent(currentSelection));
+        raise(new CommandPredictionPanelHideEvent());
+    }
+
+    /**
+     * Getter method for testing the contents of the CommandPredictionPanel
+     * @return the ListView fx component
+     */
+    public ListView<String> getListView() {
+        return commandPredictionListView;
+    }
+
+    /**
+     * Detects changes in the {@link CommandBox} and updates the contents of the Command Predictions
+     * @param event the event fired by the {@code CommandBox} to indicate a change in content
+     */
     @Subscribe
     private void handleCommandBoxContentsChangedEvent(CommandBoxContentsChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updatePredictionResults(event.getCommandText());
     }
 
+    /**
+     * Shifts the currently selected Command Prediction down by one when the down arrow key is pressed
+     * while the user is focused on the {@code CommandBox}
+     * @param event the event fired by the {@code CommandBox} to
+     * indicate the request to select the next Command Prediction
+     */
     @Subscribe
     private void handleCommandPredictionPanelNextSelectionEvent(CommandPredictionPanelNextSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandPredictionListView.getSelectionModel().selectNext();
     }
 
+    /**
+     * Shifts the currently selected Command Prediction up by one when the up arrow key is pressed
+     * while the user is focused on the {@code CommandBox}
+     * @param event the event fired by the {@code CommandBox} to
+     * indicate the request to select the previous Command Prediction
+     */
     @Subscribe
     private void handleCommandPredictionPanelPreviousSelectionEvent(
             CommandPredictionPanelPreviousSelectionEvent event) {
@@ -514,9 +639,10 @@ public class CommandPredictionPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
+    private void handleCommandPredictionPanelSelectionEvent(CommandPredictionPanelSelectionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandPredictionListView.setVisible(false);
+        String currentSelection = getSelection();
+        raise(new CommandBoxReplaceTextEvent(currentSelection));
     }
 }
 ```
@@ -526,6 +652,32 @@ public class CommandPredictionPanel extends UiPart<Region> {
     private void handleSmsCommandEvent(SmsCommandRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleSms(event.getPhoneNumbers());
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Hides the {@link CommandPredictionPanel}
+     * @param event The event thrown by the {@link CommandBox}
+     */
+    @Subscribe
+    private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
+        if (resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot())) {
+            resultDisplayPlaceholder.getChildren().remove(commandPredictionPanel.getRoot());
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        }
+    }
+
+    /**
+     * Shows the {@link CommandPredictionPanel} only if it isn't visible
+     * @param event The event thrown by the {@link CommandBox}
+     */
+    @Subscribe
+    private void handleCommandPredictionPanelShowEvent(CommandPredictionPanelShowEvent event) {
+        if (!resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot())) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
+        }
     }
 ```
 ###### \java\seedu\address\ui\SmsPanel.java
@@ -586,7 +738,12 @@ public class SmsPanel extends UiPart<Region> {
 ###### \resources\view\CommandPredictionPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <ListView fx:id="commandPredictionListView" VBox.vgrow="ALWAYS" id="command-prediction-panel" styleClass="card"/>
+   <ListView fx:id="commandPredictionListView"
+             VBox.vgrow="ALWAYS"
+             id="command-prediction-panel"
+             styleClass="card"
+             onMouseClicked="#handleMouseClick"
+   />
 </VBox>
 ```
 ###### \resources\view\Styles.css
@@ -806,7 +963,7 @@ public class SmsPanel extends UiPart<Region> {
  */
 .button {
     -fx-padding: 5 22 5 22;
-    -fx-border-color: transparent;
+    -fx-border-color: white;
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;

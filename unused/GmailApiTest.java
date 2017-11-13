@@ -12,7 +12,7 @@ import com.google.api.services.gmail.Gmail;
 import seedu.address.commons.core.Messages;
 import seedu.address.external.GmailApi;
 
-//@@author ReneeSeet-unused
+//@@author ReneeSeet
 /**
  * Contains tests for {@link GmailApi}
  * Note the verification of sending emails are done done via exploratory testing
