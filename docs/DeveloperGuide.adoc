@@ -544,7 +544,7 @@ After the user composes an SMS and clicks on the `send` button, an event is fire
 `TwilioApiHelper` which handles the actual sending of the SMS.
 
 Upon sending or failure to send the SMS, a `NewResultAvailableEvent` is fired
-to update the user if the SMS has been successfully sent or not.
+to update the `ResultDisplay` and let the user know if the SMS has been successfully sent or not.
 
 This is demonstrated in the sequence diagram below.
 
