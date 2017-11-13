@@ -29,76 +29,77 @@ public class AttendanceTest {
         /**
          * Due to the small range of possible inputs, we shall test all the possible inputs.
          */
+        Attendance attendance;
         // boundary value
         try {
-            Attendance attendance0 = new Attendance(0);
-            assertEquals(attendance0.getAttended(), 0);
-            assertEquals(attendance0.getMissed(), 8);
+            attendance = new Attendance(0);
+            assertEquals(attendance.getAttended(), 0);
+            assertEquals(attendance.getMissed(), 8);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance1 = new Attendance(1);
-            assertEquals(attendance1.getAttended(), 1);
-            assertEquals(attendance1.getMissed(), 7);
+            attendance = new Attendance(1);
+            assertEquals(attendance.getAttended(), 1);
+            assertEquals(attendance.getMissed(), 7);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance2 = new Attendance(2);
-            assertEquals(attendance2.getAttended(), 2);
-            assertEquals(attendance2.getMissed(), 6);
+            attendance = new Attendance(2);
+            assertEquals(attendance.getAttended(), 2);
+            assertEquals(attendance.getMissed(), 6);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance3 = new Attendance(3);
-            assertEquals(attendance3.getAttended(), 3);
-            assertEquals(attendance3.getMissed(), 5);
+            attendance = new Attendance(3);
+            assertEquals(attendance.getAttended(), 3);
+            assertEquals(attendance.getMissed(), 5);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance4 = new Attendance(4);
-            assertEquals(attendance4.getAttended(), 4);
-            assertEquals(attendance4.getMissed(), 4);
+            attendance = new Attendance(4);
+            assertEquals(attendance.getAttended(), 4);
+            assertEquals(attendance.getMissed(), 4);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance5 = new Attendance(5);
-            assertEquals(attendance5.getAttended(), 5);
-            assertEquals(attendance5.getMissed(), 3);
+            attendance = new Attendance(5);
+            assertEquals(attendance.getAttended(), 5);
+            assertEquals(attendance.getMissed(), 3);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance6 = new Attendance(6);
-            assertEquals(attendance6.getAttended(), 6);
-            assertEquals(attendance6.getMissed(), 2);
+            attendance = new Attendance(6);
+            assertEquals(attendance.getAttended(), 6);
+            assertEquals(attendance.getMissed(), 2);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         try {
-            Attendance attendance7 = new Attendance(7);
-            assertEquals(attendance7.getAttended(), 7);
-            assertEquals(attendance7.getMissed(), 1);
+            attendance = new Attendance(7);
+            assertEquals(attendance.getAttended(), 7);
+            assertEquals(attendance.getMissed(), 1);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
 
         // boundary value
         try {
-            Attendance attendance8 = new Attendance(8);
-            assertEquals(attendance8.getAttended(), 8);
-            assertEquals(attendance8.getMissed(), 0);
+            attendance = new Attendance(8);
+            assertEquals(attendance.getAttended(), 8);
+            assertEquals(attendance.getMissed(), 0);
         } catch (IllegalValueException e) {
             System.out.println("Illegal value!");
         }
