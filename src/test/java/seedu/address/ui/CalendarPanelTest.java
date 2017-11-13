@@ -30,14 +30,13 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default calendar page should not be the same as browser panel
+        // default window should be updated
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertFalse(expectedDefaultPageUrl.equals(calendarPanelHandle.getLoadedUrl()));
 
-        /*
+        /* The section below can be used for local testing. It does not load on Travis-CI.
         postNow(calendarRequestEvent);
 
-        //expected google login page, does not pass Travis for some reason
         URL expectedCalendarUrl = new URL("https://accounts.google.com/ServiceLogin?service=cl&"
                 + "passive=1209600&osid=1&continue=https://calendar.google.com/calendar/render&followup="
                 + "https://calendar.google.com/calendar/render&scc=1");
