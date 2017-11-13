@@ -14,7 +14,8 @@ public class Messages {
     public static final String MESSAGE_EMAIL_SUCCESS = "Emails are sent successfully";
     public static final String MESSAGE_NOBODY_FOUND = "0 persons found";
     //@@author
+    public static final String MESSAGE_ADD_EVENT_SUCCESS = "New event added: %1$s";
+    public static final String CALENDAR_MESSAGE = "Calendar loaded!";
     public static final String MESSAGE_SMS_CONFIRMATION = "Would you like to SMS all %1$d persons listed?";
     public static final String MESSAGE_SMS_SUCCESS = "SMSes are sent successfully";
-    public static final String CALENDAR_MESSAGE = "Calendar loaded!";
 }

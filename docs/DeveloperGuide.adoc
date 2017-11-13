@@ -591,6 +591,8 @@ _Figure 5.4.3 List of tags displayed to the right of person list_
 
 // end::listalltags[]
 
+
+
 // tag::personinfo[]
 === PersonInfo mechanism
 
@@ -632,6 +634,82 @@ This may violate the single responsibility principle, since PersonInfo may have 
 the specifics of `PersonPanelSelectionChangedEvent` change.
 
 // end::personinfo[]
+
+
+// tag::calendar[]
+=== Calendar mechanism
+==== Description
+The calendar mechanism integrates with Google Calendar, and allows the user to view / add upcoming events.
+The calendar service is facilitated by the Google Calendar API.
+
+==== Implementation
+There are two types of calendar commands: +
+1. `calendar` : Displays the google calendar in the browser window +
+2. `addevent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
+
+==== Command `calendar`
+Upon entering the `calendar` command, the `CalendarPanel` will appear in the `MainDisplayPanel` area,
+showing the user's google calendar, or a google login page if it is first time the command is used after
+the app is restarted. As demonstrated in the two diagrams below.
+
+image::CalendarLogin.png[width="800"]
+_Figure 5.5.3.1: Upon first use of the command after every restart_
+
+image::Calendar.png[width="800"]
+_Figure 5.5.3.2: Subsequent usages of the command after logging in_
+
+After the `calendar` command is entered, an `event` is sent to the `EventsCenter`, which sends an update to the `UI`
+such that the google calendar can be displayed in the `MainDisplayPanel`. As demonstrated in the diagram below.
+
+image::calendarCommand.png[width="800"]
+_Figure 5.5.3.3: Sequence diagram for the execution of `calendar` command_
+
+==== Command `addevent`
+Upon entering the `addevent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
+an update to `AddEventManager`, which follows the Facade design pattern and interacts with the `CalendarApi` for
+google calendar to add the event. If the calendar event is added successfully, an `event` is
+sent to the `UI` to refresh the calendar. As demonstrated in the diagram below.
+
+image::addEvent.png[width="800"]
+_Figure 5.5.4.1: Sequence diagram for the execution of `addevent` command_
+
+==== Design Considerations
+**Aspect:** Placement of the `calendarDisplayPanel` +
+**Alternative 1 (current choice):** Replaces the `mainDisplayPanel` +
+**Pros:** Users can see the `PersonListPanel` side by side with the calendar.
+Users can use other functions involving the `PersonListPanel`, such as `add` and `find`, with the calendar open. +
+**Cons:** Calendar is open all the time unless a command changes the `mainDisplayPanel`, more resources consumed as it is
+left running when not needed. +
+**Alternative 2:** An overlay that covers both the `mainDisplayPanel` and the `PersonListPanel` +
+**Pros:** Calendar is switched out when another command is entered, saves resources when not needed. +
+**Cons:** Users are not able to refer to the data on the `PersonListPanel` when using the calendar.
+
+// end::calendar[]
+
+// tag::findfunction[]
+=== Find Mechanism
+==== Description
+The `find` command is the filter function for this application. It will filter through all fields of the user data
+based on the given keywords.
+
+==== Implementation
+The `find` command works as such: `find KEYWORD [MORE KEYWORDS]` +
+
+After the command is entered, the keywords will be sent to the `parser` which then creates a `predicate` to filter
+the stored data. +
+The `predicate` is used by the `model`, which returns a list of filtered people based on the given `predicate`.
+
+==== Design Considerations
+**Aspect:** How to provide the user with functions to search through different fields of customer data +
+**Alternative 1 (current choice):** All-in-one search function. +
+**Pros:** Intuitive and easy to remember. Users can search through any fields of customer data with a single function. +
+**Cons:** User is unable to restrict the search to only one field in the customers' data. E.g. If the user is searching
+for people with addresses in `East Coast`, if there is someone whose name contains `East Coast`, it will show up as well. +
+**Alternative 2:** Multiple search functions. +
+**Pros:** The user can specify exactly which field he wants to search in, avoids the kind of situation described above. +
+**Cons:** Not very intuitive. It is a hassle for the users to remember many different search functions.
+
+// end::findfunction[]
 
 == Documentation
 
@@ -717,6 +795,21 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
+
+// tag::testingTips[]
+
+**Problem: Tests fail with a `GuiRobot$EventTimeoutException`. **
+
+* Reason: The tests are taking a longer time to load than the given `waitForEvent` timeout limit.
+* Solution: To give it more time, increase the `DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS` in `src\test\java\guitests\GuiRobot.java`.
+
+**Problem: GUI tests fail randomly using JUnit test runner.**
+
+* Reason: Shifting of mouse / switching tabs during the test may have interrupted with the tests.
+* Solution: Recommended to run tests in headless mode. You can do so by opening the console and running the command
+`gradlew clean headless allTests`.
+
+// end::testingTips[]
 
 == Dev Ops
 

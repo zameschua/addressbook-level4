@@ -288,24 +288,32 @@ Format: `calendar`
 [TIP]
 Instead of a calendar, a google login page will be shown every time the application is restarted. Please log in to proceed to the calendar.
 
+The UI should appear as such before you log in:
+
+image::CalendarLogin.png[width="790"]
+
 The UI should appear as such after you have logged in:
 
 image::Calendar.png[width="790"]
 // end::calendar[]
 
-// tag::addEvent[]
-=== Adding a event to the calendar: `addEvent`
+// tag::addevent[]
+=== Adding a event to the calendar: `addevent`
 
-To add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addEvent` +
-To use the `addEvent` command, type the command `addEvent` in the command box, followed by the details of the event. +
-The calendar shown should be updated automatically. +
+To add an event to the google calendar linked, you can interact with the google calendar directly by clicking, or with the command `addevent` +
+To use the `addevent` command, type the command `addevent` in the command box, followed by the details of the event. +
+The calendar shown will be updated automatically. +
 Time has to be in 24hrs format. e.g. `16:00` for 4pm +
-Format: `addEvent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
+Format: `addevent n/EVENT NAME sd/START DAY(YYYY-MM-DD) st/START TIME(HH:MM) ed/END DAY(YYYY-MM-DD) et/END TIME(HH:MM)`
+
+If the event is added successfully, a message similar to below will be shown:
+
+image::addEventSuccessMessage.png[width="790"]
 
 Examples:
 
-* `addEvent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
-// end::addEvent[]
+* `addevent n/Halloween Party sd/2017-10-30 st/17:00 ed/2017-10-30 et/22:00`
+// end::addevent[]
 
 // tag::massemail[]
 === Mass Email : `email`
