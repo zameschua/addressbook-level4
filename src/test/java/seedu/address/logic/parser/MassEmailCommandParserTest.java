@@ -15,6 +15,8 @@ import seedu.address.model.tag.TagMatchingPredicate;
 
 public class MassEmailCommandParserTest {
 
+    private static final String STUB_TAG_VALID_FIRST = "owesMoney";
+    private static final String STUB_TAG_VALID_SECOND = "friends";
     private MassEmailParser parser = new MassEmailParser();
 
     @Test
@@ -27,11 +29,13 @@ public class MassEmailCommandParserTest {
     public void parse_validArgs_returnsMassEmailCommand() {
         // no leading and trailing whitespaces
         MassEmailCommand expectedMassEmailCommand =
-                new MassEmailCommand(new TagMatchingPredicate((Arrays.asList("friends", "OwesMoney"))));
-        assertParseSuccess(parser, "friends OwesMoney", expectedMassEmailCommand);
+                new MassEmailCommand(new TagMatchingPredicate((
+                        Arrays.asList(STUB_TAG_VALID_FIRST , STUB_TAG_VALID_SECOND))));
+        assertParseSuccess(parser, STUB_TAG_VALID_FIRST + " " + STUB_TAG_VALID_SECOND , expectedMassEmailCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n friends \n \t OwesMoney  \t", expectedMassEmailCommand);
+        assertParseSuccess(parser, " \n " + STUB_TAG_VALID_FIRST
+                + " \n \t " + STUB_TAG_VALID_SECOND + "  \t", expectedMassEmailCommand);
     }
 
     @Test

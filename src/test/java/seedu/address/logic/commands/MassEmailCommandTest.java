@@ -28,19 +28,15 @@ import seedu.address.model.tag.TagMatchingPredicate;
  */
 
 public class MassEmailCommandTest {
+    public static final String INVALID_TAG = "hello";
+    public static final String SPECIAL_TAG_ALL = "all";
+    public static final String VALID_TAG = "family";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_NOBODY_FOUND);
-        MassEmailCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
 
     @Test
     //test 'all' predicate
     public void execute_massEmail_allsuccess() throws Exception {
-        MassEmailCommand command = prepareCommand("all");
+        MassEmailCommand command = prepareCommand(SPECIAL_TAG_ALL);
         String expectedMessage = buildExpectedMessage(getTypicalAddressBook().getPersonList());
         assertCommandSuccess(command, expectedMessage , getTypicalAddressBook().getPersonList());
     }
@@ -48,7 +44,7 @@ public class MassEmailCommandTest {
     @Test
     // one valid tag
     public void  execute_tagEmail_success() throws  Exception {
-        MassEmailCommand command = prepareCommand("family");
+        MassEmailCommand command = prepareCommand(VALID_TAG);
         String expectedMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedMessage , Arrays.asList(ALICE));
     }
@@ -56,7 +52,7 @@ public class MassEmailCommandTest {
     @Test
     //no vaild tag
     public void  executenoVaildTagEmailsuccess() throws  Exception {
-        MassEmailCommand command = prepareCommand("hello");
+        MassEmailCommand command = prepareCommand(INVALID_TAG);
         String expectedMessage = buildExpectedMessage(Collections.emptyList());
         assertCommandSuccess(command, expectedMessage , Collections.emptyList());
     }
@@ -64,7 +60,7 @@ public class MassEmailCommandTest {
     @Test
     // 1 vaild tag and 1 invalid tag
     public void  executevalidInvalidtagEmailsuccess() throws  Exception {
-        MassEmailCommand command = prepareCommand("family hello");
+        MassEmailCommand command = prepareCommand(VALID_TAG + " " + INVALID_TAG);
         String expectedMessage = buildExpectedMessage(Arrays.asList(ALICE));
         assertCommandSuccess(command, expectedMessage , Arrays.asList(ALICE));
     }
@@ -101,7 +97,7 @@ public class MassEmailCommandTest {
     private String buildExpectedMessage(List<ReadOnlyPerson> expectedList) {
         if (!expectedList.isEmpty()) {
             StringBuilder mess = new StringBuilder(
-                    String.format(Messages.MESSAGE_SMS_CONFIRMATION, expectedList.size()));
+                    String.format(Messages.MESSAGE_EMAIL_CONFIRMATION, expectedList.size()));
             mess.append("\n");
             for (int i = 0; i < expectedList.size(); i++) {
                 mess.append(expectedList.get(i).getEmail());
